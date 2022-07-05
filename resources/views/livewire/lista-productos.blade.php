@@ -14,21 +14,22 @@
         <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                     <div class="justify-self-center">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('Productos') }}
+                            {{ __('Productos7') }}
                     </h2>
                     </div>
                 </div>
 
+                <div class="py-8 grid grid-cols-4 gap-4">
+                    <div class="py-4">
+                    <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded" href="/productos/nuevo">Nuevo</a>
+                    </div>
+                </div>
 
-        <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded"
-        href="/productos/nuevo">Nuevo</a>
-
-    <x-table>
             <table class="text-center w-full">
              <thead class="border-b bg-gray-800">
              <tr>
                      <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                         Nombre
+                         Productos
                      </th>
                      <th scope="col" class="text-sm font-medium text-white px-6 py-4">
                          Código
@@ -79,7 +80,7 @@
                         {{ $productos->links() }}
                </div>
 
-     </x-table>
+
         </div>
         </div>
         </div>

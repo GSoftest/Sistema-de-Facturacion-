@@ -56,9 +56,9 @@
                          </td>
                          <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                          <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2.5 border border-blue-500 rounded"
-                            href="/clientes/{{$cliente->id}}">Editar</a>
+                            href="/clientes/{{$cliente->id}}">Editar&nbsp;</a>
                             <button
-                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded" wire:click='destroy({{ $cliente->id }})'>Delete</button>
+                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded" wire:click='destroy({{ $cliente->id }})'>Delete&nbsp;</button>
                          </td>
                      </tr class="bg-white border-b">
                  @endforeach
