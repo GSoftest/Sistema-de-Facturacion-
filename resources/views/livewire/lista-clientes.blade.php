@@ -51,10 +51,10 @@
                      <tr class="border-b">
                          <td class="w-44 border-r text-gray-700 mr-3">
                              {{ $cliente->name }}</td>
-                         <td class="w-32 border-r appearance-none text-gray-700 mr-3">
+                         <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">
                             {{ $cliente->identificacion }}</td>
                          </td>
-                         <td class="w-32 border-r appearance-none text-gray-700 mr-3">
+                         <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $cliente->telefono }}
                          </td>
                          <td class="w-24 border-r px-8 py-4">

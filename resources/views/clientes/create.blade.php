@@ -4,7 +4,7 @@
             {{ __('Registro de cliente') }}
         </h2>
     </x-slot>-->
-    <div>
+    <div class="flex flex-col justify-center items-center">
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
             <div class="mt-5 md:mt-0 md:col-span-2">
@@ -16,31 +16,36 @@
                         <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                             <div class="justify-self-center">
                                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                    {{ __('Registro de clientes') }}
+                                    {{ __('Registro de Clientes') }}
                                 </h2>
                             </div>
                         </div>
 
-                        <div class="pt-8 py-2 grid grid-cols-4 gap-4 justify-items-stretc">
+                        <div class="pt-8 py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social</label>
-                                <input type="text" name="name" id="name" wire:model='name' autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="name" id="name" wire:model='name' autocomplete="given-name" minlength="3" maxlength="50" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="name"/>
                             </div>
+                            
                             <div>
                                 <label for="identificacion" class="block text-sm font-medium text-gray-700">RIF/CI</label>
-                                <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' placeholder="V-xxxxxxxx" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="identificacion"/>
                             </div>
                         </div>
-                        <div class="py-2 grid grid-cols-4 gap-4 justify-items-stretc">
+                        <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div class="">
                                 <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
-                                <input type="text" name="telefono" id="telefono" wire:model='telefono' autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="telefono" id="telefono" wire:model='telefono' maxlength="11" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="telefono"/>
                             </div>
                        </div>
                        <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div class="col-span-2 sm:col-span-2">
-                                <label for="direccion" class="block text-sm font-medium text-gray-700">Direccion</label>
+                                <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
                                 <textarea type="text" name="direccion" id="direccion" wire:model='direccion' autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                <x-jet-input-error for="direccion"/>
                             </div> 
                             <div class="col-span-2 sm:col-span-2"></div>
                         </div>

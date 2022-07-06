@@ -56,16 +56,16 @@
                      <tr class="border-b">
                          <td class="w-44 border-r text-gray-700 mr-3">
                              {{ $producto->name }}</td>
-                         <td class="w-32 border-r appearance-none text-gray-700 mr-3">
+                         <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->upc }}
                          </td>
-                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-right">
+                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->precio_sin_iva }}
                          </td>
-                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-right">
+                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->costo_unitario }}
                          </td>
-                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-right">
+                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->contenido_neto }}
                          </td>
                          <td class="w-24 border-r px-8 py-4">

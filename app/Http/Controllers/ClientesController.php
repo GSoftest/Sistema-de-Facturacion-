@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClienteRequest;
 use App\Models\Clientes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 class ClientesController extends Controller
 {
 
-    public function create(Request $request)
+    public function create(ClienteRequest $request)
     {
         $clientes = new Clientes();
         $clientes->name = $request->name;
@@ -28,7 +29,7 @@ class ClientesController extends Controller
     }
 
 
-    public function editar(Request $request){
+    public function editar(ClienteRequest $request){
 
         $data = Clientes::find($request->id);
         $data->name = $request->name;
