@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center items-center">
+<div>
   <!--  <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Clientes') }}
@@ -26,41 +26,44 @@
     </div>
 </div>
 
-            <table class="text-center">
+            <table class="w-full border">
              <thead class="border-b bg-gray-800">
              <tr>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                         Nombre/Razón Social
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                         Rif/Ci
+                     <th scope="col" class="text-sm font-medium text-white border-r">
+                         RIF/CI
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                         Telefono
+                     <th scope="col" class="text-sm font-medium text-white border-r">
+                         Teléfono
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
+                         &nbsp;
+                     </th>
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
                      </th>
                  </tr>
-             </thead class="border-b">
+             </thead>
              <tbody>
              @foreach ($clientes as $cliente)
-                     <tr class="bg-white border-b">
-                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                     <tr class="border-b">
+                         <td class="w-44 border-r text-gray-700 mr-3">
                              {{ $cliente->name }}</td>
-                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                         <td class="w-32 border-r appearance-none text-gray-700 mr-3">
                             {{ $cliente->identificacion }}</td>
                          </td>
-                         <td class="text-sm text-gray-900 font-light whitespace-nowrap">
+                         <td class="w-32 border-r appearance-none text-gray-700 mr-3">
                              {{ $cliente->telefono }}
                          </td>
-                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                         <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2.5 border border-blue-500 rounded"
-                            href="/clientes/{{$cliente->id}}">Editar&nbsp;</a>
-                            <button
-                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded" wire:click='destroy({{ $cliente->id }})'>Delete&nbsp;</button>
+                         <td class="w-24 border-r px-8 py-4">
+                         <a class="py-2" href="/clientes/{{$cliente->id}}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
+                        </td>
+                         <td class="w-24 border-r px-8 py-4">
+                            <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $cliente->id }})'></i></button>
                          </td>
-                     </tr class="bg-white border-b">
+                     </tr>
                  @endforeach
              </tbody>
          </table>

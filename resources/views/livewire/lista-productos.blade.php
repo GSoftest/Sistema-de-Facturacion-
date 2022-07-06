@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center items-center">
+<div>
    <!-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Productos') }}
@@ -14,64 +14,68 @@
         <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                     <div class="justify-self-center">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('Productos7') }}
+                            {{ __('Productos') }}
                     </h2>
                     </div>
                 </div>
 
-                <div class="py-8 grid grid-cols-4 gap-4">
+                <div class="pt-8 grid grid-cols-4 gap-4 justify-items-stretc">
                     <div class="py-4">
                     <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded" href="/productos/nuevo">Nuevo</a>
                     </div>
                 </div>
 
-            <table class="text-center w-full">
+            <table class="w-full border">
              <thead class="border-b bg-gray-800">
              <tr>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          Productos
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          Código
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                         Precio sin Iva
+                     <th scope="col" class="text-sm font-medium text-white border-r">
+                         Precio sin IVA
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          Costo Unitario
                      </th>
-                      <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                      <th scope="col" class="text-sm font-medium text-white border-r">
                          Contenido Neto
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
+                         &nbsp;
+                     </th>
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
                      </th>
                  </tr>
-             </thead class="border-b">
+             </thead>
              <tbody>
              @foreach ($productos as $producto)
-                     <tr class="bg-white border-b">
-                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                     <tr class="border-b">
+                         <td class="w-44 border-r text-gray-700 mr-3">
                              {{ $producto->name }}</td>
-                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                         <td class="w-32 border-r appearance-none text-gray-700 mr-3">
                              {{ $producto->upc }}
                          </td>
-                         <td class="text-sm text-gray-900 font-light whitespace-nowrap">
+                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-right">
                              {{ $producto->precio_sin_iva }}
                          </td>
-                         <td class="text-sm text-gray-900 font-light whitespace-nowrap">
+                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-right">
                              {{ $producto->costo_unitario }}
                          </td>
-                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-right">
                              {{ $producto->contenido_neto }}
                          </td>
-                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                         <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded"
-                            href="/productos/{{$producto->id}}">Editar</a>
-                             <button
-                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded" wire:click='destroy({{ $producto->id }})'>Delete</button>
+                         <td class="w-24 border-r px-8 py-4">
+                         <a class="py-2"
+                            href="/productos/{{$producto->id}}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
                          </td>
-                     </tr class="bg-white border-b">
+                         <td class="w-24 border-r px-8 py-4">
+                             <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $producto->id }})'></i></button>
+                         </td>
+                     </tr>
                  @endforeach
              </tbody>
          </table>
