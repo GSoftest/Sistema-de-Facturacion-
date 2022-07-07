@@ -1,9 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
+    <!-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Modificar producto') }}
         </h2>
-    </x-slot>
+    </x-slot>-->
     <div>
         
 
@@ -15,7 +15,16 @@
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{$producto->id}}">
                     <div class="px-4 py-5 bg-white sm:p-6">
-                        <div class="grid grid-cols-4 gap-4">
+
+                    <div class="grid grid-cols-1 gap-1  justify-items-stretc">
+                            <div class="justify-self-center">
+                                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                    {{ __('Actualizar Producto') }}
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-4 pt-8">
                             <div class="py-2">
                                 <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
                                 <input type="text" name="name" id="name" wire:model='name' value="{{$producto->name}}" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -63,22 +72,7 @@
                                 <label for="unidad" class="block text-sm font-medium text-gray-700">Unidad</label>
                                 <input type="text" name="unidad" id="unidad" wire:model='unidad' autocomplete="given-unidad" value="{{$producto->unidad}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
-                            </div>
 
-
-                            <div class="py-2">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
-                            <textarea type="text" name="description" id="description" wire:model='description' value="{{$producto->description}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{$producto->description}}</textarea>
-                            </div>
-
-                            <div class="py-2">
-                                <label for="exento" class="block text-sm font-medium text-gray-700">Exento de iva</label>
-                                <input type="radio" name="exento" wire:model='exento' class="" value="1" @if($producto->exento=="1") checked @endif> Si
-                                <input type="radio" name="exento" wire:model='exento' class="" value="0" @if($producto->exento=="0") checked @endif> No
-                            </div>
-
-                            <div class="grid grid-cols-4 gap-4">
-                          
                             <div class="py-2">
                             <label for="id_categoria" class="block text-sm font-medium text-gray-700">Categorías</label>
                             <select wire:model="id_categoria" name="id_categoria" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
@@ -88,22 +82,44 @@
                                 @endforeach
                             </select>
                             </div>
-                            </div>
-                            
+
                             <div class="py-2">
-                            <div class="col-span-3 sm:col-span-3">
-                            <label class="block text-sm font-medium text-gray-700 py-2">Imagen del producto</label>
-                            <img src="{{ URL::asset('app/archivos/productos/'.$producto->imagen_url) }}" class="flex-shrink-0 w-28"/>
-                            <input type="file" name="imagen_url" accept="image/*">
-                            </div>
+                                <label for="exento" class="block text-sm font-medium text-gray-700">Exento de iva</label>
+                                <div class="py-2 justify-center">
+                                <input type="radio" name="exento" wire:model='exento' class="" value="1" @if($producto->exento=="1") checked @endif> Si
+                                <input type="radio" name="exento" wire:model='exento' class="" value="0" @if($producto->exento=="0") checked @endif> No
+                                </div>
                             </div>
 
-                        <div class="py-2">
-                            <div class="col-span-3 sm:col-span-3">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded" type="submit">Guardar</button>
-                            <a href="/productos" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 mt-2  border border-red-500 rounded">Cancelar</a>
-                        </div>
-                        </div>
+                            </div>
+
+
+
+                            <div class="grid grid-cols-4 gap-4 justify-items-stretc">
+                                <div class="py-2">
+                                    <div class="col-span-3 sm:col-span-3">
+                                    <label class="block text-sm font-medium text-gray-700 py-2">Imagen del producto</label>
+                                    <input type="file" name="imagen_url" accept="image/*">
+                                    <img src="{{ URL::asset('app/archivos/productos/'.$producto->imagen_url) }}" class="flex-shrink-0 w-28"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="py-2">
+                            <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
+                            <textarea type="text" name="description" id="description" wire:model='description' value="{{$producto->description}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full h-32 shadow-sm sm:text-sm border-gray-300 resize-y rounded-md">{{$producto->description}}</textarea>
+                            </div>
+
+
+                            <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
+                            <div class="pb-3.5 pr-4">
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 border border-blue-500 rounded" type="submit">Guardar&nbsp;</button>
+                            </div>
+                            <div class="pt-3.5">
+                                <a href="/productos" class="bg-red-500 hover:bg-red-700 text-white font-bold px-2 mt-2 border border-red-500 rounded py-1.5">Cancelar</a>
+                            </div>
+                        </div> 
+                          
                         </div>
                     </div>
                     </form>

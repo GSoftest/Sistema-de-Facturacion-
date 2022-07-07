@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center items-center">
+<div>
    <!-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Categorias') }}
@@ -19,39 +19,45 @@
                     </div>
                 </div>
 
+<div class="py-8 grid grid-cols-4 gap-4">
+    <div class="py-4">
         <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded"
         href="/categorias/nuevo">Nuevo</a>
+    </div>
+</div>
 
-    <x-table>
-            <table class="text-center">
+
+            <table class="w-full border">
              <thead class="border-b bg-gray-800">
                  <tr>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          Nombre
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                         Imagen
+                     <th scope="col" class="text-sm font-medium text-white border-r">
+                         Descripción
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
+                         &nbsp;
+                     </th>
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
                      </th>
                  </tr>
-             </thead class="border-b">
+             </thead>
              <tbody>
                  @foreach ($items as $item)
-                     <tr class="bg-white border-b">
-                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                     <tr class="border-b">
+                         <td class="w-44 border-r text-gray-700 mr-3">
                          {{ $item->name }}</td>
-                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            <img src="{{URL::asset('app/archivos/categorias/'.$item->imagen)}}"  class="flex-shrink-0 w-10">
+                         <td class="w-52 border-r text-gray-700 mr-3">
+                         {{ $item->descripcion }}</td>
+                         <td class="w-20 border-r px-8 py-4">
+                         <a class="py-2" href="/categorias/{{$item->id}}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
+                        </td>
+                         <td class="w-20 border-r px-8 py-4">
+                         <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $item->id }})'></i></button>
                          </td>
-                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                         <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded"
-                            href="/categorias/{{$item->id}}">Editar</a>
-                         <button
-                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded" wire:click='destroy({{ $item->id }})'>Eliminar</button>
-                         </td>
-                     </tr class="bg-white border-b">
+                     </tr>
                  @endforeach
              </tbody>
          </table>
@@ -60,7 +66,7 @@
                         {{ $items->links() }}
                </div>
 
-     </x-table>
+
         </div>
         </div>
         </div>

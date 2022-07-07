@@ -10,7 +10,7 @@ class Categorias extends Model
 
     protected $table = 'categorias';
 
-	protected $fillable = ['name','imagen'];
+	protected $fillable = ['name','descripcion'];
     
 
 }

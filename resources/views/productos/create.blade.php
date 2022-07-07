@@ -1,9 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
+   <!-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Registrar producto') }}
         </h2>
-    </x-slot>
+    </x-slot>-->
     <div>
         
 
@@ -14,7 +14,17 @@
                     <form action="{{ route('nuevoproductos')  }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="px-4 py-5 bg-white sm:p-6">
-                        <div class="grid grid-cols-4 gap-4">
+
+                    <div class="grid grid-cols-1 gap-1  justify-items-stretc">
+                            <div class="justify-self-center">
+                                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                    {{ __('Registro de Producto') }}
+                                </h2>
+                            </div>
+                        </div>
+
+
+                        <div class="grid grid-cols-4 gap-4 pt-8">
                             <div class="py-2">
                                 <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
                                 <input type="text" name="name" id="name" wire:model='name' autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -44,7 +54,7 @@
                                 <input type="text" name="upc" id="upc" wire:model='upc' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                             <div class="py-2">
-                                <label for="precio_sin_iva" class="block text-sm font-medium text-gray-700">Precio sin iva</label>
+                                <label for="precio_sin_iva" class="block text-sm font-medium text-gray-700">Precio sin IVA</label>
                                 <input type="text" name="precio_sin_iva" id="precio_sin_iva" wire:model='precio_sin_iva' autocomplete="given-precio_sin_iva" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                             <div class="py-2">
@@ -63,24 +73,9 @@
                                 <input type="text" name="unidad" id="unidad" wire:model='unidad' autocomplete="given-unidad" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
 
-                            </div>
 
                             <div class="py-2">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
-                            <textarea type="text" name="description" id="description" wire:model='description' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
-                            </div>
-
-                            <div class="py-2">
-                                <label for="exento" class="block text-sm font-medium text-gray-700">Exento de iva</label>
-                                <input type="radio" name="exento" wire:model='exento' class="" value="1"> Si
-                                <input type="radio" name="exento" wire:model='exento' class="" value="0"> No
-                            </div>
-
-                           
-
-                            <div class="grid grid-cols-4 gap-4">
-                            <div class="py-2">
-                            <label for="id_categoria" class="block text-sm font-medium text-gray-700 mt-1">Categorías</label>
+                            <label for="id_categoria" class="block text-sm font-medium text-gray-700">Categorías</label>
                             <select wire:model="id_categoria" name="id_categoria" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>  
                                 <option value="">{{ __("Seleccione") }}</option>                   
                                  @foreach ($categorias as $categoria)
@@ -89,8 +84,21 @@
                                     @endforeach
                             </select>
                             </div>
+
+
+                            <div class="py-2">
+                                <label for="exento" class="block text-sm font-medium text-gray-700">Exento de IVA</label>
+                                <div class="py-2 justify-center">
+                                <input type="radio" name="exento" wire:model='exento' value="1"> Si
+                                <input type="radio" name="exento" wire:model='exento'value="0"> No
+                                </div>
                             </div>
-                            
+                        
+
+                            </div>
+
+                            <div class="grid grid-cols-4 gap-4 justify-items-stretc">
+
                             <div class="py-2">
                             <div class="col-span-3 sm:col-span-3">
                             <label class="block text-sm font-medium text-gray-700 py-2">Imagen del producto</label>
@@ -98,12 +106,25 @@
                             </div>
                             </div>
 
-                            <div class="py-2">
-                            <div class="col-span-3 sm:col-span-3">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded" type="submit">Guardar</button>
-                            <a href="/productos" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 mt-2  border border-red-500 rounded">Cancelar</a>
-                        </div>
                             </div>
+                            
+                            <div class="py-2 ">
+                            <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
+                            <textarea type="text" name="description" id="description" wire:model='description' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full h-32 shadow-sm sm:text-sm border-gray-300 resize-y rounded-md"></textarea>
+                            </div>
+
+                         
+                            <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
+                            <div class="pb-3.5 pr-4">
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 border border-blue-500 rounded" type="submit">Guardar&nbsp;</button>
+                            </div>
+                            <div class="pt-3.5">
+                                <a href="/productos" class="bg-red-500 hover:bg-red-700 text-white font-bold px-2 mt-2 border border-red-500 rounded py-1.5">Cancelar</a>
+                            </div>
+                        </div> 
+
+
+
                         </div>
                     </div>
                     </form>
