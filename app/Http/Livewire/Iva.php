@@ -12,7 +12,7 @@ class Iva extends Component
 
   
     use WithPagination;
-    public $iva, $iva_id;
+    public $iva, $iva_id,$estado;
 
     public function render()
     {
@@ -22,14 +22,15 @@ class Iva extends Component
 
     public function guardar()
     {
-        $this->validate(['iva' => 'required']);
+        $this->validate(['iva' => 'required|numeric']);
 
         if ($this->iva_id) {
+
 
             $iva = Ivas::find($this->iva_id);
             $iva->update([
                 'iva' => $this->iva,
-                'estado' => 0
+                'estado' => $this->estado
             ]);
 
         }else{
@@ -76,7 +77,25 @@ class Iva extends Component
 
     public function activar($id)
     {
-        $iva = Ivas::find($id);
+
+        $verificacion = Ivas::where('estado', 1)->get();
+
+        if(count($verificacion) == 0){
+
+            $iva = Ivas::find($id);
+
+            $iva->update([
+                'estado' => 1
+            ]);
+    
+    
+            $this->estado = $iva->estado;
+
+        }else{
+
+            session()->flash('message', 'Ya se encuentra un IVA activado para la venta');
+        
+        }
 
         $this->view = 'livewire.iva';
     }
@@ -85,6 +104,10 @@ class Iva extends Component
     {
         $iva = Ivas::find($id);
 
+        $iva->update([
+            'estado' => 0
+        ]);
+        $this->estado = $iva->estado;
         $this->view = 'livewire.iva';
     }
 }

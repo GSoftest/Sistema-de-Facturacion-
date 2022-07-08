@@ -1,4 +1,4 @@
- <div class="flex flex-col justify-center items-center">
+ <div>
     <!-- <x-slot name="header">
          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
              {{ __('Tipos de Iva') }}
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                     <div class="py-8 grid grid-cols-4 gap-4">
+                     <div class="pt-8 grid grid-cols-4 gap-4">
                    <!--  <div class="col-span-3 sm:col-span-3">-->
                         <div>
                             <label for="iva" class="block text-sm font-medium text-gray-700">IVA</label>
@@ -37,43 +37,46 @@
                          <!--   </div>-->
                      </div>
  
-
-     <x-table>
-         <table class="text-center w-2/3">
+  
+         <table class="w-full border">
              <thead class="border-b bg-gray-800">
                  <tr>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          IVA
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
                      </th>
-                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
                      </th>
                  </tr>
-             </thead class="border-b">
+             </thead>
              <tbody>
                  @foreach ($ivas as $iva)
-                     <tr class="bg-white border-b">
-                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                     <tr class="border-b">
+                         <td class="border-r text-gray-700 mr-3">
                              {{ $iva->iva }}
                          </td>
-                         <td class="w-24 text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                             <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded" wire:click='activar({{ $iva->id }})'>Activar</button>
+                         <td class="w-24 border-r px-8 py-4">
+                            <input type="hidden" wire:model='estado' name="estado">
+                            @if ($iva->estado == 0)
+
+                             <button class="py-2"><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar({{ $iva->id }})'></i></button>
+                            @else
+                            <button class="py-2"><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $iva->id }})'></i></button>
+                            @endif
+                        </td>
+                         <td class="w-24 border-r px-8 py-4">
+                             <button class="py-2"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true" wire:click='edit({{ $iva->id }})'></i></button>
                          </td>
-                         <td class="w-24 text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                             <button
-                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 border border-blue-500 rounded" wire:click='edit({{ $iva->id }})'>Editar</button>
+                         <td class="w-24 border-r px-8 py-4">
+                             <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $iva->id }})'></i></button>
                          </td>
-                         <td class="w-24 text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                             <button
-                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded" wire:click='destroy({{ $iva->id }})'>Eliminar</button>
-                         </td>
-                     </tr class="bg-white border-b">
+                     </tr>
                  @endforeach
              </tbody>
          </table>
@@ -81,7 +84,7 @@
          <div class="mt-4">
                         {{ $ivas->links() }}
                </div>
-     </x-table>
+
      </div>
         </div>
  </div>

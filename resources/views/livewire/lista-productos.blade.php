@@ -44,6 +44,9 @@
                          Contenido Neto
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
+                        Existencia
+                     </th>
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
@@ -67,6 +70,9 @@
                          </td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->contenido_neto }}
+                         </td>
+                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
+                             {{ $producto->unidad }}
                          </td>
                          <td class="w-24 border-r px-8 py-4">
                          <a class="py-2"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductoRequest;
 use App\Models\Productos;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class ProductosController extends Controller
         return view('productos.create')->with($data);     
     }
 
-    public function create(Request $request)
+    public function create(ProductoRequest $request)
     {
         $productos = new Productos();
         $productos->name = $request->name;
@@ -74,7 +75,7 @@ class ProductosController extends Controller
     }
 
 
-    public function editar(Request $request){
+    public function editar(ProductoRequest $request){
 
        
         $producto = Productos::find($request->id);
