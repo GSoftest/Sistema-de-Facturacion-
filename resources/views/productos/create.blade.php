@@ -32,18 +32,18 @@
                             </div>
                             <div class="py-2">
                                 <label for="peso" class="block text-sm font-medium text-gray-700">Peso</label>
-                                <input type="text" name="peso" id="peso" wire:model='peso' autocomplete="given-peso" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="peso" id="peso" wire:model='peso' autocomplete="given-peso" value='0' placeholder="0" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <x-jet-input-error for="peso"/>
                             </div>
                             <div class="py-2">
                                 <label for="altura" class="block text-sm font-medium text-gray-700">Altura</label>
-                                <input type="text" name="altura" id="altura" wire:model='altura' autocomplete="given-altura" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="altura" id="altura" wire:model='altura' autocomplete="given-altura" value='0' placeholder="0" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <x-jet-input-error for="altura"/>
                             </div>
                             
                             <div class="py-2">
                                 <label for="ancho" class="block text-sm font-medium text-gray-700">Ancho</label>
-                                <input type="text" name="ancho" id="ancho" wire:model='ancho' autocomplete="given-ancho" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="ancho" id="ancho" wire:model='ancho' autocomplete="given-ancho" value='0' placeholder="0" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <x-jet-input-error for="ancho"/>
                             </div>
                             </div>
@@ -51,7 +51,7 @@
                             <div class="grid grid-cols-4 gap-4">
                             <div class="py-2">
                                 <label for="longitud" class="block text-sm font-medium text-gray-700">Longitud</label>
-                                <input type="text" name="longitud" id="longitud" wire:model='longitud' autocomplete="given-longitud" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="longitud" id="longitud" wire:model='longitud' autocomplete="given-longitud" placeholder="0" value='0' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <x-jet-input-error for="longitud"/>
                             </div>
                             <div class="py-2">
@@ -115,7 +115,7 @@
                             <div class="col-span-3 sm:col-span-3">
                             <label class="block text-sm font-medium text-gray-700 py-2">Imagen del producto</label>
                             <input type="file" name="imagen_url" accept="image/*">
-                            
+                            <x-jet-input-error for="imagen_url"/>
                             </div>
                             </div>
 

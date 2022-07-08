@@ -28,38 +28,46 @@
                             <div class="py-2">
                                 <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
                                 <input type="text" name="name" id="name" wire:model='name' value="{{$producto->name}}" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="name"/>
                             </div>
                             <div class="py-2">
                                 <label for="peso" class="block text-sm font-medium text-gray-700">Peso</label>
-                                <input type="text" name="peso" id="peso" wire:model='peso' value="{{$producto->peso}}" autocomplete="given-peso" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="peso" id="peso" wire:model='peso' value="{{$producto->peso}}"  placeholder="0" autocomplete="given-peso" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="peso"/>
                             </div>
                             <div class="py-2">
                                 <label for="altura" class="block text-sm font-medium text-gray-700">Altura</label>
-                                <input type="text" name="altura" id="altura" wire:model='altura' value="{{$producto->altura}}" autocomplete="given-altura" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div>
+                                <input type="text" name="altura" id="altura" wire:model='altura' value="{{$producto->altura}}" placeholder="0" autocomplete="given-altura" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="altura"/>
+                            </div>
                             
                             <div class="py-2">
                                 <label for="ancho" class="block text-sm font-medium text-gray-700">Ancho</label>
-                                <input type="text" name="ancho" id="ancho" wire:model='ancho' value="{{$producto->ancho}}" autocomplete="given-ancho" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="ancho" id="ancho" wire:model='ancho' value="{{$producto->ancho}}" placeholder="0" autocomplete="given-ancho" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="ancho"/>
                             </div>
                             </div>
 
                             <div class="grid grid-cols-4 gap-4">
                             <div class="py-2">
                                 <label for="longitud" class="block text-sm font-medium text-gray-700">Longitud</label>
-                                <input type="text" name="longitud" id="longitud" wire:model='longitud' value="{{$producto->longitud}}" autocomplete="given-longitud" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="longitud" id="longitud" wire:model='longitud' value="{{$producto->longitud}}" placeholder="0" autocomplete="given-longitud" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="longitud"/>
                             </div>
                             <div class="py-2">
                                 <label for="upc" class="block text-sm font-medium text-gray-700">UPC</label>
                                 <input type="text" name="upc" id="upc" wire:model='upc' value="{{$producto->upc}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="upc"/>
                             </div>
                             <div class="py-2">
                                 <label for="precio_sin_iva" class="block text-sm font-medium text-gray-700">Precio sin iva</label>
                                 <input type="text" name="precio_sin_iva" id="precio_sin_iva" wire:model='precio_sin_iva' value="{{$producto->precio_sin_iva}}" autocomplete="given-precio_sin_iva" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="precio_sin_iva"/>
                             </div>
                             <div class="py-2">
                                 <label for="costo_unitario" class="block text-sm font-medium text-gray-700">Costo unitario</label>
                                 <input type="text" name="costo_unitario" id="costo_unitario" wire:model='costo_unitario' value="{{$producto->costo_unitario}}" autocomplete="given-costo_unitario" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="costo_unitario"/>
                             </div>
                             </div>
 
@@ -67,10 +75,12 @@
                             <div class="py-2">
                                 <label for="contenido_neto" class="block text-sm font-medium text-gray-700">Contenido neto</label>
                                 <input type="text" name="contenido_neto" id="contenido_neto" wire:model='contenido_neto' value="{{$producto->contenido_neto}}" autocomplete="given-contenido_neto" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="contenido_neto"/>
                             </div>
                             <div class="py-2">
                                 <label for="unidad" class="block text-sm font-medium text-gray-700">Unidad</label>
                                 <input type="text" name="unidad" id="unidad" wire:model='unidad' autocomplete="given-unidad" value="{{$producto->unidad}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="unidad"/>
                             </div>
 
                             <div class="py-2">
@@ -81,6 +91,7 @@
                                     <option value="{{ $categoria->id }}" @if($producto->id_categoria==$categoria->id) selected @endif>{{ $categoria->name }}</option>
                                 @endforeach
                             </select>
+                            <x-jet-input-error for="id_categoria"/>
                             </div>
 
                             <div class="py-2">
@@ -89,6 +100,7 @@
                                 <input type="radio" name="exento" wire:model='exento' class="" value="1" @if($producto->exento=="1") checked @endif> Si
                                 <input type="radio" name="exento" wire:model='exento' class="" value="0" @if($producto->exento=="0") checked @endif> No
                                 </div>
+                                <x-jet-input-error for="exento"/>
                             </div>
 
                             </div>
@@ -100,7 +112,10 @@
                                     <div class="col-span-3 sm:col-span-3">
                                     <label class="block text-sm font-medium text-gray-700 py-2">Imagen del producto</label>
                                     <input type="file" name="imagen_url" accept="image/*">
+                                    @if(isset($producto->imagen_url))
                                     <img src="{{ URL::asset('app/archivos/productos/'.$producto->imagen_url) }}" class="flex-shrink-0 w-28"/>
+                                    @endif
+                                    <x-jet-input-error for="imagen_url"/>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +123,8 @@
                             <div class="py-2">
                             <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
                             <textarea type="text" name="description" id="description" wire:model='description' value="{{$producto->description}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full h-32 shadow-sm sm:text-sm border-gray-300 resize-y rounded-md">{{$producto->description}}</textarea>
-                            </div>
+                            <x-jet-input-error for="description"/>
+                        </div>
 
 
                             <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
