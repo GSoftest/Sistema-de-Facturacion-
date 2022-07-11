@@ -78,7 +78,7 @@
                                 <x-jet-input-error for="contenido_neto"/>
                             </div>
                             <div class="py-2">
-                                <label for="unidad" class="block text-sm font-medium text-gray-700">Unidad</label>
+                                <label for="unidad" class="block text-sm font-medium text-gray-700">Unidad disponible</label>
                                 <input type="text" name="unidad" id="unidad" wire:model='unidad' autocomplete="given-unidad" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <x-jet-input-error for="unidad"/>
                             </div>

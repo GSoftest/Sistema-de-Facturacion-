@@ -33,7 +33,7 @@ class ClienteRequest extends FormRequest
         // Si es diferente a Post
         if($this->method() !== 'PUT')
         {
-            $rules ['correo' ] = 'required|string|email|max:255|regex:/[a-zA-Z]{1}-[0-9]{6,10}|unique:cliente,correo,' . $this->id;
+            $rules ['correo' ] = 'required|string|email:rfc|max:255|regex:/^[\w.-]+@[\w]+\.{1}[\w]+(.{1}[\w])*$/|unique:cliente,correo,' . $this->id;
 
         }
 
@@ -55,6 +55,7 @@ class ClienteRequest extends FormRequest
             'correo.required' => 'Obligatorio.',
             'correo.email' => 'Debe ser una dirección válida.',
             'correo.unique' => 'El correo ya esta registrado.',
+            'correo.regex' => 'Formato inválido.',
         ];
     }
 }

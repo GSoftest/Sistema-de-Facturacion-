@@ -31,9 +31,9 @@ class CategoriaRequest extends FormRequest
 
     public function messages(){
         return [
-            'name.required' => 'El nombre es obligatorio.',
-            'name.max' => 'El nombre no debe tener menos de 70 caracteres.',
-            'descripcion.required' => 'La descripción es obligatorio.',
+            'name.required' => 'Obligatorio.',
+            'name.max' => 'Debe tener menos de 70 caracteres.',
+            'descripcion.required' => 'Obligatorio.',
         ];
     }
 
