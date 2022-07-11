@@ -23,24 +23,38 @@ class ClienteRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required',
-            'identificacion' => 'required|max:11|regex:/[a-zA-Z]{1}-[0-9]{6,10}/',
-            'telefono' => 'required|numeric|regex:/[0-9]{11}/',
+            'identificacion' => 'required|max:11|regex:/[a-zA-Z]{1}-[0-9]{6,10}/|unique:cliente,identificacion,' . $this->id,
+            'telefono' => 'required|regex:/[0]{1}[\d]{3}-[0-9]{7}/',
             'direccion' => 'required',
         ];
+
+        // Si es diferente a Post
+        if($this->method() !== 'PUT')
+        {
+            $rules ['correo' ] = 'required|string|email|max:255|regex:/[a-zA-Z]{1}-[0-9]{6,10}|unique:cliente,correo,' . $this->id;
+
+        }
+
+        return $rules;      
+
     }
 
     public function messages(){
         return [
-            'name.required' => 'El Nombre/Razón Social es obligatorio.',
-            'identificacion.required' => 'El RIF/CI es obligatorio.',
-            'identificacion.max' => 'El RIF/CI debe ser máximo 11 caracteres.',
+            'name.required' => 'Obligatorio.',
+            'identificacion.required' => 'Obligatorio.',
+            'identificacion.max' => 'Debe ser máximo 11 caracteres.',
             'identificacion.regex' => 'El RIF/CI con formato inválido.',
-            'telefono.required' => 'El teléfono es obligatorio.',
+            'identificacion.unique' => 'El RIF/CI ya esta registrado.',
+            'telefono.required' => 'Obligatorio.',
             'telefono.numeric' => 'El teléfono debe tener solo números.',
-            'telefono.regex' => 'El teléfono debe contener 11 números.',
-            'direccion.required' => 'La dirección es obligatorio.',
+            'telefono.regex' => 'Formato inválido.',
+            'direccion.required' => 'Obligatorio.',
+            'correo.required' => 'Obligatorio.',
+            'correo.email' => 'Debe ser una dirección válida.',
+            'correo.unique' => 'El correo ya esta registrado.',
         ];
     }
 }

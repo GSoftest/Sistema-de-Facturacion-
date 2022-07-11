@@ -17,6 +17,7 @@ class ClientesController extends Controller
         $clientes->identificacion = $request->identificacion;
         $clientes->telefono = $request->telefono;
         $clientes->direccion = $request->direccion;
+        $clientes->correo = $request->correo;
 
         $clientes->save();
          return Redirect::route('clientes');
@@ -36,6 +37,7 @@ class ClientesController extends Controller
         $data->identificacion = $request->identificacion;
         $data->telefono = $request->telefono;
         $data->direccion = $request->direccion;
+        $data->correo = $request->correo;
         
             $data->save();
             return Redirect::route('clientes');

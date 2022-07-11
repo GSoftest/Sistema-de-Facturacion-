@@ -30,7 +30,7 @@ class ProductoRequest extends FormRequest
             'id_categoria' => 'required',
             'exento' => 'required',
             'description' => 'required',
-            'upc' => 'required|numeric|digits_between:12,12',
+            'upc' => 'numeric|digits_between:12,12',
             'contenido_neto' => 'required',
             'unidad' => 'required|numeric',
             'peso'=> 'numeric',

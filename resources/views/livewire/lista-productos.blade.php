@@ -29,13 +29,13 @@
              <thead class="border-b bg-gray-800">
              <tr>
                      <th scope="col" class="text-sm font-medium text-white border-r">
-                         Productos
-                     </th>
-                     <th scope="col" class="text-sm font-medium text-white border-r">
                          Código
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
-                         Precio sin IVA
+                        Productos
+                     </th>
+                     <th scope="col" class="text-sm font-medium text-white border-r">
+                        Unidad Disponible
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
                          Costo Unitario
@@ -44,7 +44,7 @@
                          Contenido Neto
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
-                        Existencia
+                        Precio sin IVA
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
@@ -57,13 +57,13 @@
              <tbody>
              @foreach ($productos as $producto)
                      <tr class="border-b">
-                         <td class="w-44 border-r text-gray-700 mr-3">
-                             {{ $producto->name }}</td>
+                         <td class="w-44 border-r text-gray-700 mr-3 text-center">
+                             {{ $producto->upc }}</td>
                          <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">
-                             {{ $producto->upc }}
+                             {{ $producto->name }}
                          </td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
-                             {{ $producto->precio_sin_iva }}
+                             {{ $producto->unidad }}
                          </td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->costo_unitario }}
@@ -72,13 +72,13 @@
                              {{ $producto->contenido_neto }}
                          </td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
-                             {{ $producto->unidad }}
+                             {{ $producto->precio_sin_iva }}
                          </td>
-                         <td class="w-24 border-r px-8 py-4">
+                         <td class="w-24 border-r text-center">
                          <a class="py-2"
                             href="/productos/{{$producto->id}}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
                          </td>
-                         <td class="w-24 border-r px-8 py-4">
+                         <td class="w-24 border-r text-center">
                              <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $producto->id }})'></i></button>
                          </td>
                      </tr>

@@ -37,7 +37,7 @@ class Iva extends Component
             $iva = Ivas::where('iva', $this->iva)->exists();
             if ($iva) {
 
-                session()->flash('message', 'El iva ya se encuentra registrado');
+                session()->flash('message', 'El IVA ya se encuentra registrado');
                 $this->view = 'livewire.iva';
                 
             }else{

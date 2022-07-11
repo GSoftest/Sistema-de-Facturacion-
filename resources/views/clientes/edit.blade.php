@@ -32,7 +32,7 @@
                             </div>
                             <div>
                                 <label for="identificacion" class="block text-sm font-medium text-gray-700">RIF/CI</label>
-                                <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' value="{{$data->identificacion}}" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' value="{{$data->identificacion}}" autocomplete="given-identificacion" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <x-jet-input-error for="identificacion"/>
                             </div>
                         </div>
@@ -40,15 +40,20 @@
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div>
                                 <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
-                                <input type="text" name="telefono" id="telefono" wire:model='telefono' maxlength="11" value="{{$data->telefono}}"  autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
+                                <input type="text" name="telefono" id="telefono" wire:model='telefono' maxlength="12" value="{{$data->telefono}}"  autocomplete="given-telefono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
                                 <x-jet-input-error for="telefono"/>
+                            </div>
+                            <div>
+                                <label for="correo" class="block text-sm font-medium text-gray-700">Correo</label>
+                                <input type="text" name="correo" id="correo" wire:model='correo' value="{{$data->correo}}"  autocomplete="given-correo" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
+                                <x-jet-input-error for="correo"/>
                             </div>
                         </div>
 
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div class="col-span-2 sm:col-span-2"> 
                                 <label for="direccion" class="block text-sm font-medium text-gray-700">Direccion</label>
-                                <textarea type="text" name="direccion" id="direccion" wire:model='direccion' autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{$data->direccion}}</textarea>
+                                <textarea type="text" name="direccion" id="direccion" wire:model='direccion' autocomplete="given-direccion" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{$data->direccion}}</textarea>
                                 <x-jet-input-error for="direccion"/>
                             </div>
                             <div class="col-span-2 sm:col-span-2"></div>

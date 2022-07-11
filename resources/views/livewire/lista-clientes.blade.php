@@ -39,6 +39,9 @@
                          Teléfono
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
+                         Correo
+                     </th>
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
@@ -57,10 +60,13 @@
                          <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $cliente->telefono }}
                          </td>
-                         <td class="w-24 border-r px-8 py-4">
+                         <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">
+                             {{ $cliente->correo }}
+                         </td>
+                         <td class="w-24 border-r text-center">
                          <a class="py-2" href="/clientes/{{$cliente->id}}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
                         </td>
-                         <td class="w-24 border-r px-8 py-4">
+                         <td class="w-24 border-r text-center">
                             <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $cliente->id }})'></i></button>
                          </td>
                      </tr>

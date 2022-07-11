@@ -1,4 +1,4 @@
- <div>
+ <div class="flex flex-col justify-center items-center">
     <!-- <x-slot name="header">
          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
              {{ __('Tipos de Iva') }}
@@ -19,16 +19,11 @@
                     </div>
                 </div>
 
-                     <div class="pt-8 grid grid-cols-4 gap-4">
+                     <div class="pt-8 grid grid-cols-2 gap-4">
                    <!--  <div class="col-span-3 sm:col-span-3">-->
                         <div>
                             <label for="iva" class="block text-sm font-medium text-gray-700">IVA</label>
                             <input type="text" name="iva" id="iva" wire:model='iva' autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                         
-                            @if (session()->has('message'))
-                            <p class="text-sm text-red-600">{{ session('message') }}</p>
-                            @endif
-                            <x-jet-input-error for="iva"/>
                         </div>
                    
                          <div class="py-4">
@@ -36,7 +31,12 @@
                          </div>
                          <!--   </div>-->
                      </div>
- 
+                     <div class="py-4">
+                     @if (session()->has('message'))
+                            <p class="text-sm text-red-600">{{ session('message') }}</p>
+                            @endif
+                            <x-jet-input-error for="iva"/>
+                    </div>  
   
          <table class="w-full border">
              <thead class="border-b bg-gray-800">
@@ -58,10 +58,10 @@
              <tbody>
                  @foreach ($ivas as $iva)
                      <tr class="border-b">
-                         <td class="border-r text-gray-700 mr-3">
+                         <td class="border-r text-gray-700 mr-3 text-center">
                              {{ $iva->iva }}
                          </td>
-                         <td class="w-24 border-r px-8 py-4">
+                         <td class="w-24 border-r text-center">
                             <input type="hidden" wire:model='estado' name="estado">
                             @if ($iva->estado == 0)
 
@@ -70,10 +70,10 @@
                             <button class="py-2"><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $iva->id }})'></i></button>
                             @endif
                         </td>
-                         <td class="w-24 border-r px-8 py-4">
+                         <td class="w-24 border-r text-center">
                              <button class="py-2"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true" wire:click='edit({{ $iva->id }})'></i></button>
                          </td>
-                         <td class="w-24 border-r px-8 py-4">
+                         <td class="w-24 border-r text-center">
                              <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $iva->id }})'></i></button>
                          </td>
                      </tr>

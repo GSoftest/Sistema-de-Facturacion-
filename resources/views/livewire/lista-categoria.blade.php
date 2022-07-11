@@ -1,4 +1,4 @@
-<div>
+<div class="flex flex-col justify-center items-center">
    <!-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Categorias') }}
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-<div class="py-8 grid grid-cols-4 gap-4">
+<div class="py-8 grid grid-cols-1 gap-4">
     <div class="py-4">
         <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded"
         href="/categorias/nuevo">Nuevo</a>
