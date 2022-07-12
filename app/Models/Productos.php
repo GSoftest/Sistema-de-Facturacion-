@@ -17,15 +17,14 @@ class Productos extends Model
         'costo_unitario',
         'contenido_neto',
         'unidad',
-        'peso',
         'altura',
         'ancho',
-        'longitud',
         'description',
         'upc',
         'id_categoria',
         'exento',
-        'imagen_url'];
+        'imagen_url',
+        'id_medida'];
     
 
         

@@ -39,15 +39,14 @@
                             <div class="col-span-2 sm:col-span-2"></div>
                         </div>
 
-
                         <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
                             <div class="pb-3.5 pr-4">
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 border border-blue-500 rounded" type="submit">Guardar&nbsp;</button>
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 mt-2 border border-blue-500 rounded py-1.5" type="submit">Guardar&nbsp;</button>
                             </div>
-                            <div class="pt-3.5">
-                                <a href="/categorias" class="bg-red-500 hover:bg-red-700 text-white font-bold px-2 mt-2 border border-red-500 rounded py-1.5">Cancelar</a>
+                            <div class="">
+                            <a class="bg-red-500 hover:bg-red-700 text-white font-bold px-2 mt-2 border border-red-500 rounded py-1.5" href="{{ route('categorias') }}" type="button" >Cancelar</a>
                             </div>
-                        </div>
+                        </div> 
 
                     </div>
                     </form>

@@ -6,7 +6,6 @@ use Livewire\Component;
 use App\Models\Ivas;
 use Livewire\WithPagination;
 
-
 class Iva extends Component
 {
 
@@ -17,30 +16,44 @@ class Iva extends Component
     public function render()
     {
         $iva = Ivas::paginate(4);
+
         return view('livewire.iva', ['ivas' => $iva]);
     }
 
     public function guardar()
     {
-        $this->validate(['iva' => 'required|numeric']);
+
+        $rules = [
+            'iva' => 'required|regex:/^[\d]+([,][\d]+)?$/',
+        ];
+
+        $messages = [
+            'iva.required' => 'Obligatorio.',
+            'iva.regex' =>'El IVA con formato inválido.',
+        ];
+
+        $this->validate($rules, $messages);
 
         if ($this->iva_id) {
 
-
             $iva = Ivas::find($this->iva_id);
+            $this->iva = str_replace(",",".",$this->iva);
+
             $iva->update([
                 'iva' => $this->iva,
                 'estado' => $this->estado
             ]);
-
+            
         }else{
             $iva = Ivas::where('iva', $this->iva)->exists();
             if ($iva) {
 
                 session()->flash('message', 'El IVA ya se encuentra registrado');
-                $this->view = 'livewire.iva';
+
                 
             }else{
+                $this->iva = str_replace(",",".",$this->iva);
+
                 Ivas::create([
                 'iva' => $this->iva,
                 'estado' => 0
@@ -48,17 +61,28 @@ class Iva extends Component
             }
         }
 
-        
-        $this->default();
-
+        $this->limpiar();
+        $this->view = 'livewire.iva';
 
     }
 
     public function edit($id)
     {
+
+        $rules = [
+            'iva' => 'regex:/^[\d]+([,][\d]+)?$/',
+        ];
+
+        $messages = [
+            'iva.regex' =>'El IVA con formato inválido.',
+        ];
+
         $iva = Ivas::find($id);
         $this->iva_id = $iva->id;
-        $this->iva = $iva->iva;
+        $this->iva = number_format($iva->iva, 2);
+        $this->iva = str_replace(".",",",$this->iva);
+
+        $this->validate($rules, $messages);
         $this->view = 'livewire.iva';
     }
 
@@ -68,11 +92,10 @@ class Iva extends Component
     }
 
 
-    public function default()
+    public function limpiar()
     {
         $this->iva = '';
         $this->iva_id = '';
-        $this->view = 'livewire.iva';
     }
 
     public function activar($id)
@@ -93,7 +116,7 @@ class Iva extends Component
 
         }else{
 
-            session()->flash('message', 'Ya se encuentra un IVA activado para la venta');
+            session()->flash('message', 'Ya se encuentra un IVA activo para la venta');
         
         }
 

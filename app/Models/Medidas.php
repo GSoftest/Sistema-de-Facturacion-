@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ivas extends Model
+class Medidas extends Model
 {
+    protected $table = 'medida_unidad';
 
-    protected $table = 'porcentaje_impuesto';
-
-	protected $fillable = ['id','iva','estado'];
-    
-
+	protected $fillable = ['id','unidad'];
 }

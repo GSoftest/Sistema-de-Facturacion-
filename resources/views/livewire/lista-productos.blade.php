@@ -66,13 +66,18 @@
                              {{ $producto->unidad }}
                          </td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
-                             {{ $producto->costo_unitario }}
+                             {{str_replace(".",",",str_replace(",","",number_format($producto->costo_unitario, 2 )))}}
                          </td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
-                             {{ $producto->contenido_neto }}
+                             {{ $producto->contenido_neto }} 
+                             @foreach ($medidas as $medida)
+                               @if($producto->id_medida==$medida->id) 
+                               {{ $medida->unidad }}
+                               @endif
+                             @endforeach
                          </td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
-                             {{ $producto->precio_sin_iva }}
+                         {{str_replace(".",",",str_replace(",","",number_format($producto->precio_sin_iva, 2 )))}}
                          </td>
                          <td class="w-16 border-r text-center">
                          <a class="py-2"

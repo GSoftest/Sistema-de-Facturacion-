@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Medidas;
 use Livewire\Component;
 use App\Models\Productos;
 use Livewire\WithPagination;
@@ -12,7 +13,8 @@ class ListaProductos extends Component
     public function render()
     {
         $data = Productos::paginate(10);
-        return view('livewire.lista-productos',['productos'  => $data]);
+        $medidas = Medidas::all();
+        return view('livewire.lista-productos',['productos'  => $data,'medidas' => $medidas]);
     }
 
 

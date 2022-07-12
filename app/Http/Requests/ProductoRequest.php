@@ -25,18 +25,16 @@ class ProductoRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'precio_sin_iva' => 'required|numeric',
-            'costo_unitario' => 'required|numeric',
+            'precio_sin_iva' => 'required|regex:/^[\d]+([,][\d]+)?$/',
+            'costo_unitario' => 'required|regex:/^[\d]+([,][\d]+)?$/',
             'id_categoria' => 'required',
             'exento' => 'required',
             'description' => 'required',
-            'upc' => 'numeric|digits_between:12,12',
+            'upc' => 'nullable|numeric|digits_between:12,12',
             'contenido_neto' => 'required',
             'unidad' => 'required|numeric',
-            'peso'=> 'numeric',
-            'altura'=> 'numeric',
-            'ancho'=> 'numeric',
-            'longitud'=> 'numeric',
+            'altura'=> 'nullable|numeric',
+            'ancho'=> 'nullable|numeric',
             'imagen_url' => 'image|mimes:jpeg,png,jpg,bmp,gif,svg',
         ];
     }
@@ -45,9 +43,9 @@ class ProductoRequest extends FormRequest
         return [
             'name.required' => 'Obligatorio.',
             'precio_sin_iva.required' => 'Obligatorio.',
-            'precio_sin_iva.numeric' => 'El precio sin IVA debe ser numérico.',
+            'precio_sin_iva.regex' => 'El precio con formato inválido.',
             'costo_unitario.required' => 'Obligatorio.',
-            'costo_unitario.numeric' => 'El costo unitario debe ser numérico.',
+            'costo_unitario.regex' => 'El costo con formato inválido.',
             'id_categoria.required' => 'Obligatorio.',
             'exento.required' => 'Obligatorio.',
             'description.required' => 'Obligatorio.',
@@ -57,10 +55,8 @@ class ProductoRequest extends FormRequest
             'contenido_neto.required' => 'Obligatorio.',
             'unidad.required' => 'Obligatorio.',
             'unidad.numeric' => 'La unidad debe ser numérico.',
-            'peso.numeric'=> 'El peso debe ser numérico',
             'altura.numeric'=> 'El altura debe ser numérico',
             'ancho.numeric'=> 'El ancho debe ser numérico',
-            'longitud.numeric'=> 'El longitud debe ser numérico',
             'imagen_url.image' => 'El archivo debe ser una imagen.',
             'imagen_url.mimes' => 'La imagen debe ser jpeg,png,jpg,bmp,gif,svg.',
         ];

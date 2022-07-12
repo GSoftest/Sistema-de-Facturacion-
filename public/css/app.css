@@ -8728,6 +8728,20 @@ select {
 .prose > :where(:last-child):not(:where([class~="not-prose"] *)) {
   margin-bottom: 0;
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.pointer-events-none {
+  pointer-events: none;
+}
 .fixed {
   position: fixed;
 }
@@ -8742,6 +8756,10 @@ select {
   right: 0px;
   bottom: 0px;
   left: 0px;
+}
+.inset-y-0 {
+  top: 0px;
+  bottom: 0px;
 }
 .left-0 {
   left: 0px;
@@ -8902,6 +8920,9 @@ select {
 }
 .h-screen {
   height: 100vh;
+}
+.h-full {
+  height: 100%;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -9425,6 +9446,10 @@ select {
   padding-left: 2rem;
   padding-right: 2rem;
 }
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -9466,6 +9491,18 @@ select {
 }
 .pt-3 {
   padding-top: 0.75rem;
+}
+.pl-7 {
+  padding-left: 1.75rem;
+}
+.pr-12 {
+  padding-right: 3rem;
+}
+.pl-2 {
+  padding-left: 0.5rem;
+}
+.pr-7 {
+  padding-right: 1.75rem;
 }
 .text-left {
   text-align: left;

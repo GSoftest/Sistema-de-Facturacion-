@@ -23,7 +23,7 @@
                    <!--  <div class="col-span-3 sm:col-span-3">-->
                         <div>
                             <label for="iva" class="block text-sm font-medium text-gray-700">IVA</label>
-                            <input type="text" name="iva" id="iva" wire:model='iva' autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" name="iva" id="iva" wire:model='iva' autocomplete="given-name" maxlength="5" placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                    
                          <div class="py-4">
@@ -59,7 +59,7 @@
                  @foreach ($ivas as $iva)
                      <tr class="border-b">
                          <td class="border-r text-gray-700 mr-3 text-center">
-                             {{ $iva->iva }}
+                             {{str_replace(".",",",number_format($iva->iva, 2 )) }}
                          </td>
                          <td class="w-24 border-r text-center">
                             <input type="hidden" wire:model='estado' name="estado">

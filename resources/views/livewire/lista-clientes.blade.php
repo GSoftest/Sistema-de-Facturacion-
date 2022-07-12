@@ -26,7 +26,7 @@
     </div>
 </div>
 
-            <table class="w-full border table-fixed">
+            <table class="w-full border m:table-fixed">
              <thead class="border-b bg-gray-800">
              <tr>
                      <th scope="col" class="text-sm font-medium text-white border-r">
