@@ -24,6 +24,7 @@ class ServicioTecnico extends Component
     $recibo,
     $descripcion_equipo,
     $fecha,
+    $item,
     $factura;
 
 
@@ -31,12 +32,23 @@ class ServicioTecnico extends Component
     {
 
         $data = Ivas::All();
+        if($this->id_iva!=''){
+            foreach($data as $item){
+                if($this->id_iva==$item['id']){
+                    $this->MontoConIva($item['iva']);
+                }
+            }
+        }
+
         return view('livewire.servicio-tecnico',
         ['ivas'  => $data,
         'monto_con_iva' => 0,
         'monto_pendiente' => 0,
         'fecha_servicio' => date('d/m/Y'),
     ]);
+
+
+
     }
 
     public function Buscar()
@@ -51,6 +63,7 @@ class ServicioTecnico extends Component
     $this->name=  $cliente[0]->name;
     $this->telefono =  $cliente[0]->telefono;
     $this->direccion =  $cliente[0]->direccion;
+    $this->correo =  $cliente[0]->correo;
 
      $this->view = 'livewire.servicio-tecnico';
     }else{
@@ -63,19 +76,42 @@ class ServicioTecnico extends Component
     }
     
     public function change(){
+
        if ($this->id_iva != '') {
+
+
+        $rules = [
+            'monto_sin_iva' => 'required|regex:/^[\d]+(\,[\d]{1,2})$/',
+        ];
+
+        $messages = [
+            'monto_sin_iva.required' => 'Obligatorio.',
+            'monto_sin_iva.regex' =>'Formato válido 0,00',
+        ];
+
+        $this->validate($rules, $messages);
+        
         $iva = Ivas::find($this->id_iva);
+
             if ($this->monto_sin_iva != '' && $this->monto_sin_iva != 0 ) {
-                $monto = $this->monto_sin_iva;
-                $monto_con_iva = ($iva->iva*$monto)/100;
-                $this->monto_con_iva =   $monto+$monto_con_iva;
+                $this->MontoConIva($iva->iva);
             }else{
                 $this->monto_con_iva =  $this->monto_sin_iva;
             }
+
         }else{
             $this->monto_con_iva =  $this->monto_sin_iva;
         }
         $this->view = 'livewire.servicio-tecnico';
+
+    }
+
+    public function MontoConIva($iva){
+        $monto = $this->monto_sin_iva;
+        $monto = str_replace(",",".",$monto);
+        $monto_con_iva = ($iva*$monto)/100;
+        $this->monto_con_iva = number_format($monto+$monto_con_iva, 2);
+        $this->monto_con_iva = str_replace(".",",",$this->monto_con_iva);
     }
 
 
