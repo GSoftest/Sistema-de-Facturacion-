@@ -27,7 +27,7 @@
                         </div>
                    
                          <div class="py-4">
-                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded" wire:click='guardar'>Guardar</button>
+                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded w-20" wire:click='guardar'>Guardar</button>
                          </div>
                          <!--   </div>-->
                      </div>

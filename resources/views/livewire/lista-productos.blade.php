@@ -21,7 +21,7 @@
 
                 <div class="pt-8 grid grid-cols-4 gap-4 justify-items-stretc">
                     <div class="py-4">
-                    <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded" href="/productos/nuevo">Nuevo</a>
+                    <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded w-20" href="{{ route('productosN') }}">Nuevo</a>
                     </div>
                 </div>
 

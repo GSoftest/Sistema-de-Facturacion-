@@ -18,7 +18,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\CajaController;
 use App\Http\Controllers\FacturaVentaController;
-
+use App\Http\Controllers\ScraperController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,12 @@ Route::get('/', function () {
   return Redirect::route('login');
 });
 
+
+
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+
+
+   Route::get('/scraper',[ScraperController::class, 'scraper'])->name('scraper');
 
    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -68,7 +73,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
    Route::get('/productos', ListaProductos::class)->name('productos');
 
    Route::controller(ProductosController::class)->group(function(){
-    Route::get('/productos/nuevo', 'index');
+    Route::get('/productos/nuevo', 'index')->name('productosN');
      Route::post('/productos/save', 'create')->name('nuevoproductos');
      Route::get('/productos/{id}', 'show');
      Route::post('/productos/editar', 'editar')->name('editarproductos');

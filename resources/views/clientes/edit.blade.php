@@ -52,7 +52,7 @@
 
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div class="col-span-2 sm:col-span-2"> 
-                                <label for="direccion" class="block text-sm font-medium text-gray-700">Direccion</label>
+                                <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
                                 <textarea type="text" name="direccion" id="direccion" wire:model='direccion' autocomplete="given-direccion" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{$data->direccion}}</textarea>
                                 <x-jet-input-error for="direccion"/>
                             </div>
@@ -62,10 +62,10 @@
 
                         <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
                             <div class="pb-3.5 pr-4">
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 mt-2 border border-blue-500 rounded py-1.5" type="submit">Guardar&nbsp;</button>
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 mt-2 border border-blue-500 rounded py-1.5 w-20" type="submit">Guardar</button>
                             </div>
                             <div class="">
-                            <a class="bg-red-500 hover:bg-red-700 text-white font-bold px-2 mt-2 border border-red-500 rounded py-1.5" href="{{ route('clientes') }}" type="button" >Cancelar</a>
+                            <a class="bg-red-500 hover:bg-red-700 text-white font-bold px-2 mt-2 border border-red-500 rounded py-1.5 w-20" href="{{ route('clientes') }}" type="button" >Cancelar</a>
                             </div>
                         </div>
                     </div>

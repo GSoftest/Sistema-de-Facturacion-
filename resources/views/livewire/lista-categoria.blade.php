@@ -21,8 +21,8 @@
 
 <div class="py-8 grid grid-cols-1 gap-4">
     <div class="py-4">
-        <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded"
-        href="/categorias/nuevo">Nuevo</a>
+        <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded w-20"
+         href="{{ route('categoriasaNuevo') }}" >Nuevo</a>
     </div>
 </div>
 

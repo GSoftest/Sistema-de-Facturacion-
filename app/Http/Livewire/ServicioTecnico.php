@@ -40,6 +40,23 @@ class ServicioTecnico extends Component
             }
         }
 
+
+        if ($this->monto_con_iva != '' && $this->monto_con_iva != 0 ) {
+            $monto_pendiente = ($this->monto_con_iva-$this->abono);
+            $this->monto_pendiente =  $monto_pendiente;
+    
+            if($this->monto_pendiente == 0){
+                $factura = true;
+            }else{
+                $factura = false;
+            }
+                $this->factura = $factura;
+    
+    
+            $this->view = 'livewire.servicio-tecnico';
+            }
+
+
         return view('livewire.servicio-tecnico',
         ['ivas'  => $data,
         'monto_con_iva' => 0,

@@ -125,7 +125,7 @@
                             <div></div>
                             <div>
                                 <label for="abono" class="block text-sm font-medium text-gray-700">Abono Bs.</label>
-                                <input type="text" name="abono" id="abono"  wire:model="abono" wire:change="calculo()"  placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" name="abono" id="abono"  wire:model="abono" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                             </div>
                             
                         </div>
