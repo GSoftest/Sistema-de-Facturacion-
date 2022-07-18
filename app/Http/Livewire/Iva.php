@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Ivas;
+use App\Models\Tasa_BCV;
 use Livewire\WithPagination;
 
 class Iva extends Component
@@ -45,6 +46,7 @@ class Iva extends Component
             ]);
             
         }else{
+            $this->iva = str_replace(",",".",$this->iva);
             $iva = Ivas::where('iva', $this->iva)->exists();
             if ($iva) {
 
@@ -81,6 +83,7 @@ class Iva extends Component
         $this->iva_id = $iva->id;
         $this->iva = number_format($iva->iva, 2);
         $this->iva = str_replace(".",",",$this->iva);
+        $this->estado = $iva->estado;
 
         $this->validate($rules, $messages);
         $this->view = 'livewire.iva';
@@ -113,6 +116,11 @@ class Iva extends Component
     
     
             $this->estado = $iva->estado;
+
+            $bcv = Tasa_BCV::all();
+            $bcv->update([
+                'estado' => 0
+            ]);
 
         }else{
 

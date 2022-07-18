@@ -81,9 +81,9 @@
              </tbody>
          </table>
      
-         <div class="mt-4">
-                        {{ $ivas->links() }}
-               </div>
+        <div class="mt-4">
+            {{ $ivas->links() }}
+        </div>
 
      </div>
         </div>

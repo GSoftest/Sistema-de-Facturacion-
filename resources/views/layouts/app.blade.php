@@ -30,11 +30,23 @@
             @if (isset($header))
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 grid grid-cols-2 gap-1">
-                        <div class="grid grid-cols-4 gap-1">
-                            <div class="flex justify-end">
-                                <img src="{{URL::asset('app/logo_bcv.jpg')}}" class="flex-shrink-0 h-10"/>
+                        <div class="grid grid-cols-3 gap-1">
+                            <div class="flex items-center">
+                                <div class="px-1"><img src="{{URL::asset('app/logo_bcv.jpg')}}" class="flex-shrink-0 h-10"/></div>
+                                <div><label><strong>{{$tasa_BCV}}</strong></label></div>
+
                             </div>
-                            <div class="flex items-center"><label><strong>{{$tasa_del_dia}}</strong></label></div>
+                            <div class="flex justify-start">
+                            </div>
+                                <div></div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-1">
+                            <div></div>
+                            <div></div>
+                        <div class="flex items-center justify-end">
+                            <label><strong>Tasa activa:</strong></label>
+                        </div>
+                          <div class="flex items-center"><label><strong>USD {{str_replace(".",",",$tasa_del_dia)}}</strong></label></div>
                         </div>
                  <!--      {{ $header }}-->
                     </div>

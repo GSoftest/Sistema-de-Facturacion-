@@ -19,6 +19,7 @@ use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\CajaController;
 use App\Http\Controllers\FacturaVentaController;
 use App\Http\Controllers\ScraperController;
+use App\Http\Livewire\Tasa;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,13 +92,21 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
   });
 
 
+  
+     /************Ventas*************/
+     Route::get('/caja', Caja::class)->name('caja');
+
+
+
+        /************Tasa************ */
+   Route::get('/tasa', Tasa::class)->name('tasa');
+
+
     /*************Sin configurar***** */
      /************PROVEEDORES*************/
      Route::get('/proveedores', ListaProductos::class)->name('proveedores');
      Route::get('/proveedores/nuevo', function () {return view('proveedores.create');})->name('proveedoresNuevo');
 
 
-     /************Ventas*************/
-     Route::get('/caja', Caja::class)->name('caja');
 
 });
