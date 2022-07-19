@@ -15,7 +15,7 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div>
+            <div class="pt-8">
                 <x-jet-label for="email" value="{{ __('Correo') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
@@ -25,13 +25,13 @@
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
-            <div class="flex items-center justify-center mt-4">
+            <div class="flex items-center justify-center mt-4 pt-8">
             <x-jet-button class="ml-4">
                     {{ __('Ingresar') }}
                 </x-jet-button>
             </div>
 
-            <div class="flex mt-4 justify-items-stretc grid grid-cols-2 gap-2">
+            <div class="flex mt-4 justify-items-stretc grid grid-cols-2 gap-2 pt-8">
             <div>
 
                 @if (Route::has('password.request'))
