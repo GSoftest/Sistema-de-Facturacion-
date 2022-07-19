@@ -30,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
         $tasadeldiaBCV = Tasa_BCV::all();
         $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
 
+        
+
         if($tasadeldiaotros){
             View::share('tasa_del_dia', $tasadeldiaotros->tasa);
         }else{

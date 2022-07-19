@@ -135,7 +135,6 @@ class Tasa extends Component
             ]);
 
             $this->estatus = $tasa->estatus;
-            session()->flash('message', 'Al activar una tasa desactiva la tasa del BCV');
         }else{
 
             session()->flash('message', 'Ya se encuentra una tasa activa');

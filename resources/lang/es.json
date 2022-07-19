@@ -215,7 +215,7 @@
     "Email Addresses": "Correos electrónicos",
     "Email Password Reset Link": "Enviar enlace para restablecer contraseña",
     "Enable": "Habilitar",
-    "Ensure your account is using a long, random password to stay secure.": "Asegúrese que su cuenta esté usando una contraseña larga y aleatoria para mantenerse seguro.",
+    "Ensure your account is using a long, random password to stay secure.": "Asegúrese que su cuenta este usando una contraseña mayor a 8 caracteres para mantenerse seguro",
     "Equatorial Guinea": "Guinea Ecuatorial",
     "Eritrea": "Eritrea",
     "Error": "Error",

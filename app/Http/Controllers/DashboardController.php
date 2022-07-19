@@ -24,8 +24,15 @@ class DashboardController extends Controller
        $client = new Client();
        $crawler = $client->request('GET', $url_to_traverse);
        $tasa = $crawler->filter('#dolar')->first()->text();
-       $request->tasa = $tasa;
+       $fecha = $crawler->filter('div.pull-right.dinpro.center span.date-display-single')->first()->attr('content');
+       $fecha = explode('T',$fecha);
+       $fechaActual = explode('T',date(DATE_ATOM));
+
+        $request->tasa = $tasa;
         $tasadeldia = Tasa_BCV::all();
+
+        if($fecha[0] == $fechaActual[0]){
+            
         if(count($tasadeldia) == 0){
             $Tasa_BCV = new Tasa_BCV();
             $Tasa_BCV->tasa = $request->tasa ;
@@ -35,7 +42,7 @@ class DashboardController extends Controller
            $data->tasa = $request->tasa;
            $data->save();
         }
-
+      }
 
 
        $data = [
