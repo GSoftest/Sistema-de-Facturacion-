@@ -109,13 +109,13 @@
                             <div></div>
                             <div>
                                 <label for="monto_con_iva" class="block text-sm font-medium text-gray-700">Monto Total Bs.</label>
-                                <input type="text" name="monto_con_iva" id="monto_con_iva" value="{{ $monto_con_iva }}"  placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" name="monto_con_iva" id="monto_con_iva" value="{{ $monto_con_iva }}"  placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
                             </div>
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
-                                <label for="monto_con_iva" class="block text-sm font-medium text-gray-700">Monto Total $</label>
-                                <input type="text" name="monto_con_iva" id="monto_con_iva" value="{{ $monto_con_iva }}" placeholder="0,00"  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <label for="monto_con_iva_dolar" class="block text-sm font-medium text-gray-700">Monto Total $</label>
+                                <input type="text" name="monto_con_iva_dolar" id="monto_con_iva_dolar" value="{{ $monto_con_iva_dolar }}" placeholder="0,00"  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
                             </div>
                         </div>
                     </div> 
@@ -131,8 +131,8 @@
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
-                            <label for="abono" class="block text-sm font-medium text-gray-700">Abono $</label>
-                            <input type="text" name="abono" id="abono"  wire:model="abono" wire:change="calculo()"  placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                            <label for="abono_dolar" class="block text-sm font-medium text-gray-700">Abono $</label>
+                            <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                             </div>
                         </div>
                     </div>
@@ -143,13 +143,13 @@
                             <div></div>
                             <div>
                                 <label for="monto_pendiente" class="block text-sm font-medium text-gray-700">Monto Pendiente Bs.</label>
-                                <input type="text" name="monto_pendiente" id="monto_pendiente" wire:model="monto_pendiente" placeholder="0,00" value="{{ $monto_pendiente }}"   autocomplete="given-monto_pendiente" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" name="monto_pendiente" id="monto_pendiente" wire:model="monto_pendiente" placeholder="0,00" value="{{ $monto_pendiente }}"   autocomplete="given-monto_pendiente" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
                             </div>
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
-                            <label for="abono" class="block text-sm font-medium text-gray-700">Monto Pendiente $</label>
-                            <input type="text" name="monto_pendiente" id="monto_pendiente" wire:model="monto_pendiente" placeholder="0,00" value="{{ $monto_pendiente }}"   autocomplete="given-monto_pendiente" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                            <label for="monto_pendiente_dolar" class="block text-sm font-medium text-gray-700">Monto Pendiente $</label>
+                            <input type="text" name="monto_pendiente_dolar" id="monto_pendiente_dolar" wire:model="monto_pendiente_dolar" placeholder="0,00" value="{{ $monto_pendiente }}"   autocomplete="given-monto_pendiente" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
                             </div>
                         </div>
                     </div>
