@@ -9,6 +9,7 @@ use App\Models\Clientes;
 use Illuminate\Http\Request;
 use Goutte\Client;
 use App\Models\Tasa_BCV;
+use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
 {
@@ -21,8 +22,13 @@ class DashboardController extends Controller
 
 
        $url_to_traverse = 'http://www.bcv.org.ve/';
+    //$url_to_traverse = 'http://ffdgbdfgbfgb.com/';
        $client = new Client();
+     
        $crawler = $client->request('GET', $url_to_traverse);
+
+
+
        $tasa = $crawler->filter('#dolar')->first()->text();
        $fecha = $crawler->filter('div.pull-right.dinpro.center span.date-display-single')->first()->attr('content');
        $fecha = explode('T',$fecha);

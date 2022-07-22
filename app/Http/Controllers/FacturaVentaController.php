@@ -15,13 +15,12 @@ class FacturaVentaController extends Controller
 
     public function imprimirFactura(Request $request){
 
-
         $Servicio_Tecnico = new Servicio_Tecnico();
         $Servicio_Tecnico->id_recibo = 1;
         $Servicio_Tecnico->id_cliente = $request->id_cliente;
         $Servicio_Tecnico->id_iva = $request->id_iva;
         $Servicio_Tecnico->descripcion_equipo = $request->descripcion_equipo;
-        $Servicio_Tecnico->fecha = $request->fecha;
+        $Servicio_Tecnico->fecha = $request->fecha_servicio;
         $Servicio_Tecnico->monto_sin_iva = $request->monto_sin_iva;
         $Servicio_Tecnico->monto_con_iva = $request->monto_con_iva;
         $Servicio_Tecnico->abono = $request->abono;
@@ -43,7 +42,10 @@ class FacturaVentaController extends Controller
      //  $Recibo->save();
     }
 
-    $montoIva = ($request->monto_con_iva-$request->monto_sin_iva);
+    $monto_con_iva = str_replace(",",".",$request->monto_con_iva);
+    $monto_sin_iva = str_replace(",",".",$request->monto_sin_iva);
+
+    $montoIva = ($monto_con_iva-$monto_sin_iva);
     $porcentajeIva = Ivas::find($request->id_iva);
     $porcentajeIva = $porcentajeIva->iva;
 

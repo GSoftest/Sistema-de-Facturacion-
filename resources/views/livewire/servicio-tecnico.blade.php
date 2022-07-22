@@ -34,10 +34,11 @@
 
                         <div class="py-2 justify-self-end  w-3/4 md:flex md:items-center">
                                 <div>
-                                <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha:</label>
+                                <label for="fecha_servicio" class="block text-sm font-medium text-gray-700">Fecha:</label>
                                 </div>
                                 <div>
-                                <input type="text" name="fecha" id="fecha" wire:model='fecha' value="{{$fecha_servicio}}" placeholder="{{$fecha_servicio}}" class="appearance-none bg-transparent border-none w-full text-gray-700 text-sm font-medium mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+                                <label class="block text-sm font-medium text-gray-700">{{$fecha_servicio}}</label>
+                                <input type="hidden" name="fecha_servicio" id="fecha_servicio" value="{{$fecha_servicio}}">
                                 </div>
                             </div>
                      </div>
@@ -55,16 +56,16 @@
                         <div>
                             <input type="hidden" name="id_cliente" id="id_cliente" wire:model='id_cliente'>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social</label>
-                            <input type="text" name="name" id="name" wire:model='name' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
+                            <input type="text" name="name" id="name" wire:model='name' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
-                                <input type="text" name="telefono" id="telefono"  wire:model='telefono' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
+                                <input type="text" name="telefono" id="telefono"  wire:model='telefono' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
                             </div>
                             <div>
                                 <label for="correo" class="block text-sm font-medium text-gray-700">Correo</label>
-                                <input type="text" name="correo" id="correo"  wire:model='correo' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
+                                <input type="text" name="correo" id="correo"  wire:model='correo' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
                             </div>
                         </div>
                     </div>
@@ -72,7 +73,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div class="py-2">
                         <label for="description" class="block text-sm font-medium text-gray-700">Dirección</label>
-                        <textarea type="text" name="direccion" id="direccion"  wire:model='direccion' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 resize-y rounded-md" required disabled></textarea>
+                        <textarea type="text" name="direccion" id="direccion"  wire:model='direccion' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 resize-y rounded-md" required readonly></textarea>
                         </div>
                     </div>
 
@@ -87,7 +88,7 @@
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                                 <label for="monto_sin_iva" class="block text-sm font-medium text-gray-700">Monto Bs.</label>
-                                <input type="text" name="monto_sin_iva" id="monto_sin_iva" wire:model="monto_sin_iva" placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" onkeyup="myFunction()" name="monto_sin_iva" id="monto_sin_iva" wire:model="monto_sin_iva" placeholder="0,00"   class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                                 <x-jet-input-error for="monto_sin_iva"/>
                             </div>
 
@@ -109,13 +110,15 @@
                             <div></div>
                             <div>
                                 <label for="monto_con_iva" class="block text-sm font-medium text-gray-700">Monto Total Bs.</label>
-                                <input type="text" name="monto_con_iva" id="monto_con_iva" value="{{ $monto_con_iva }}"  placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
+                                <input type="text" name="monto_con_iva" id="monto_con_iva" wire:model="monto_con_iva"  placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
                             </div>
+
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                                 <label for="monto_con_iva_dolar" class="block text-sm font-medium text-gray-700">Monto Total $</label>
-                                <input type="text" name="monto_con_iva_dolar" id="monto_con_iva_dolar" value="{{ $monto_con_iva_dolar }}" placeholder="0,00"  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
+                                <input type="text" name="monto_con_iva_dolar" id="monto_con_iva_dolar"  wire:model="monto_con_iva_dolar" placeholder="0,00" autocomplete="given-monto_con_iva_dolar" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
+                         
                             </div>
                         </div>
                     </div> 
@@ -125,14 +128,14 @@
                             <div></div>
                             <div>
                                 <label for="abono" class="block text-sm font-medium text-gray-700">Abono Bs.</label>
-                                <input type="text" name="abono" id="abono"  wire:model="abono" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                             
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                             <label for="abono_dolar" class="block text-sm font-medium text-gray-700">Abono $</label>
-                            <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                            <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                         </div>
                     </div>
@@ -143,13 +146,13 @@
                             <div></div>
                             <div>
                                 <label for="monto_pendiente" class="block text-sm font-medium text-gray-700">Monto Pendiente Bs.</label>
-                                <input type="text" name="monto_pendiente" id="monto_pendiente" wire:model="monto_pendiente" placeholder="0,00" value="{{ $monto_pendiente }}"   autocomplete="given-monto_pendiente" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
+                                <input type="text" name="monto_pendiente"  wire:model="monto_pendiente" placeholder="0,00" autocomplete="given-monto_pendiente" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
                             </div>
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                             <label for="monto_pendiente_dolar" class="block text-sm font-medium text-gray-700">Monto Pendiente $</label>
-                            <input type="text" name="monto_pendiente_dolar" id="monto_pendiente_dolar" wire:model="monto_pendiente_dolar" placeholder="0,00" value="{{ $monto_pendiente }}"   autocomplete="given-monto_pendiente" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required disabled>
+                            <input type="text" name="monto_pendiente_dolar" id="monto_pendiente_dolar" wire:model="monto_pendiente_dolar" autocomplete="given-monto_pendiente_dolar" placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>  
                             </div>
                         </div>
                     </div>
@@ -165,10 +168,12 @@
                     <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
                         <input type="hidden" name="factura" id="factura" value="{{$factura}}">
                         <div class="pb-3.5 pr-4">
-                            @if($factura == true)
+                            @if($factura == 'true')
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="submit">Imprimir factura</button>
-                            @else
+                            @elseif($factura == 'false')
                                 <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 mt-2  border border-green-500 rounded py-1.5" type="submit">Imprimir Recibo</button>
+                            @else
+                                <p class="text-sm text-red-600">El abono supera el monto total</p>
                             @endif
                         </div>
                     </div> 
@@ -180,3 +185,14 @@
         </div>
     </div>
 </div>
+
+<script>
+function myFunction() {
+  var monto_sin_iva = document.getElementById("monto_sin_iva");
+  var abono = document.getElementById("abono");
+  var abono_dolar = document.getElementById("abono_dolar");
+  monto_sin_iva.value = monto_sin_iva.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');
+  abono.value = abono.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
+  abono_dolar.value = abono_dolar.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
+}
+</script>

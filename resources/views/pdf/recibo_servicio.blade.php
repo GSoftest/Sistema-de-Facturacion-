@@ -25,6 +25,7 @@
         <div><span>TELEFONO</span>{{$data['telefono']}}</div>
         <div><span>DIRECCION</span>{{$data['direccion']}}</div>
         <div><span>N° RECIBO</span></div>
+        <div><span>FECHA</span>{{$data['fecha']}}</div>
       </div>
     </header>
     <main>
