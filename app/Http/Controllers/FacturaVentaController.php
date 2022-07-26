@@ -8,6 +8,7 @@ use App\Models\Servicio_Tecnico;
 use App\Models\Recibo;
 use App\Models\Facturas_servicios;
 use App\Models\Ivas;
+use Illuminate\Support\Facades\DB;
 
 class FacturaVentaController extends Controller
 {
@@ -20,26 +21,52 @@ class FacturaVentaController extends Controller
         $Servicio_Tecnico->id_cliente = $request->id_cliente;
         $Servicio_Tecnico->id_iva = $request->id_iva;
         $Servicio_Tecnico->descripcion_equipo = $request->descripcion_equipo;
-        $Servicio_Tecnico->fecha = $request->fecha_servicio;
         $Servicio_Tecnico->monto_sin_iva = $request->monto_sin_iva;
         $Servicio_Tecnico->monto_con_iva = $request->monto_con_iva;
         $Servicio_Tecnico->abono = $request->abono;
         $Servicio_Tecnico->monto_pendiente = $request->monto_pendiente;
 
-     //   $Servicio_Tecnico->save();
+        $date = str_replace('/', '-', $request->fecha_servicio);
+        $Servicio_Tecnico->fecha = date("Y-m-d",strtotime( $date ));
 
+        //$Servicio_Tecnico->save();
 
-     if($request->factura === '1'){
-        $Recibo = new Facturas_servicios();
-        $Recibo->numero_factura = 000001;
-        $Recibo->pdf = 'Factura.pdf';
-        //$Recibo->save();
+     if($request->factura === 'true'){
+        $ultimaFactura = Facturas_servicios::first();
+       
+
+        $Factura = new Facturas_servicios();
+        if($ultimaFactura == null){
+            $Factura->numero_factura = 1;
+            $Factura->pdf = 'Factura'.$Factura->numero_factura.'.pdf';
+        }else{
+            $Factura->numero_factura = $ultimaFactura->numero_factura+1;
+            $Factura->pdf = 'Factura'.$Factura->numero_factura.'.pdf';
+        }
+        
+    
+       // $Factura->save();
+        $facturanumero = Facturas_servicios::selectRaw('numero_factura, lpad(numero_factura, 15, 0)')->where('pdf',$Factura->pdf)->first();
+        $facturanumero = $facturanumero['lpad(numero_factura, 15, 0)'];
+        $recibonumero = '';
 
      }else{
+        $ultimaRecibo = Recibo::first();
+
        $Recibo = new Recibo();
-       $Recibo->recibo = 0000001;
-       $Recibo->pdf = 'Recibo.pdf';
-     //  $Recibo->save();
+
+       if($ultimaRecibo == null){
+        $Recibo->recibo = 1;
+        $Recibo->pdf = 'Recibo'.$Recibo->recibo.'.pdf';
+        }else{
+            $Recibo->recibo = $ultimaRecibo->recibo+1;
+            $Recibo->pdf = 'Recibo'.$Recibo->recibo.'.pdf';
+        }
+
+       $Recibo->save();
+       $recibonumero = Recibo::selectRaw('recibo, lpad(recibo, 15, 0)')->where('pdf',$Recibo->pdf)->first();
+       $recibonumero = $recibonumero['lpad(recibo, 15, 0)'];
+       $facturanumero = '';
     }
 
     $monto_con_iva = str_replace(",",".",$request->monto_con_iva);
@@ -48,7 +75,8 @@ class FacturaVentaController extends Controller
     $montoIva = ($monto_con_iva-$monto_sin_iva);
     $porcentajeIva = Ivas::find($request->id_iva);
     $porcentajeIva = $porcentajeIva->iva;
-
+    $pdf = app('dompdf.wrapper');
+   
 
     $data = [
         'fecha' => $request->fecha_servicio,
@@ -61,24 +89,23 @@ class FacturaVentaController extends Controller
         'monto_con_iva' => $request->monto_con_iva,
         'abono' => $request->abono,
         'monto_pendiente' => $request->monto_pendiente,
-        'factura' => $request->factura,
         'montoIva' => $montoIva,
+        'factura' => $facturanumero,
+        'recibo' => $recibonumero,
         'porcentajeIva' => $porcentajeIva,
     ];
 
-
-    $pdf = app('dompdf.wrapper');
-
-
-    if($request->factura === '1'){
+    if($request->factura === 'true'){
         $pdf->loadView('pdf.factura_servicio',compact('data'));
+      //  $pdf->save(public_path('app/archivos/pdf/facturas/') .$Factura->pdf);
     }else{
         $pdf->loadView('pdf.recibo_servicio',compact('data'));
+        $pdf->save(public_path('app/archivos/pdf/facturas/') .$Recibo->pdf);
     }
-    // $pdf->save(public_path('app/archivos/pdf/facturas/') ."Factura.pdf");
 
         $pdf->render();
-        return $pdf->stream('prueba.pdf',['attachment' => true]);
+        return response()->file(public_path('app/archivos/pdf/facturas/') .$Recibo->pdf);
+       // return $pdf->stream('prueba.pdf',['attachment' => true]);
 
     }
 

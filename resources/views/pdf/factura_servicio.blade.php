@@ -9,9 +9,6 @@
 </head>
 <body>
     <header class="clearfix">
-      <div id="logo">
-        <img src="{{ URL::asset('/app/archivos/logo.jpg'); }}">
-      </div>
       <h1>Factura</h1>
       <div id="company" class="clearfix">
         <div>Company Name</div>
@@ -24,7 +21,8 @@
         <div><span>CI/RIF</span> {{$data['identificacion']}}</div>
         <div><span>TELEFONO</span>{{$data['telefono']}}</div>
         <div><span>DIRECCION</span>{{$data['direccion']}}</div>
-        <div><span>N° FACTURA</span></div>
+        <div><span>N° FACTURA</span>{{$data['factura']}}</div>
+        <div><span>FECHA</span>{{$data['fecha']}}</div>
       </div>
     </header>
     <main>

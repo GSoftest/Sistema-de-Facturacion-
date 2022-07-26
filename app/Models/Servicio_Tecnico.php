@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Servicio_Tecnico extends Model
 {
 
-    protected $table = 'sevicio_tecnicos';
+    protected $table = 'servicio_tecnicos';
 
 	protected $fillable = [
         'id',
