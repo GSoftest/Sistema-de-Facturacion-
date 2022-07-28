@@ -20,12 +20,12 @@
         <div><a href="mailto:company@example.com">company@example.com</a></div>
       </div>
       <div id="project">
-        <div><span>CLIENTE</span> {{$data['name']}}</div>
-        <div><span>CI/RIF</span> {{$data['identificacion']}}</div>
-        <div><span>TELEFONO</span>{{$data['telefono']}}</div>
-        <div><span>DIRECCION</span>{{$data['direccion']}}</div>
-        <div><span>N° RECIBO</span>{{$data['recibo']}}</div>
-        <div><span>FECHA</span>{{$data['fecha']}}</div>
+        <div><span>CLIENTE</span> {{$datapdf['name']}}</div>
+        <div><span>CI/RIF</span> {{$datapdf['identificacion']}}</div>
+        <div><span>TELEFONO</span>{{$datapdf['telefono']}}</div>
+        <div><span>DIRECCION</span>{{$datapdf['direccion']}}</div>
+        <div><span>N° RECIBO</span>{{$datapdf['recibo']}}</div>
+        <div><span>FECHA</span>{{$datapdf['fecha_servicio']}}</div>
       </div>
     </header>
     <main>
@@ -40,28 +40,28 @@
         <tbody>
           <tr>
             <td class="service">Servicio técnico</td>
-            <td class="desc">{{$data['descripcion_equipo']}}</td>
-            <td class="unit">{{$data['monto_sin_iva']}}</td>
+            <td class="desc">{{$datapdf['descripcion_equipo']}}</td>
+            <td class="unit">{{$datapdf['monto_sin_iva']}}</td>
           </tr>
           <tr>
             <td colspan="2">SUBTOTAL</td>
-            <td class="total">{{$data['monto_sin_iva']}}</td>
+            <td class="total">{{$datapdf['monto_sin_iva']}}</td>
           </tr>
           <tr>
-            <td colspan="2">IVA {{$data['porcentajeIva']}}%</td>
-            <td class="total">{{$data['montoIva']}}</td>
+            <td colspan="2">IVA {{$datapdf['porcentajeIva']}}%</td>
+            <td class="total">{{$datapdf['montoIva']}}</td>
           </tr>
           <tr>
             <td colspan="2" class="grand total">TOTAL</td>
-            <td class="grand total">{{$data['monto_con_iva']}}</td>
+            <td class="grand total">{{$datapdf['monto_con_iva']}}</td>
           </tr>
           <tr>
             <td colspan="2" class="grand">ABONO</td>
-            <td class="grand total">{{$data['abono']}}</td>
+            <td class="grand total">{{$datapdf['abono']}}</td>
           </tr>
           <tr>
             <td colspan="2">MONTO PENDIENTE</td>
-            <td class="total">{{$data['monto_pendiente']}}</td>
+            <td class="total">{{$datapdf['monto_pendiente']}}</td>
           </tr>
         </tbody>
       </table>

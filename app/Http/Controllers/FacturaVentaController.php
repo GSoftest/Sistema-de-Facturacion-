@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Models\Clientes;
 use Illuminate\Http\Request;
 use App\Models\Servicio_Tecnico;
 use App\Models\Recibo;
 use App\Models\Facturas_servicios;
 use App\Models\Ivas;
+use Hamcrest\Core\Every;
 use Illuminate\Support\Facades\DB;
+use Livewire\Event;
 
 class FacturaVentaController extends Controller
 {
@@ -51,9 +54,8 @@ class FacturaVentaController extends Controller
         $recibonumero = '';
 
      }else{
-        $ultimaRecibo = Recibo::first();
-
-       $Recibo = new Recibo();
+        $ultimaRecibo = Recibo::orderBy('recibo', 'desc')->first();
+        $Recibo = new Recibo();
 
        if($ultimaRecibo == null){
         $Recibo->recibo = 1;
@@ -104,9 +106,13 @@ class FacturaVentaController extends Controller
     }
 
         $pdf->render();
-        return response()->file(public_path('app/archivos/pdf/facturas/') .$Recibo->pdf);
-       // return $pdf->stream('prueba.pdf',['attachment' => true]);
+        $request['descripcion_equipo'] = 'hola';
+      //  $request->merge(array('descripcion_equipo' => "hola"));
+      /*  Input::replace(['descripcion_equipo' => 'hola']);*/
 
+       // dd($request);
+        return redirect()->back();
+        //->$pdf->stream('prueba.pdf',['attachment' => true]);    
     }
 
 

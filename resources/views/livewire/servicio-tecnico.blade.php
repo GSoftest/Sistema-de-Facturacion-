@@ -8,8 +8,9 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
         <div class="mt-5 md:mt-0 md:col-span-2">
             <div class="shadow overflow-hidden sm:rounded-md">
+                <!-- <form action="{{ route('imprimirFactura')  }}" method="post" id='formulario' enctype="multipart/form-data">-->
   
-                    <form action="{{ route('imprimirFactura')  }}" method="post" enctype="multipart/form-data" target="_blank">
+                     <form wire:submit.prevent="submit" method="post" enctype="multipart/form-data" target="_blank">
                     @csrf
                     <div class="px-4 py-5 bg-white sm:p-6">
                 
@@ -38,7 +39,7 @@
                                 </div>
                                 <div>
                                 <label class="block text-sm font-medium text-gray-700">{{$fecha_servicio}}</label>
-                                <input type="hidden" name="fecha_servicio" id="fecha_servicio" value="{{$fecha_servicio}}">
+                                <input type="hidden" name="fecha_servicio" id="fecha_servicio" value="{{$fecha_servicio}}" wire:model='fecha_servicio'>
                                 </div>
                             </div>
                      </div>
@@ -80,7 +81,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div class="py-2">
                         <label for="descripcion_equipo" class="block text-sm font-medium text-gray-700">Descripción del Equipo y Falla</label>
-                        <textarea type="text" name="descripcion_equipo" id="descripcion_equipo"  wire:model='descripcion_equipo' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 resize-y rounded-md" required></textarea>
+                        <textarea type="text" name="descripcion_equipo" id="descripcion_equipo"  wire:model='descripcion_equipo'  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 resize-y rounded-md" required></textarea>
                         </div>
                     </div>
 
@@ -128,15 +129,24 @@
                             <div></div>
                             <div>
                                 <label for="abono" class="block text-sm font-medium text-gray-700">Abono Bs.</label>
+                                @if($habilitarAbono == 'true')
                                 <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @else
+                                <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
+                                @endif
                             </div>
                             
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                             <label for="abono_dolar" class="block text-sm font-medium text-gray-700">Abono $</label>
+                            <input type="hidden" name="abonodolarbs" id="abonodolarbs" value="{{$abonodolarbs}}"></label>
+                            @if($habilitarAbonoDolar == 'true')
                             <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            </div>
+                            @else
+                            <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
+                            @endif
+                         </div>
                         </div>
                     </div>
 
@@ -181,6 +191,22 @@
 
                      </div>
                     </form>
+
+
+<x-jet-dialog-modal wire:model="confirmingUserDeletion">
+    <x-slot name="title">{{$Nombrepdf}}</x-slot>
+    <x-slot name="content">
+    <embed
+    src="{{URL::asset($urlpdf)}}"
+    style="width:600px; height:800px;"
+    frameborder="0">
+    </x-slot>
+
+    <x-slot name="footer">
+    </x-slot>
+</x-jet-dialog-modal>
+
+
             </div>
         </div>
     </div>

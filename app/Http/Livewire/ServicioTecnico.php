@@ -8,8 +8,11 @@ use App\Models\Ivas;
 use App\Models\Tasa_BCV;
 use App\Models\Tasa_Otros;
 use App\Models\Servicio_Tecnico;
+use App\Models\Facturas_servicios;
+use App\Models\Recibo;
 use App\Http\Livewire\App;
 use Illuminate\Support\Facades\App as FacadesApp;
+use Symfony\Component\Console\Output\NullOutput;
 
 class ServicioTecnico extends Component
 {
@@ -31,13 +34,21 @@ class ServicioTecnico extends Component
     $item,
     $factura,
     $monto_con_iva_dolar,
-    $abono_dolar;
+    $abono_dolar,
+    $idrecibo,
+    $urlpdf,
+    $abonodolarbs,
+    $habilitarAbono,
+    $habilitarAbonoDolar,
+    $Nombrepdf;
 
-
+    public $confirmingUserDeletion = false;
 
     public function render()
     {
 
+        $habilitarAbono = true;
+        $habilitarAbonoDolar = true;
         $data = Ivas::All();
 
         /*************selección de iva********* */
@@ -60,15 +71,22 @@ class ServicioTecnico extends Component
 
 
          /*************Campo Abono********* */
-
-         if($this->abono != null  && $this->abono_dolar != null){
+  
+        /* if($this->abono != null  && $this->abono_dolar != null){
 
             $this->abono =  '';
             $this->abono_dolar =  '';
-            $this->monto_pendiente =  '';
-            $this->monto_pendiente_dolar =  '';
+            $this->monto_pendiente =  '0,00';
+            $this->monto_pendiente_dolar =  '0,00';
 
-         }else if($this->abono == $this->monto_con_iva){
+         }else if($this->abono == null  && $this->abono_dolar == null){
+
+            $this->abono =  '';
+            $this->abono_dolar =  '';
+            $this->monto_pendiente =  '0,00';
+            $this->monto_pendiente_dolar =  '0,00';
+
+         }else*/ if($this->abono == $this->monto_con_iva){
 
             $this->monto_pendiente =  '0,00';
             $this->monto_pendiente_dolar =  '0,00';
@@ -78,14 +96,24 @@ class ServicioTecnico extends Component
             $this->monto_pendiente =  '0,00';
             $this->monto_pendiente_dolar =  '0,00';
 
-         }else if($this->abono != null && $this->monto_con_iva > $this->abono){
+         }
+         
 
+         if($this->abono_dolar != null){
+            $habilitarAbono = false;
+            $habilitarAbonoDolar = true;
+            $this->abono = '';
+         }else if($this->abono != null){
+            $habilitarAbono = true;
+            $habilitarAbonoDolar = false;
+            $this->abono_dolar = '';
+         }
+         
+         
+
+      
+         if($this->abono != null || $this->abono_dolar != null){
             $this->montoPendiente();
-
-         }else if($this->abono_dolar != null && $this->monto_con_iva_dolar > $this->abono_dolar){
-
-            $this->montoPendiente();
-
          }
 
 
@@ -113,16 +141,16 @@ class ServicioTecnico extends Component
 
 
             $this->factura = $factura;
-
-
+            $this->habilitarAbono = $habilitarAbono;
+            $this->habilitarAbonoDolar = $habilitarAbonoDolar;
+           
         return view('livewire.servicio-tecnico',
         ['ivas'  => $data,
         'monto_con_iva' => 0,
-        'monto_pendiente' => 0,
         'fecha_servicio' => date('d/m/Y'),
     ]);
-    }
 
+    }
 
 
 
@@ -192,9 +220,10 @@ class ServicioTecnico extends Component
             $tasadia = str_replace(",",".",$tasadia);
            
         }
-  
 
-        $tasadia = bcdiv($tasadia, '1', 2);
+        $tasadia = $tasadia;
+        //$tasadia = $tasadia;
+       // $tasadia = bcdiv($tasadia, '1', 2);
        
         $this->monto_con_iva_dolar = ($this->monto_con_iva*1)/$tasadia;
         
@@ -204,7 +233,7 @@ class ServicioTecnico extends Component
        }
 
        $this->monto_con_iva = str_replace(".",",",$this->monto_con_iva);
-       $this->monto_con_iva_dolar =  number_format($this->monto_con_iva_dolar, 2);
+       $this->monto_con_iva_dolar =   bcdiv($this->monto_con_iva_dolar, '1', 2);
        $this->monto_con_iva_dolar = str_replace(".",",",$this->monto_con_iva_dolar);
 
     }
@@ -228,16 +257,16 @@ public function montoPendiente(){
             $tasadia = $tasadeldiaotros; 
         }else{
             $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
-            $tasadia = str_replace(",",".",$tasadia); 
+            $tasadia = str_replace(",",".",$tasadia);
         }
 
-       
+
         if($montAbono != null){
 
             $pendiente = $mont-$montAbono;
             $this->monto_pendiente_dolar = ($pendiente*1)/$tasadia;
             $this->monto_pendiente = number_format($pendiente, 2);
-            $this->monto_pendiente_dolar = number_format($this->monto_pendiente_dolar, 2);
+            $this->monto_pendiente_dolar = number_format($this->monto_pendiente_dolar,2) ;
             $this->monto_pendiente_dolar = str_replace(".",",",$this->monto_pendiente_dolar);
             $this->monto_pendiente = str_replace(".",",",$this->monto_pendiente);
 
@@ -245,15 +274,37 @@ public function montoPendiente(){
         }else if($montAbonodolar != null){
 
             $pendiente = $montDolar-$montAbonodolar;
-            $this->monto_pendiente = ($pendiente*$tasadia)/1;
-            $this->monto_pendiente_dolar = number_format($pendiente, 2);
-            $this->monto_pendiente = number_format($this->monto_pendiente, 2);
-            $this->monto_pendiente = str_replace(".",",",$this->monto_pendiente);
+        
+            $this->monto_pendiente_dolar =  number_format($pendiente, 2);
+            
+          //  $this->monto_pendiente_dolar =  bcdiv($pendiente, '1', 2); 
             $this->monto_pendiente_dolar = str_replace(".",",",$this->monto_pendiente_dolar);
 
+           
+
+            /********************* */
+
+            $abonodolarbs = ($montAbonodolar*$tasadia)/1;
+            
+            //$abonodolarbs = number_format($abonodolarbs, 2);
+           // $this->abonodolarbs = bcdiv($abonodolarbs, '1', 2); 
+            $this->abonodolarbs =  $abonodolarbs;
+
+
+          //  $this->monto_pendiente = ($pendiente*$tasadia)/1;
+            $this->monto_pendiente = ($mont-$abonodolarbs);
+            $this->monto_pendiente =  number_format($this->monto_pendiente, 2);
+         //   $this->monto_pendiente =  bcdiv($this->monto_pendiente, '1', 2); 
+            $this->monto_pendiente = str_replace(".",",",$this->monto_pendiente);
 
         }
-        
+
+
+        if($this->monto_pendiente == '0,00'){
+            $this->monto_pendiente_dolar = '0,00';
+        }else if($this->monto_pendiente_dolar == '0,00'){
+            $this->monto_pendiente = '0,00';
+        }
         /*$this->monto_pendiente_dolar = ($this->monto_pendiente*1)/$tasadia;
         $this->monto_pendiente_dolar = number_format($this->monto_pendiente_dolar, 2);
 
@@ -347,16 +398,18 @@ public function montoPendiente(){
     $this->name = '';
     $this->telefono = '';
     $this->recibo = '';
-    $this->recibo = '';
     $this->id_cliente = '';
     $this->id_iva = '';
+    $this->correo = '';
+    $this->direccion = '';
     $this->descripcion_equipo = '';
-   // $this->fecha = '';
     $this->monto_sin_iva = '';
     $this->monto_con_iva = '';
+    $this->monto_con_iva_dolar = '';
     $this->abono = '';
+    $this->abono_dolar = '';
     $this->monto_pendiente = '';
-
+    $this->monto_pendiente_dolar = '';
     $this->view = 'livewire.servicio-tecnico';
 }
 
@@ -371,6 +424,128 @@ public function montoPendiente(){
     $this->imprimir = $imprimir;
     $this->view = 'livewire.servicio-tecnico';
 }*/
+
+
+public function submit(){
+    /**********se guarda el registro en la tabla factura************** */
+    
+        if($this->factura === 'true'){
+            $ultimaFactura = Facturas_servicios::orderBy('numero_factura', 'desc')->first();
+            $Factura = new Facturas_servicios();
+            if($ultimaFactura == null){
+                $Factura->numero_factura = 1;
+                $Factura->pdf = 'Factura'.$Factura->numero_factura.'.pdf';
+            }else{
+                $Factura->numero_factura = $ultimaFactura->numero_factura+1;
+                $Factura->pdf = 'Factura'.$Factura->numero_factura.'.pdf';
+            }
+            
+            $Factura->save();
+            $facturanu = Facturas_servicios::selectRaw('numero_factura, lpad(numero_factura, 15, 0), id')->where('pdf',$Factura->pdf)->first();
+            $facturanumero = $facturanu['lpad(numero_factura, 15, 0)'];
+            $idfactura = $facturanu['id'];
+            $this->idrecibo = '0';
+            $recibonumero = '';
+    
+         }else{
+    
+            /**********se guarda el registro en la tabla recibo************** */
+            $ultimaRecibo = Recibo::orderBy('recibo', 'desc')->first();
+            $Recibo = new Recibo();
+    
+           if($ultimaRecibo == null){
+            $Recibo->recibo = 1;
+            $Recibo->pdf = 'Recibo'.$Recibo->recibo.'.pdf';
+            }else{
+                $Recibo->recibo = $ultimaRecibo->recibo+1;
+                $Recibo->pdf = 'Recibo'.$Recibo->recibo.'.pdf';
+            }
+    
+           $Recibo->save();
+           $recibonu = Recibo::selectRaw('recibo, lpad(recibo, 15, 0), id')->where('pdf',$Recibo->pdf)->first();
+           $recibonumero = $recibonu['lpad(recibo, 15, 0)'];
+           $this->idrecibo = $recibonu['id'];
+           $idfactura = '0';
+           $facturanumero = '';
+        }
+    
+    
+          /**********se calcula el monto del iva************** */
+    
+          $monto_con_iva = str_replace(",",".",$this->monto_con_iva);
+          $monto_sin_iva = str_replace(",",".",$this->monto_sin_iva);
+      
+          $montoIva = ($monto_con_iva-$monto_sin_iva);
+          $porcentajeIva = Ivas::find($this->id_iva);
+          $porcentajeIva = $porcentajeIva->iva;
+
+
+    
+        /**********se guarda el registro en la tabla servicio técnico************** */
+    
+    $date = str_replace('/', '-', date('d/m/Y'));
+    
+    $Servicio_Tecnico = new Servicio_Tecnico();
+    $Servicio_Tecnico->id_recibo = $this->idrecibo;
+    $Servicio_Tecnico->id_cliente = $this->id_cliente;
+    $Servicio_Tecnico->id_iva =$this->id_iva;
+    $Servicio_Tecnico->id_factura_servicios = $idfactura;
+    $Servicio_Tecnico->descripcion_equipo = $this->descripcion_equipo;
+    $Servicio_Tecnico->monto_sin_iva = $this->monto_sin_iva;
+    $Servicio_Tecnico->monto_con_iva = $this->monto_con_iva;
+
+   
+    if($this->abono == null){
+        $Servicio_Tecnico->abono = str_replace(".",",",$this->abonodolarbs);
+        $abono = bcdiv($this->abonodolarbs, '1', 2);
+    }else{
+    $Servicio_Tecnico->abono = $this->abono;
+    $abono = $this->abono;
+    }
+
+    $Servicio_Tecnico->monto_pendiente = $this->monto_pendiente;
+    $Servicio_Tecnico->fecha = date("Y-m-d",strtotime( $date ));
+    $Servicio_Tecnico->save();
+  
+    
+    /**********se crea el pdf************** */
+    $pdf = app('dompdf.wrapper');
+        $datapdf = [
+            'fecha_servicio' => date('d/m/Y'),
+            'name' => $this->name,
+            'identificacion' => $this->identificacion,
+            'telefono' => $this->telefono,
+            'direccion' => $this->direccion,
+            'descripcion_equipo' => $this->descripcion_equipo,
+            'monto_sin_iva' => $this->monto_sin_iva,
+            'monto_con_iva' => $this->monto_con_iva,
+            'abono' => $abono,
+            'monto_pendiente' => $this->monto_pendiente,
+            'montoIva' => $montoIva,
+            'factura' => $facturanumero,
+            'recibo' => $recibonumero,
+            'porcentajeIva' => $porcentajeIva,
+        ];
+    
+    
+        if($this->factura === 'true'){
+            $pdf->loadView('pdf.factura_servicio',compact('datapdf'));
+            $pdf->save(public_path('app/archivos/pdf/facturas/') .$Factura->pdf);
+            $this->urlpdf='app/archivos/pdf/facturas/'.$Factura->pdf;
+            $this->Nombrepdf= $Factura->pdf;
+        }else{
+            $pdf->loadView('pdf.recibo_servicio',compact('datapdf'));
+            $pdf->save(public_path('app/archivos/pdf/facturas/') .$Recibo->pdf);
+            $this->urlpdf='app/archivos/pdf/facturas/'.$Recibo->pdf;
+            $this->Nombrepdf= $Recibo->pdf;
+        }
+    
+        $pdf->render();
+    
+    /**********se habilita el modal y se limpia los input************** */
+    $this->confirmingUserDeletion=true;
+    $this->default();
+    }
 
 
 }
