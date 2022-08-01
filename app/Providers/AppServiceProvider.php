@@ -31,7 +31,6 @@ class AppServiceProvider extends ServiceProvider
         $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
 
         
-
         if($tasadeldiaotros){
             View::share('tasa_del_dia', $tasadeldiaotros->tasa);
         }else{
@@ -40,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
             $tasadia =(float)$tasadia;
             View::share('tasa_del_dia', $tasadia);
         }
+        
         
         View::share('tasa_BCV', $tasadeldiaBCV[0]->tasa);
         

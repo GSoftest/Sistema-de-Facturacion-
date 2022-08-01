@@ -49,6 +49,8 @@ class ServicioTecnico extends Component
 
         $habilitarAbono = true;
         $habilitarAbonoDolar = true;
+
+
         $data = Ivas::All();
 
         /*************selección de iva********* */
@@ -128,15 +130,19 @@ class ServicioTecnico extends Component
 
             if($existe == $existeiva || $existe2 == $existeiva2){
                 $factura = 'true';
-            }else if($existe > $existeiva || $existe2 > $existeiva2){
-                $factura = 'ninguno';
-            }else{
+            }else if($existe < $existeiva || $existe2 < $existeiva2){
+                if($existe > '0,00' || $existe2 > '0,00' ){
+                    $factura = 'false';
+                }else{
+                    $factura = 'ninguno';
+                }
+            }/*else{
                 $factura = 'false';
-            }
+            }*/
 
 
         }else{
-            $factura = 'false';
+            $factura = 'ninguno';
         }
 
 
@@ -427,6 +433,7 @@ public function montoPendiente(){
 
 
 public function submit(){
+
     /**********se guarda el registro en la tabla factura************** */
     
         if($this->factura === 'true'){

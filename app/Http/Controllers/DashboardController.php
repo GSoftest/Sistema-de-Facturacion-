@@ -21,8 +21,14 @@ class DashboardController extends Controller
         $clientes = Clientes::count();
 
 
-       $url_to_traverse = 'http://www.bcv.org.ve/';
-    //$url_to_traverse = 'http://ffdgbdfgbfgb.com/';
+       //$url_to_traverse = 'http://www.bcv.org.ve/';
+       $url_to_traverse = 'http://ffdgbdfgbfgb.com/';
+
+
+       $file_headers = @get_headers($url_to_traverse ); 
+  
+if($file_headers !=  false){ 
+    if($file_headers[0] ==  "HTTP/1.1 200 OK"){ 
        $client = new Client();
      
        $crawler = $client->request('GET', $url_to_traverse);
@@ -50,6 +56,12 @@ class DashboardController extends Controller
         }
       }
 
+    }else{
+        $tasadeldia = '';
+    }
+}else{
+    $tasadeldia = '';
+}
 
        $data = [
             'ivas' => $ivas,

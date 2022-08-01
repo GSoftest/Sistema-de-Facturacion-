@@ -10,12 +10,21 @@ use Livewire\WithPagination;
 class ListaServicioTecnico extends Component
 {
     use WithPagination;
+    public $file;
     public function render()
     {
-        $data = Servicio_Tecnico::paginate(10);
+        $data = Servicio_Tecnico::where('id_recibo', '>=' ,'1')->paginate(10);
 
+        $data2 = Recibo::selectRaw('recibo, lpad(recibo, 15, 0),id,pdf')->get();
+        
 
      //   $recibo = Recibo::find($data[0]->id_recibo);
-        return view('livewire.lista-servicio-tecnico',['servicios' => $data]);
+        return view('livewire.lista-servicio-tecnico',['servicios' => $data, 'recibo' => $data2]);
+    }
+
+    public function download($file){
+      
+        $file= public_path(). "/app/archivos/pdf/facturas/".$file;
+        return response()->download($file);
     }
 }

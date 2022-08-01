@@ -85,6 +85,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
      Route::get('/listaServicioTecnico', ListaServicioTecnico::class)->name('listaServicioTecnico');
 
 
+
  /************IMPRIMIR FACTURA************ */
  Route::controller(FacturaVentaController::class)->group(function(){
   Route::post('/imprimirFactura', 'imprimirFactura')->name('imprimirFactura');

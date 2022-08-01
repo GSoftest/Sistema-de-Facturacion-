@@ -13,3 +13,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+public/app/archivos/pdf/facturas/Factura3.pdf
+public/app/archivos/pdf/facturas/Factura4.pdf
+public/app/archivos/pdf/facturas/Recibo2.pdf

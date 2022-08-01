@@ -27,7 +27,8 @@
                             <div>
                             <label for="identificacion" class="block text-sm font-medium text-gray-700">Cédula o RIF</label>
                             <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' placeholder="V-xxxxxxxx" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            </div>
+                            <x-jet-input-error for="identificacion"/>
+                        </div>
                             <div class="pt-4">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 border border-blue-500 rounded" type="button" wire:click='Buscar()'>Buscar</button>
                             </div>
@@ -58,6 +59,7 @@
                             <input type="hidden" name="id_cliente" id="id_cliente" wire:model='id_cliente'>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social</label>
                             <input type="text" name="name" id="name" wire:model='name' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
+                            <x-jet-input-error for="name"/>
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
@@ -146,6 +148,7 @@
                             @else
                             <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                             @endif
+
                          </div>
                         </div>
                     </div>
@@ -167,11 +170,11 @@
                         </div>
                     </div>
 
-                    <div class="py-4">
+                  <!--  <div class="py-4">
                             @if (session()->has('message'))
                         <p class="text-sm text-red-600">{{ session('message') }}</p>
                             @endif
-                    </div>
+                    </div>-->
 
 
                     
@@ -183,7 +186,7 @@
                             @elseif($factura == 'false')
                                 <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 mt-2  border border-green-500 rounded py-1.5" type="submit">Imprimir Recibo</button>
                             @else
-                                <p class="text-sm text-red-600">El abono supera el monto total</p>
+                                <!--<p class="text-sm text-red-600">El abono supera el monto total</p>-->
                             @endif
                         </div>
                     </div> 
