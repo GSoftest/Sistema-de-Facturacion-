@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@$slot('layouts.app')
 
 @section('content')
 

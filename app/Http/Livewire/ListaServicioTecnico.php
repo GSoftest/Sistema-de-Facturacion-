@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Servicio_Tecnico;
 use App\Models\Recibo;
+use App\Models\Clientes;
 use Livewire\WithPagination;
 
 class ListaServicioTecnico extends Component
@@ -17,8 +18,6 @@ class ListaServicioTecnico extends Component
 
         $data2 = Recibo::selectRaw('recibo, lpad(recibo, 15, 0),id,pdf')->get();
         
-
-     //   $recibo = Recibo::find($data[0]->id_recibo);
         return view('livewire.lista-servicio-tecnico',['servicios' => $data, 'recibo' => $data2]);
     }
 

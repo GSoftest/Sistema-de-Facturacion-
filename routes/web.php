@@ -7,6 +7,7 @@ use App\Http\Livewire\ListaCategoria;
 use App\Http\Livewire\ListaProductos;
 use App\Http\Livewire\ListaClientes;
 use App\Http\Livewire\ServicioTecnico;
+use App\Http\Livewire\ServicioTecnicoEditar;
 use App\Http\Livewire\ListaServicioTecnico;
 
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\CajaController;
 use App\Http\Controllers\FacturaVentaController;
 use App\Http\Controllers\ScraperController;
+use App\Http\Controllers\EditarServicioController;
 use App\Http\Livewire\Tasa;
 
 /*
@@ -83,6 +85,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
      /************SERVICIO TECNICO************ */
      Route::get('/servicioTecnico', ServicioTecnico::class)->name('servicioTecnico');
      Route::get('/listaServicioTecnico', ListaServicioTecnico::class)->name('listaServicioTecnico');
+     Route::get('/servicioTecnicoEditar/{id}', ServicioTecnicoEditar::class)->name('servicioTecnicoEditar');
 
 
 

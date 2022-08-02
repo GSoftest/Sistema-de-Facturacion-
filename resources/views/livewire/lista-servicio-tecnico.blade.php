@@ -58,8 +58,8 @@
                 @endforeach
                 </td> 
                 <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">{{$servicio->fecha}}</td>
-                <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$servicio->abono}}</td>
-                <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$servicio->monto_pendiente}}</td>
+                <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center"> {{str_replace(".",",",number_format(str_replace(",",".",$servicio->abono), 2 ))}}</td>
+                <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{str_replace(".",",",number_format(str_replace(",",".",$servicio->monto_pendiente), 2 ))}}</td>
                 <td class="w-16 border-r text-center">
                 @foreach ($recibo as $rec)
                     @if($rec->id == $servicio->id_recibo) 
@@ -68,7 +68,8 @@
                 @endforeach
                 </td>
                 <td class="w-16 border-r text-center">
-                <a class="py-2" href="/productos/{{$servicio->id}}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
+               <a class="py-2" href="{{ route('servicioTecnicoEditar', $servicio->id) }}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
+              <!-- <button class="py-2" type="button" wire:click="editar('{{$servicio->id}}')"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></button>-->
                 </td>
              </tr>
              @endforeach

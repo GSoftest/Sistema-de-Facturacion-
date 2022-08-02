@@ -4,20 +4,16 @@
              {{ __('Servicio Técnico') }}
          </h2>
      </x-slot>-->
-
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
+     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
         <div class="mt-5 md:mt-0 md:col-span-2">
             <div class="shadow overflow-hidden sm:rounded-md">
-                <!-- <form action="{{ route('imprimirFactura')  }}" method="post" id='formulario' enctype="multipart/form-data">-->
-  
-                     <form wire:submit.prevent="submit" method="post" enctype="multipart/form-data" target="_blank">
-                    @csrf
-                    <div class="px-4 py-5 bg-white sm:p-6">
-                
+                <form wire:submit.prevent="submit" method="post" enctype="multipart/form-data" target="_blank">
+                @csrf
+                <div class="px-4 py-5 bg-white sm:p-6">
                     <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                         <div class="justify-self-center">
                             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ __('Servicio Técnico') }}
+                                {{ __('Actualizar Servicio Técnico') }}
                             </h2>
                         </div>
                     </div>
@@ -26,11 +22,10 @@
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                             <label for="identificacion" class="block text-sm font-medium text-gray-700">Cédula o RIF</label>
-                            <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' placeholder="V-xxxxxxxx" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' placeholder="V-xxxxxxxx" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                             <x-jet-input-error for="identificacion"/>
                         </div>
                             <div class="pt-4">
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 border border-blue-500 rounded" type="button" wire:click='Buscar()'>Buscar</button>
                             </div>
                         </div>
 
@@ -39,22 +34,15 @@
                                 <label for="fecha_servicio" class="block text-sm font-medium text-gray-700">Fecha:</label>
                                 </div>
                                 <div>
-                                <label class="block text-sm font-medium text-gray-700">{{$fecha_servicio}}</label>
-                                <input type="hidden" name="fecha_servicio" id="fecha_servicio" value="{{$fecha_servicio}}" wire:model='fecha_servicio'>
+                                <label class="block text-sm font-medium text-gray-700"></label>
+                                <input type="hidden" name="fecha_servicio" id="fecha_servicio"  wire:model='fecha_servicio'>
                                 </div>
                         </div>
                      </div>
-                    <div class="py-2">
-                        @if (session()->has('message'))
-                            <p class="text-sm text-red-600">{{ session('message') }}</p>
-                            <div class="py-2">
-                                <a href="{{ route('clientesNuevo') }}" class="bg-green-600 hover:bg-green-500 text-white font-bold py-1 px-2 mt-2 border border-green-500 rounded">Registrar Cliente</a>
-                            </div>
-                    @endif
-                    </div>
 
 
-                    <div class="grid grid-cols-2 gap-4 py-2">
+
+                     <div class="grid grid-cols-2 gap-4 py-2">
                         <div>
                             <input type="hidden" name="id_cliente" id="id_cliente" wire:model='id_cliente'>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social</label>
@@ -80,12 +68,14 @@
                         </div>
                     </div>
 
+
                     <div class="grid grid-cols-1 gap-4">
                         <div class="py-2">
                         <label for="descripcion_equipo" class="block text-sm font-medium text-gray-700">Descripción del Equipo y Falla</label>
                         <textarea type="text" name="descripcion_equipo" id="descripcion_equipo"  wire:model='descripcion_equipo'  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 resize-y rounded-md" required></textarea>
                         </div>
                     </div>
+
 
                     <div class="grid grid-cols-2 gap-4">
                         <div class="py-2 grid grid-cols-2 gap-4">
@@ -97,17 +87,13 @@
 
 
                             <div>
-                                <label for="id_iva" class="block text-sm font-medium text-gray-700">Iva</label>
-                                <select wire:model="id_iva" name="id_iva" wire:click="change()" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                                 <option value="">{{ __("Seleccione") }}</option>                     
-                                 @foreach ($ivas as $iva)
-                                 <option value="{{ $iva->id }}">{{str_replace(".",",",str_replace(",","",number_format($iva->iva, 2 )))}}</option>
-                                @endforeach
-                                </select>
+                            
                             </div>
                         </div>
                         <div></div>
-                    </div>   
+                    </div> 
+
+
                     <div class="grid grid-cols-2 gap-4">
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div></div>
@@ -125,6 +111,8 @@
                             </div>
                         </div>
                     </div> 
+
+
 
                     <div class="grid grid-cols-2 gap-4">
                         <div class="py-2 grid grid-cols-2 gap-4">
@@ -154,6 +142,7 @@
                     </div>
 
 
+
                     <div class="grid grid-cols-2 gap-4">
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div></div>
@@ -170,14 +159,7 @@
                         </div>
                     </div>
 
-                  <!--  <div class="py-4">
-                            @if (session()->has('message'))
-                        <p class="text-sm text-red-600">{{ session('message') }}</p>
-                            @endif
-                    </div>-->
 
-
-                    
                     <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
                         <input type="hidden" name="factura" id="factura" value="{{$factura}}">
                         <div class="pb-3.5 pr-4">
@@ -191,37 +173,10 @@
                         </div>
                     </div> 
 
-
-                     </div>
-                    </form>
-
-
-<x-jet-dialog-modal wire:model="confirmingUserDeletion">
-    <x-slot name="title">{{$Nombrepdf}}</x-slot>
-    <x-slot name="content">
-    <embed
-    src="{{URL::asset($urlpdf)}}"
-    style="width:600px; height:800px;"
-    frameborder="0">
-    </x-slot>
-
-    <x-slot name="footer">
-    </x-slot>
-</x-jet-dialog-modal>
-
-
+                    
+                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-function myFunction() {
-  var monto_sin_iva = document.getElementById("monto_sin_iva");
-  var abono = document.getElementById("abono");
-  var abono_dolar = document.getElementById("abono_dolar");
-  monto_sin_iva.value = monto_sin_iva.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');
-  abono.value = abono.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
-  abono_dolar.value = abono_dolar.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
-}
-</script>
