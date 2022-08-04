@@ -122,11 +122,20 @@ class Caja extends Component
 
      
      if (isset($cliente[0])) {
-      $this->name=  $cliente[0]->name;
-     $this->telefono =  $cliente[0]->telefono;
-     $this->direccion =  $cliente[0]->direccion;
 
-     $this->view = 'livewire.caja';
+        if($cliente[0]->estatus == 1){
+        $this->name=  $cliente[0]->name;
+        $this->telefono =  $cliente[0]->telefono;
+        $this->direccion =  $cliente[0]->direccion;
+
+        $this->view = 'livewire.caja';
+
+        }else{
+            session()->flash('message', 'El cliente se encuentra desactivado');
+            $this->view = 'livewire.servicio-tecnico';
+        }
+
+
     }else{
         session()->flash('message', 'No se encuentra registrado debe registrar el cliente');
         $this->view = 'livewire.caja';

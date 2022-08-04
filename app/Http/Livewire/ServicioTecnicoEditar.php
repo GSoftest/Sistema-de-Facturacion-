@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Servicio_Tecnico;
 use App\Models\Ivas;
 use App\Models\Clientes;
+use App\Models\Tasa_BCV;
+use App\Models\Tasa_Otros;
 
 class ServicioTecnicoEditar extends Component
 {
@@ -36,6 +38,23 @@ class ServicioTecnicoEditar extends Component
         $this->habilitarAbonoDolar = 'true';
         $this->abonodolarbs = '';
         $this->factura = '';
+
+        $this->fecha_servicio = date('d/m/Y');
+
+        $tasadeldiaBCV = Tasa_BCV::all();
+        $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
+
+        if($tasadeldiaotros){
+          $tasadia = $tasadeldiaotros; 
+      }else{
+          $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
+          $tasadia = str_replace(",",".",$tasadia);
+      }
+
+      $Dpendiente = str_replace(",",".",$this->monto_pendiente);
+      $this->monto_pendiente_dolar = ($Dpendiente*1)/$tasadia;
+      $this->monto_pendiente_dolar =   bcdiv($this->monto_pendiente_dolar, '1', 2);
+      $this->monto_pendiente_dolar = str_replace(".",",",$this->monto_pendiente_dolar);
 
         $data = Ivas::All();
 

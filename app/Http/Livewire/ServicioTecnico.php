@@ -162,9 +162,13 @@ class ServicioTecnico extends Component
 
     public function Buscar()
     {
-     $cliente = Clientes::where('identificacion',$this->identificacion)->get();
+     $cliente = Clientes::where('identificacion',$this->identificacion)
+                         ->get();
 
      if (isset($cliente[0])) {
+
+        if($cliente[0]->estatus == 1){
+
     $this->id_cliente=  $cliente[0]->id;
     $this->name=  $cliente[0]->name;
     $this->telefono =  $cliente[0]->telefono;
@@ -172,10 +176,17 @@ class ServicioTecnico extends Component
     $this->correo =  $cliente[0]->correo;
 
      $this->view = 'livewire.servicio-tecnico';
+
+    }else{
+        session()->flash('message', 'El cliente se encuentra desactivado');
+        $this->view = 'livewire.servicio-tecnico';
+    }
+
     }else{
         session()->flash('message', 'No se encuentra registrado debe registrar el cliente');
         $this->view = 'livewire.servicio-tecnico';
     }
+    
     }
     
     public function change(){
@@ -554,6 +565,17 @@ public function submit(){
     $this->default();
     }
 
+
+
+    public function convertidor_decimal(){
+      //  dd( $this->monto_sin_iva);
+        
+      /*  for ($dd = 2; $dd > 0; $dd--) {
+            $cad3 += nums[nums.length - $dd]
+        }*/
+
+
+    }
 
 }
 

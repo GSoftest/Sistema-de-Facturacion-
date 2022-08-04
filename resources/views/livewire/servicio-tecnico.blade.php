@@ -91,7 +91,7 @@
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                                 <label for="monto_sin_iva" class="block text-sm font-medium text-gray-700">Monto Bs.</label>
-                                <input type="text" onkeyup="myFunction()" name="monto_sin_iva" id="monto_sin_iva" wire:model="monto_sin_iva" placeholder="0,00"   class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" onkeyup="myFunction()" name="monto_sin_iva" id="monto_sin_iva" wire:model="monto_sin_iva" placeholder="0,00" wire:keydown="convertidor_decimal()" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                                 <x-jet-input-error for="monto_sin_iva"/>
                             </div>
 

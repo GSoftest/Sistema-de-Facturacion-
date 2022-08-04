@@ -64,16 +64,15 @@
                             </div>
                     </div>
 
-                        @if (session()->has('message'))
-                        <div class="mt-2 py-2">
-                            {{ session('message') }}
-                            <div class="py-2">
-                            <a href="/clientes/nuevo" class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded">Registrar Cliente</a>
-                            </div>
 
-                        </div>
-                            @endif
-                        
+                    <div class="py-2">
+                        @if (session()->has('message'))
+                            <p class="text-sm text-red-600">{{ session('message') }}</p>
+                            <div class="py-2">
+                                <a href="{{ route('clientesNuevo') }}" class="bg-green-600 hover:bg-green-500 text-white font-bold py-1 px-2 mt-2 border border-green-500 rounded">Registrar Cliente</a>
+                            </div>
+                    @endif
+                    </div>
 
                         <div class="grid grid-cols-4 gap-4 py-2">
                             <div>

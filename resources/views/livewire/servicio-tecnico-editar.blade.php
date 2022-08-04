@@ -10,6 +10,7 @@
                 <form wire:submit.prevent="submit" method="post" enctype="multipart/form-data" target="_blank">
                 @csrf
                 <div class="px-4 py-5 bg-white sm:p-6">
+
                     <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                         <div class="justify-self-center">
                             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -24,7 +25,7 @@
                             <label for="identificacion" class="block text-sm font-medium text-gray-700">Cédula o RIF</label>
                             <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' placeholder="V-xxxxxxxx" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                             <x-jet-input-error for="identificacion"/>
-                        </div>
+                            </div>
                             <div class="pt-4">
                             </div>
                         </div>
@@ -34,8 +35,8 @@
                                 <label for="fecha_servicio" class="block text-sm font-medium text-gray-700">Fecha:</label>
                                 </div>
                                 <div>
-                                <label class="block text-sm font-medium text-gray-700"></label>
-                                <input type="hidden" name="fecha_servicio" id="fecha_servicio"  wire:model='fecha_servicio'>
+                                <label class="block text-sm font-medium text-gray-700">{{$fecha_servicio}}</label>
+                                <input type="hidden" name="fecha_servicio" id="fecha_servicio"  wire:model='fecha_servicio' value="{{$fecha_servicio}}">
                                 </div>
                         </div>
                      </div>
@@ -72,7 +73,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div class="py-2">
                         <label for="descripcion_equipo" class="block text-sm font-medium text-gray-700">Descripción del Equipo y Falla</label>
-                        <textarea type="text" name="descripcion_equipo" id="descripcion_equipo"  wire:model='descripcion_equipo'  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 resize-y rounded-md" required></textarea>
+                        <textarea type="text" name="descripcion_equipo" id="descripcion_equipo"  wire:model='descripcion_equipo'  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 resize-y rounded-md" required readonly></textarea>
                         </div>
                     </div>
 
@@ -81,22 +82,9 @@
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                                 <label for="monto_sin_iva" class="block text-sm font-medium text-gray-700">Monto Bs.</label>
-                                <input type="text" onkeyup="myFunction()" name="monto_sin_iva" id="monto_sin_iva" wire:model="monto_sin_iva" placeholder="0,00"   class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" onkeyup="myFunction()" name="monto_sin_iva" id="monto_sin_iva" wire:model="monto_sin_iva" placeholder="0,00"   class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
                                 <x-jet-input-error for="monto_sin_iva"/>
                             </div>
-
-
-                            <div>
-                            
-                            </div>
-                        </div>
-                        <div></div>
-                    </div> 
-
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="py-2 grid grid-cols-2 gap-4">
-                            <div></div>
                             <div>
                                 <label for="monto_con_iva" class="block text-sm font-medium text-gray-700">Monto Total Bs.</label>
                                 <input type="text" name="monto_con_iva" id="monto_con_iva" wire:model="monto_con_iva"  placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
@@ -104,44 +92,12 @@
 
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
-                            <div>
-                                <label for="monto_con_iva_dolar" class="block text-sm font-medium text-gray-700">Monto Total $</label>
-                                <input type="text" name="monto_con_iva_dolar" id="monto_con_iva_dolar"  wire:model="monto_con_iva_dolar" placeholder="0,00" autocomplete="given-monto_con_iva_dolar" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
-                         
+                        <div>
+                                <label for="abono" class="block text-sm font-medium text-gray-700">Abono Bs.</label>
+                                <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                             </div>
                         </div>
                     </div> 
-
-
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="py-2 grid grid-cols-2 gap-4">
-                            <div></div>
-                            <div>
-                                <label for="abono" class="block text-sm font-medium text-gray-700">Abono Bs.</label>
-                                @if($habilitarAbono == 'true')
-                                <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @else
-                                <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
-                                @endif
-                            </div>
-                            
-                        </div>
-                        <div class="py-2 grid grid-cols-2 gap-4">
-                            <div>
-                            <label for="abono_dolar" class="block text-sm font-medium text-gray-700">Abono $</label>
-                            <input type="hidden" name="abonodolarbs" id="abonodolarbs" value="{{$abonodolarbs}}"></label>
-                            @if($habilitarAbonoDolar == 'true')
-                            <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            @else
-                            <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
-                            @endif
-
-                         </div>
-                        </div>
-                    </div>
-
-
 
                     <div class="grid grid-cols-2 gap-4">
                         <div class="py-2 grid grid-cols-2 gap-4">
@@ -172,8 +128,6 @@
                             @endif
                         </div>
                     </div> 
-
-                    
                 </div>
                 </form>
             </div>
