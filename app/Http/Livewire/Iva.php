@@ -10,7 +10,7 @@ use Livewire\WithPagination;
 class Iva extends Component
 {
 
-  
+    public $confirmingUserDeletion = false;
     use WithPagination;
     public $iva, $iva_id,$estado;
 
@@ -89,11 +89,6 @@ class Iva extends Component
         $this->view = 'livewire.iva';
     }
 
-    public function destroy($id)
-    {
-        Ivas::destroy($id);
-    }
-
 
     public function limpiar()
     {
@@ -140,5 +135,25 @@ class Iva extends Component
         ]);
         $this->estado = $iva->estado;
         $this->view = 'livewire.iva';
+    }
+
+
+    public function destroy($id)
+    {
+        $this->eliminar=$id;
+        $this->confirmingUserDeletion=true;
+    }
+
+
+    public function destroy2()
+    {
+        $this->confirmingUserDeletion=false;
+        Ivas::destroy($this->eliminar);
+    }
+
+
+    public function cerrar()
+    {
+        $this->confirmingUserDeletion=false;
     }
 }

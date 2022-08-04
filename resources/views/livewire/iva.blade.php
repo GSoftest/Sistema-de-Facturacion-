@@ -85,6 +85,35 @@
             {{ $ivas->links() }}
         </div>
 
+        <x-jet-dialog-modal wire:model="confirmingUserDeletion">
+    <x-slot name="title">
+        <span class="flex justify-center">
+        <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: red;"></i>
+        </span>
+    </x-slot>
+    <x-slot name="content">
+        <span class="flex justify-center">
+        ¿Está seguro que desea eliminar?
+        </span>
+    </x-slot>
+        
+<x-slot name="footer">
+<span class="flex justify-center pt-2">
+        <div class="pb-3.5 pr-4">
+            <x-jet-danger-button class="mx-12" wire:click="destroy2" wire:loading.attr="disabled">
+            Sí
+            </x-jet-danger-button>
+        </div>
+        <div class="">
+        <x-jet-secondary-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+            No
+        </x-jet-secondary-button>
+        </div>
+        </span>
+</x-slot>
+
+</x-jet-dialog-modal>
+
      </div>
         </div>
  </div>

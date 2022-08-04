@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class Tasa extends Component
 {
+    public $confirmingUserDeletion = false;
     use WithPagination;
     public $tasa, $tasa_id,$estatus;
 
@@ -88,12 +89,6 @@ class Tasa extends Component
         $this->tasa_id= '';
     }
 
-
-    public function destroy($id)
-    {
-        Tasa_Otros::destroy($id);
-    }
-
     public function edit($id)
     {
 
@@ -164,5 +159,23 @@ class Tasa extends Component
         return Redirect::route('tasa');
     }
     
+
+    public function destroy($id)
+    {
+        $this->eliminar=$id;
+        $this->confirmingUserDeletion=true;
+    }
+ 
+    public function destroy2()
+    {
+        $this->confirmingUserDeletion=false;
+        Tasa_Otros::destroy($this->eliminar);
+    }
+
+    public function cerrar()
+    {
+        $this->confirmingUserDeletion=false;
+    }
+
 
 }

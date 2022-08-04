@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 
 class ListaProductos extends Component
 {
+    public $confirmingUserDeletion = false;
     use WithPagination;
     public function render()
     {
@@ -20,6 +21,20 @@ class ListaProductos extends Component
 
     public function destroy($id)
     {
-        Productos::destroy($id);
+        $this->eliminar=$id;
+        $this->confirmingUserDeletion=true;
     }
+ 
+    public function destroy2()
+    {
+        $this->confirmingUserDeletion=false;
+        Productos::destroy($this->eliminar);
+    }
+
+    public function cerrar()
+    {
+        $this->confirmingUserDeletion=false;
+    }
+
+
 }

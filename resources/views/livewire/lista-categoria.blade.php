@@ -92,7 +92,6 @@
         </div>
         </span>
 </x-slot>
-
 </x-jet-dialog-modal>
 
         </div>
