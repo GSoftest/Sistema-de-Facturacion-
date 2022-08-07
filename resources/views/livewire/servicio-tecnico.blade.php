@@ -26,15 +26,16 @@
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                             <label for="identificacion" class="block text-sm font-medium text-gray-700">Cédula o RIF</label>
-                            <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' placeholder="V-xxxxxxxx" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' placeholder="V-xxxxxxxx" maxlength="11" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             <x-jet-input-error for="identificacion"/>
                         </div>
                             <div class="pt-4">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 border border-blue-500 rounded" type="button" wire:click='Buscar()'>Buscar</button>
                             </div>
                         </div>
-
-                        <div class="py-2 justify-self-end  w-3/4 md:flex md:items-center">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div></div>
+                        <div class="py-2 justify-self-start  w-3/4 md:flex md:items-center">
                                 <div>
                                 <label for="fecha_servicio" class="block text-sm font-medium text-gray-700">Fecha:</label>
                                 </div>
@@ -43,12 +44,17 @@
                                 <input type="hidden" name="fecha_servicio" id="fecha_servicio" value="{{$fecha_servicio}}" wire:model='fecha_servicio'>
                                 </div>
                         </div>
+                        </div>
                      </div>
                     <div class="py-2">
                         @if (session()->has('message'))
                             <p class="text-sm text-red-600">{{ session('message') }}</p>
                             <div class="py-2">
+                                @if($botoncliente == 'true')
                                 <a href="{{ route('clientesNuevo') }}" class="bg-green-600 hover:bg-green-500 text-white font-bold py-1 px-2 mt-2 border border-green-500 rounded">Registrar Cliente</a>
+                                @elseif($botoncliente == 'false')
+                                <a href="{{ route('clientes') }}" class="bg-green-600 hover:bg-green-500 text-white font-bold py-1 px-2 mt-2 border border-green-500 rounded">Listado de Cliente</a>
+                                @endif
                             </div>
                     @endif
                     </div>
@@ -59,7 +65,7 @@
                             <input type="hidden" name="id_cliente" id="id_cliente" wire:model='id_cliente'>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social</label>
                             <input type="text" name="name" id="name" wire:model='name' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required readonly>
-                            <x-jet-input-error for="name"/>
+                            <x-jet-input-error for="id_cliente"/>
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
@@ -91,7 +97,7 @@
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                                 <label for="monto_sin_iva" class="block text-sm font-medium text-gray-700">Monto Bs.</label>
-                                <input type="text" onkeyup="myFunction()" name="monto_sin_iva" id="monto_sin_iva" wire:model="monto_sin_iva" placeholder="0,00" wire:keydown="convertidor_decimal()" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <input type="text" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'monto_sin_iva')" onkeypress='return myFunction()' name="monto_sin_iva" id="monto_sin_iva" wire:model="monto_sin_iva" placeholder="0,00" autocorrect="off" autocomplete="off" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                                 <x-jet-input-error for="monto_sin_iva"/>
                             </div>
 
@@ -132,9 +138,9 @@
                             <div>
                                 <label for="abono" class="block text-sm font-medium text-gray-700">Abono Bs.</label>
                                 @if($habilitarAbono == 'true')
-                                <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="abono" id="abono" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'abono')" onkeypress='return myFunction()' wire:model="abono" placeholder="0,00" autocorrect="off" autocomplete="off" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 @else
-                                <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
+                                <input type="text" name="abono" id="abono"  wire:model="abono" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'abono')" onkeypress='return myFunction()' placeholder="0,00" autocorrect="off" autocomplete="off" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                                 @endif
                             </div>
                             
@@ -144,7 +150,7 @@
                             <label for="abono_dolar" class="block text-sm font-medium text-gray-700">Abono $</label>
                             <input type="hidden" name="abonodolarbs" id="abonodolarbs" value="{{$abonodolarbs}}"></label>
                             @if($habilitarAbonoDolar == 'true')
-                            <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <input type="text" name="abono_dolar" id="abono_dolar"   onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'abono_dolar')" onkeypress='return myFunction()' wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             @else
                             <input type="text" name="abono_dolar" id="abono_dolar"  wire:model="abono_dolar" onkeyup="myFunction()" placeholder="0,00" autocomplete="given-abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                             @endif
@@ -179,13 +185,16 @@
 
                     
                     <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
-                        <input type="hidden" name="factura" id="factura" value="{{$factura}}">
+                        
                         <div class="pb-3.5 pr-4">
                             @if($factura == 'true')
+                                <input type="hidden" name="factura" id="factura" value="{{$factura}}"/>
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="submit">Imprimir factura</button>
                             @elseif($factura == 'false')
+                                <input type="hidden" name="factura" id="factura" value="{{$factura}}"/>
                                 <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 mt-2  border border-green-500 rounded py-1.5" type="submit">Imprimir Recibo</button>
                             @else
+                              <input type="hidden" name="factura" id="factura" value="{{$factura}}"/>
                                 <!--<p class="text-sm text-red-600">El abono supera el monto total</p>-->
                             @endif
                         </div>
@@ -224,4 +233,87 @@ function myFunction() {
   abono.value = abono.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
   abono_dolar.value = abono_dolar.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
 }
+
+function convertidor_decimal(donde, caracter, campo, id) {
+			var decimales = true;
+			var dec = campo;
+			var pat = /[\*,\+,\(,\),\?,\\,\$,\[,\],\^]/;
+			var valor = donde.value;
+			var largo = valor.length;
+			var crtr = true;
+			var cad1 = "";
+			var cad2 = "";
+			var cad3 = "";
+			var tres = 0;
+			var nums = 0;
+			var cont = 0;
+			var ctdd = 0;
+			var nmrs = 0;
+
+            var elemento = document.getElementById(id);
+            var val = document.getElementById(id).value;
+
+			if (isNaN(caracter) || pat.test(caracter) == true) {
+				if (pat.test(caracter) == true) {
+					caracter = "\\" + caracter
+				}
+				carcter = new RegExp(caracter, "g")
+				valor = valor.replace(carcter, "")
+				donde.value = valor
+				crtr = false
+			} else {
+				var nums = new Array()
+				cont = 0
+				for (m = 0; m < largo; m++) {
+					if (valor.charAt(m) == "." || valor.charAt(m) == " " || valor.charAt(m) == ",") {
+						continue;
+					} else {
+						nums[cont] = valor.charAt(m)
+						cont++
+					}
+
+				}
+			}
+
+			if (decimales == true) {
+				ctdd = eval(1 + dec);
+				nmrs = 1
+			} else {
+				ctdd = 1;
+				nmrs = 3
+			}
+
+			if (largo > nmrs && crtr == true) {
+
+				for (k = nums.length - ctdd; k >= 0; k--) {
+					cad1 = nums[k]
+					cad2 = cad1 + cad2
+					tres++
+					if ((tres % 3) == 0) {
+						if (k != 0) {
+							cad2 = "." + cad2
+						}
+					}
+				}
+
+				for (dd = dec; dd > 0; dd--) {
+					cad3 += nums[nums.length - dd]
+				}
+				if (decimales == true) {
+					cad2 += "," + cad3
+				}
+				var palabra = ",undefined";
+
+				var index = cad2.search(palabra);
+
+				if (index == 0) {
+					donde.value = 0;
+				} else {
+					donde.value = cad2;
+				}
+
+
+			}
+			donde.focus()
+		}
 </script>

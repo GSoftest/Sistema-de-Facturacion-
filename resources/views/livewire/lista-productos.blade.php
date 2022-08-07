@@ -110,14 +110,14 @@
 <x-slot name="footer">
 <span class="flex justify-center pt-2">
         <div class="pb-3.5 pr-4">
-            <x-jet-danger-button class="mx-12" wire:click="destroy2" wire:loading.attr="disabled">
-            Sí
-            </x-jet-danger-button>
-        </div>
-        <div class="">
         <x-jet-secondary-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
             No
         </x-jet-secondary-button>
+        </div>
+        <div class="">
+        <x-jet-danger-button class="mx-12" wire:click="destroy2" wire:loading.attr="disabled">
+            Sí
+            </x-jet-danger-button>
         </div>
         </span>
 </x-slot>

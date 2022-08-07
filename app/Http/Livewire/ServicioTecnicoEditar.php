@@ -52,9 +52,9 @@ class ServicioTecnicoEditar extends Component
       }
 
       $Dpendiente = str_replace(",",".",$this->monto_pendiente);
-      $this->monto_pendiente_dolar = ($Dpendiente*1)/$tasadia;
+     /* $this->monto_pendiente_dolar = ($Dpendiente*1)/$tasadia;
       $this->monto_pendiente_dolar =   bcdiv($this->monto_pendiente_dolar, '1', 2);
-      $this->monto_pendiente_dolar = str_replace(".",",",$this->monto_pendiente_dolar);
+      $this->monto_pendiente_dolar = str_replace(".",",",$this->monto_pendiente_dolar);*/
 
         $data = Ivas::All();
 
