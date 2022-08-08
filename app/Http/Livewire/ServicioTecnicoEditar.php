@@ -67,7 +67,7 @@ class ServicioTecnicoEditar extends Component
       $this->monto_pendiente_dolar = str_replace(".",",",$this->monto_pendiente_dolar);
 
         $data = Ivas::All();
-       // $this->redireccionar = 'false';
+        $this->redireccionar = 'false';
 
       }
 
@@ -97,11 +97,11 @@ class ServicioTecnicoEditar extends Component
    $this->habilitarAbono = $habilitarAbono;
    $this->habilitarAbonoDolar = $habilitarAbonoDolar;
 
-  // if($this->redireccionar == 'true'){
-  //  return Redirect::route('listaServicioTecnico');
-  // }else{
-    return view('livewire.servicio-tecnico-editar');
-  // }
+   /*if($this->redireccionar == 'true'){
+    $this->confirmingUserDeletion=true;
+   }*/
+
+      return view('livewire.servicio-tecnico-editar');
        
     }
 
@@ -323,8 +323,11 @@ class ServicioTecnicoEditar extends Component
     /**********se habilita el modal y se limpia los input************** */
     $this->confirmingUserDeletion=true;
     $this->boton='ninguno';
-   // $this->redireccionar = 'true';
+    $this->redireccionar = 'true';
     }
 
-
+    public function cerrar()
+    {
+      return Redirect::route('listaServicioTecnico');
+    }
 }
