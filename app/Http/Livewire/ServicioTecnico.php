@@ -432,6 +432,7 @@ if($this->identificacion != null){
         if($this->factura === 'true'){
             $ultimaFactura = Facturas_servicios::orderBy('numero_factura', 'desc')->first();
             $Factura = new Facturas_servicios();
+
             if($ultimaFactura == null){
                 $Factura->numero_factura = 1;
                 $Factura->pdf = 'Factura'.$Factura->numero_factura.'.pdf';
@@ -526,6 +527,7 @@ if($this->identificacion != null){
     
     /**********se crea el pdf************** */
     $pdf = app('dompdf.wrapper');
+
         $datapdf = [
             'fecha_servicio' => date("d/m/Y"),
             'hora' => date("h:i:s"),
@@ -552,8 +554,8 @@ if($this->identificacion != null){
             $this->Nombrepdf= $Factura->pdf;
         }else{
             $pdf->loadView('pdf.recibo_servicio',compact('datapdf'));
-            $pdf->save(public_path('app/archivos/pdf/facturas/') .$Recibo->pdf);
-            $this->urlpdf='app/archivos/pdf/facturas/'.$Recibo->pdf;
+            $pdf->save(public_path('app/archivos/recibos/') .$Recibo->pdf);
+            $this->urlpdf='app/archivos/recibos/'.$Recibo->pdf;
             $this->Nombrepdf= $Recibo->pdf;
         }
     

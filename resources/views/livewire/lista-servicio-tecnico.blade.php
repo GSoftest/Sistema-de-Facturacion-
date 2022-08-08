@@ -57,10 +57,11 @@
                 @endif
                 @endforeach
                 </td> 
-                <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">{{$servicio->fecha}}</td>
-                <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center"> {{str_replace(".",",",number_format(str_replace(",",".",$servicio->abono), 2 ))}}</td>
-                <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{str_replace(".",",",number_format(str_replace(",",".",$servicio->monto_pendiente), 2 ))}}</td>
-                <td class="w-16 border-r text-center">
+                <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">{{date('d/m/Y',strtotime($servicio->fecha))}}</td>
+                <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center"> {{$servicio->abono}}</td>
+
+              <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$servicio->monto_pendiente}}</td>
+              <td class="w-16 border-r text-center">
                 @foreach ($recibo as $rec)
                     @if($rec->id == $servicio->id_recibo) 
                     <button class="py-2" type="button" wire:click="download('{{$rec->pdf}}')"><i class="fa fa-download fa-sm" style="color: green;" aria-hidden="true"></i></button>

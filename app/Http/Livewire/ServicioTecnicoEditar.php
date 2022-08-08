@@ -14,7 +14,8 @@ class ServicioTecnicoEditar extends Component
     public $id_cliente;
     public $identificacion;
     public $fecha_servicio;
-    public $post;
+    public $post,$actualizar_abono,$actualizar_abono_dolar;
+
  
 
       public function mount($id)
@@ -52,9 +53,10 @@ class ServicioTecnicoEditar extends Component
       }
 
       $Dpendiente = str_replace(",",".",$this->monto_pendiente);
-     /* $this->monto_pendiente_dolar = ($Dpendiente*1)/$tasadia;
+  
+      $this->monto_pendiente_dolar = ($Dpendiente*1)/$tasadia;
       $this->monto_pendiente_dolar =   bcdiv($this->monto_pendiente_dolar, '1', 2);
-      $this->monto_pendiente_dolar = str_replace(".",",",$this->monto_pendiente_dolar);*/
+      $this->monto_pendiente_dolar = str_replace(".",",",$this->monto_pendiente_dolar);
 
         $data = Ivas::All();
 
@@ -65,7 +67,19 @@ class ServicioTecnicoEditar extends Component
 
     public function render()
     {
+
+      if($this->actualizar_abono != null || $this->actualizar_abono_dolar != null){
+        $this->montoPendiente();
+     }
+
        return view('livewire.servicio-tecnico-editar');
+    }
+
+    public function montoPendiente()
+    {
+
+      
+
     }
 
 

@@ -29,15 +29,17 @@
                             <div class="pt-4">
                             </div>
                         </div>
-
-                        <div class="py-2 justify-self-end  w-3/4 md:flex md:items-center">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div></div>
+                        <div class="py-2 justify-self-start  w-3/4 md:flex md:items-center">
                                 <div>
-                                <label for="fecha_servicio" class="block text-sm font-medium text-gray-700">Fecha:</label>
+                                <label for="fecha_servicio" class="block text-sm font-medium text-gray-700">Fecha:&nbsp;</label>
                                 </div>
                                 <div>
                                 <label class="block text-sm font-medium text-gray-700">{{$fecha_servicio}}</label>
                                 <input type="hidden" name="fecha_servicio" id="fecha_servicio"  wire:model='fecha_servicio' value="{{$fecha_servicio}}">
                                 </div>
+                        </div>
                         </div>
                      </div>
 
@@ -116,6 +118,23 @@
                     </div>
 
 
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="py-2 grid grid-cols-2 gap-4">
+                            <div></div>
+                            <div>
+                                <label for="actualizar_abono" class="block text-sm font-medium text-gray-700">Actualizar abono Bs.</label>
+                                <input type="text" name="actualizar_abono"  id="actualizar_abono" wire:model="actualizar_abono" placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'actualizar_abono')" onkeypress='return myFunction()' autocomplete="given-actualizar_abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                        <div class="py-2 grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="actualizar_abono_dolar" class="block text-sm font-medium text-gray-700">Actualizar abono $</label>
+                            <input type="text" name="actualizar_abono_dolar" id="actualizar_abono_dolar" wire:model="actualizar_abono_dolar" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'actualizar_abono_dolar')" onkeypress='return myFunction()' autocomplete="given-actualizar_abono_dolar" placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">  
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
                         <input type="hidden" name="factura" id="factura" value="{{$factura}}">
                         <div class="pb-3.5 pr-4">
@@ -134,3 +153,98 @@
         </div>
     </div>
 </div>
+
+
+<script>
+function myFunction() {
+  var monto_sin_iva = document.getElementById("monto_sin_iva");
+  var abono = document.getElementById("abono");
+  var abono_dolar = document.getElementById("abono_dolar");
+  monto_sin_iva.value = monto_sin_iva.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');
+  abono.value = abono.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
+  abono_dolar.value = abono_dolar.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
+}
+
+function convertidor_decimal(donde, caracter, campo, id) {
+			var decimales = true;
+			var dec = campo;
+			var pat = /[\*,\+,\(,\),\?,\\,\$,\[,\],\^]/;
+			var valor = donde.value;
+			var largo = valor.length;
+			var crtr = true;
+			var cad1 = "";
+			var cad2 = "";
+			var cad3 = "";
+			var tres = 0;
+			var nums = 0;
+			var cont = 0;
+			var ctdd = 0;
+			var nmrs = 0;
+
+            var elemento = document.getElementById(id);
+            var val = document.getElementById(id).value;
+
+			if (isNaN(caracter) || pat.test(caracter) == true) {
+				if (pat.test(caracter) == true) {
+					caracter = "\\" + caracter
+				}
+				carcter = new RegExp(caracter, "g")
+				valor = valor.replace(carcter, "")
+				donde.value = valor
+				crtr = false
+			} else {
+				var nums = new Array()
+				cont = 0
+				for (m = 0; m < largo; m++) {
+					if (valor.charAt(m) == "." || valor.charAt(m) == " " || valor.charAt(m) == ",") {
+						continue;
+					} else {
+						nums[cont] = valor.charAt(m)
+						cont++
+					}
+
+				}
+			}
+
+			if (decimales == true) {
+				ctdd = eval(1 + dec);
+				nmrs = 1
+			} else {
+				ctdd = 1;
+				nmrs = 3
+			}
+
+			if (largo > nmrs && crtr == true) {
+
+				for (k = nums.length - ctdd; k >= 0; k--) {
+					cad1 = nums[k]
+					cad2 = cad1 + cad2
+					tres++
+					if ((tres % 3) == 0) {
+						if (k != 0) {
+							cad2 = "." + cad2
+						}
+					}
+				}
+
+				for (dd = dec; dd > 0; dd--) {
+					cad3 += nums[nums.length - dd]
+				}
+				if (decimales == true) {
+					cad2 += "," + cad3
+				}
+				var palabra = ",undefined";
+
+				var index = cad2.search(palabra);
+
+				if (index == 0) {
+					donde.value = 0;
+				} else {
+					donde.value = cad2;
+				}
+
+
+			}
+			donde.focus()
+		}
+</script>
