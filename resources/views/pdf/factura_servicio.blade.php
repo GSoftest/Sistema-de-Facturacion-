@@ -11,7 +11,7 @@
     <header class="clearfix">
 
       <h1 class="lineaTop"></h1>
-      <h1 class="factura">Seniat</h1>
+      <h1 class="factura">SENIAT</h1>
       <div class="companyfactura">
         <div>J-xxxxxxxxx</div>
         <div>Company Name</div>

@@ -10,9 +10,6 @@ use App\Models\Tasa_Otros;
 use App\Models\Servicio_Tecnico;
 use App\Models\Facturas_servicios;
 use App\Models\Recibo;
-use App\Http\Livewire\App;
-use Illuminate\Support\Facades\App as FacadesApp;
-use Symfony\Component\Console\Output\NullOutput;
 
 class ServicioTecnico extends Component
 {
@@ -63,34 +60,15 @@ class ServicioTecnico extends Component
                 }
             }
 
-       //     $existe = strrpos($this->monto_sin_iva, '.');
-    //dd($this->monto_sin_iva);
-         //   if($existe == false){
             $this->MontoConIva($iva);
             $this->resetValidation();
-          /* }else{
-            $this->monto_con_iva =  '';
-           }*/
+ 
         }
 
 
          /*************Campo Abono********* */
   
-        /* if($this->abono != null  && $this->abono_dolar != null){
-
-            $this->abono =  '';
-            $this->abono_dolar =  '';
-            $this->monto_pendiente =  '0,00';
-            $this->monto_pendiente_dolar =  '0,00';
-
-         }else if($this->abono == null  && $this->abono_dolar == null){
-
-            $this->abono =  '';
-            $this->abono_dolar =  '';
-            $this->monto_pendiente =  '0,00';
-            $this->monto_pendiente_dolar =  '0,00';
-
-         }else*/ if($this->abono == $this->monto_con_iva){
+         if($this->abono == $this->monto_con_iva){
 
             $this->monto_pendiente =  '0,00';
             $this->monto_pendiente_dolar =  '0,00';
@@ -123,45 +101,6 @@ class ServicioTecnico extends Component
 
 
          /*************Botón de factura***************** */
-       /*  if($this->monto_con_iva != null){
-
-            $existe =  str_replace(","," ",$this->abono);
-            $existe = str_replace(".","",$this->abono);
-            $existe = (float) str_replace(" ",".",$existe);
-
-            $existeiva = str_replace(","," ",$this->monto_con_iva);
-            $existeiva = str_replace(".","",$this->monto_con_iva);
-            $existeiva = (float) str_replace(" ",".",$existeiva);
-
-            $existe2 = str_replace(","," ",$this->abono_dolar);
-            $existe2 = str_replace(".","",$this->abono_dolar);
-            $existe2 = (float) str_replace(" ",".",$existe2);
-
-            $existeiva2 = str_replace(","," ",$this->monto_con_iva_dolar);
-            $existeiva2 = str_replace(".","",$this->monto_con_iva_dolar);
-            $existeiva2 = (float) str_replace(" ",".",$existeiva2);
-           
-            //$existeP = strrpos($this->monto_pendiente, "-");
-    
-            if($existe == $existeiva || $existe2 == $existeiva2){
-                $factura = 'true';
-
-            }/*else if($existe > $existeiva || $existe2 > $existeiva2){
-                $factura = 'ninguno';
-
-            }else if($existe == null || $existe2 == null){
-                $factura = 'ninguno';
-                
-            }*//*else{
-                $factura = 'false';
-            }*/
-
-       /* }else{
-            $factura = 'ninguno';
-        }*/
-
-        
-           // $this->factura = 'ninguno';
             $this->habilitarAbono = $habilitarAbono;
             $this->habilitarAbonoDolar = $habilitarAbonoDolar;
             date_default_timezone_set('America/Caracas');
@@ -247,19 +186,16 @@ class ServicioTecnico extends Component
 
         $monto_con_iva = ($iva*$monto)/100;
 
-
-      //  dd( $this->monto_sin_iva);
-
         $this->monto_con_iva = bcdiv($monto+$monto_con_iva, '1', 2);
        
         $existe = strrpos($this->monto_con_iva, ',');
 
-        $tasadeldiaBCV = Tasa_BCV::all();
         $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
 
         if($tasadeldiaotros){
             $tasadia =   $tasadeldiaotros->tasa; 
         }else{
+            $tasadeldiaBCV = Tasa_BCV::all();
             $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
             $tasadia = str_replace(",",".",$tasadia);
            
@@ -269,23 +205,17 @@ class ServicioTecnico extends Component
 
         $this->monto_con_iva_dolar = ($this->monto_con_iva*1)/$tasadia;
         
-     //  dd($this->monto_con_iva);
-       /*if($existe != false){
-        $this->monto_con_iva = str_replace(",","",$this->monto_con_iva);
-       }*/
 
        $this->monto_con_iva = number_format($this->monto_con_iva, 2);
        $this->monto_con_iva = str_replace(","," ",$this->monto_con_iva);
        $this->monto_con_iva = str_replace(".",",",$this->monto_con_iva);
        $this->monto_con_iva = str_replace(" ",".",$this->monto_con_iva);
 
-      // $this->monto_con_iva = str_replace(".",",",$this->monto_con_iva);
       $this->monto_con_iva_dolar = number_format($this->monto_con_iva_dolar, 2);
       $this->monto_con_iva_dolar = str_replace(","," ",$this->monto_con_iva_dolar);
       $this->monto_con_iva_dolar = str_replace(".",",",$this->monto_con_iva_dolar);
       $this->monto_con_iva_dolar = str_replace(" ",".",$this->monto_con_iva_dolar);
-      // $this->monto_con_iva_dolar =   bcdiv($this->monto_con_iva_dolar, '1', 2);
-      // $this->monto_con_iva_dolar = str_replace(".",",",$this->monto_con_iva_dolar);
+
 
     }
 
@@ -301,8 +231,6 @@ public function montoPendiente(){
 
         $montDolar = str_replace(".","",$this->monto_con_iva_dolar);
         $montDolar = str_replace(",",".",$montDolar);
-       // $mont = str_replace(",",".",$this->monto_con_iva);
-       // $montDolar = str_replace(",",".",$this->monto_con_iva_dolar);
 
        $montAbono = str_replace(".","",$this->abono);
        $montAbono = str_replace(",",".",$montAbono);
@@ -310,15 +238,12 @@ public function montoPendiente(){
        $montAbonodolar = str_replace(".","",$this->abono_dolar);
        $montAbonodolar = str_replace(",",".",$montAbonodolar);
 
-      //  $montAbono = str_replace(",",".",$this->abono);
-      //  $montAbonodolar = str_replace(",",".",$this->abono_dolar);
-
-        $tasadeldiaBCV = Tasa_BCV::all();
         $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
 
         if($tasadeldiaotros){
             $tasadia = $tasadeldiaotros->tasa; 
         }else{
+            $tasadeldiaBCV = Tasa_BCV::all();
             $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
             $tasadia = str_replace(",",".",$tasadia);
         }
@@ -387,17 +312,6 @@ public function montoPendiente(){
         }else{
             $this->factura = 'false';
         }
-
-//dd(strrpos($this->monto_pendiente, '-'));
-
-      /*  $existependiente = strrpos($this->monto_pendiente, '-');
-
-       /* if($existependiente == false){
-            $this->factura = 'false';
-        }else if($existependiente == true){
-            $this->factura = 'ninguno';
-        }*/
-    
     }
 }
      public function default()
@@ -472,13 +386,9 @@ if($this->identificacion != null){
     
     
           /**********se calcula el monto del iva************** */
-    
-         // $monto_con_iva = str_replace(",",".",$this->monto_con_iva);
           $monto_con_iva = str_replace(".","",$this->monto_con_iva);
           $monto_con_iva = str_replace(",",".",$monto_con_iva);
 
-
-         // $monto_sin_iva = str_replace(",",".",$this->monto_sin_iva);
           $monto_sin_iva = str_replace(".","",$this->monto_sin_iva);
           $monto_sin_iva = str_replace(",",".",$monto_sin_iva);
 
@@ -487,7 +397,6 @@ if($this->identificacion != null){
           $montoIva = str_replace("."," ",$montoIva);
           $montoIva = str_replace(",",".",$montoIva);
           $montoIva = str_replace(" ",",",$montoIva);
-
 
           $porcentajeIva = Ivas::find($this->id_iva);
           $porcentajeIva = $porcentajeIva->iva;
@@ -549,8 +458,8 @@ if($this->identificacion != null){
     
         if($this->factura === 'true'){
             $pdf->loadView('pdf.factura_servicio',compact('datapdf'));
-            $pdf->save(public_path('app/archivos/pdf/facturas/') .$Factura->pdf);
-            $this->urlpdf='app/archivos/pdf/facturas/'.$Factura->pdf;
+            $pdf->save(public_path('app/archivos/facturas/') .$Factura->pdf);
+            $this->urlpdf='app/archivos/facturas/'.$Factura->pdf;
             $this->Nombrepdf= $Factura->pdf;
         }else{
             $pdf->loadView('pdf.recibo_servicio',compact('datapdf'));

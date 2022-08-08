@@ -31,13 +31,13 @@
                         Recibo
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
-                        fecha
+                        Fecha
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
                         Abono
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
-                        Monto pendiente
+                        Monto Pendiente
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
@@ -70,7 +70,6 @@
                 </td>
                 <td class="w-16 border-r text-center">
                <a class="py-2" href="{{ route('servicioTecnicoEditar', $servicio->id) }}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
-              <!-- <button class="py-2" type="button" wire:click="editar('{{$servicio->id}}')"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></button>-->
                 </td>
              </tr>
              @endforeach

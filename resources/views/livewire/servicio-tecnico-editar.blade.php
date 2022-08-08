@@ -10,7 +10,8 @@
                 <form wire:submit.prevent="submit" method="post" enctype="multipart/form-data" target="_blank">
                 @csrf
                 <div class="px-4 py-5 bg-white sm:p-6">
-
+                <input type="hidden" name="id_recibo" id="id_recibo"  wire:model='id_recibo' value="{{$id_recibo}}">
+                <input type="hidden" name="id_servicio" id="id_servicio"  wire:model='id_servicio' value="{{$id_servicio}}">
                     <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                         <div class="justify-self-center">
                             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -123,25 +124,34 @@
                             <div></div>
                             <div>
                                 <label for="actualizar_abono" class="block text-sm font-medium text-gray-700">Actualizar abono Bs.</label>
+                                @if($habilitarAbono == 'true')
                                 <input type="text" name="actualizar_abono"  id="actualizar_abono" wire:model="actualizar_abono" placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'actualizar_abono')" onkeypress='return myFunction()' autocomplete="given-actualizar_abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @else
+                                <input type="text" name="actualizar_abono"  id="actualizar_abono" wire:model="actualizar_abono" placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'actualizar_abono')" onkeypress='return myFunction()' autocomplete="given-actualizar_abono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
+                                @endif
                             </div>
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                         <div>
                             <label for="actualizar_abono_dolar" class="block text-sm font-medium text-gray-700">Actualizar abono $</label>
+                            @if($habilitarAbonoDolar == 'true')
                             <input type="text" name="actualizar_abono_dolar" id="actualizar_abono_dolar" wire:model="actualizar_abono_dolar" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'actualizar_abono_dolar')" onkeypress='return myFunction()' autocomplete="given-actualizar_abono_dolar" placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">  
+                            @else
+                            <input type="text" name="actualizar_abono_dolar" id="actualizar_abono_dolar" wire:model="actualizar_abono_dolar" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'actualizar_abono_dolar')" onkeypress='return myFunction()' autocomplete="given-actualizar_abono_dolar" placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
+                            @endif
                             </div>
                         </div>
                     </div>
 
 
                     <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
-                        <input type="hidden" name="factura" id="factura" value="{{$factura}}">
                         <div class="pb-3.5 pr-4">
-                            @if($factura == 'true')
+                            @if($boton == 'true')
+                            <input type="hidden" name="boton" id="boton" value="{{$boton}}">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="submit">Imprimir factura</button>
-                            @elseif($factura == 'false')
-                                <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 mt-2  border border-green-500 rounded py-1.5" type="submit">Imprimir Recibo</button>
+                            @elseif($boton == 'false')
+                            <input type="hidden" name="boton" id="boton" value="{{$boton}}">
+                                <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 mt-2  border border-green-500 rounded py-1.5" type="submit">Actualizar Recibo</button>
                             @else
                                 <!--<p class="text-sm text-red-600">El abono supera el monto total</p>-->
                             @endif
@@ -149,6 +159,20 @@
                     </div> 
                 </div>
                 </form>
+
+<x-dialog-modal-factura wire:model="confirmingUserDeletion">
+    <x-slot name="title">{{$Nombrepdf}}</x-slot>
+    <x-slot name="content">
+    <embed
+    src="{{URL::asset($urlpdf)}}"
+    style="width:600px; height:800px;"
+    frameborder="0">
+    </x-slot>
+
+    <x-slot name="footer">
+    </x-slot>
+</x-dialog-modal-factura>
+
             </div>
         </div>
     </div>
