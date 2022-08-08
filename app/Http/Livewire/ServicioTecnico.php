@@ -164,11 +164,12 @@ class ServicioTecnico extends Component
            // $this->factura = 'ninguno';
             $this->habilitarAbono = $habilitarAbono;
             $this->habilitarAbonoDolar = $habilitarAbonoDolar;
-           
+            date_default_timezone_set('America/Caracas');
+
         return view('livewire.servicio-tecnico',
         ['ivas'  => $data,
         'monto_con_iva' => 0,
-        'fecha_servicio' => date('d/m/Y'),
+        'fecha_servicio' =>  date('d/m/Y'),
     ]);
 
     }
@@ -493,8 +494,9 @@ if($this->identificacion != null){
 
     
         /**********se guarda el registro en la tabla servicio técnico************** */
-    
-    $date = str_replace('/', '-', date('d/m/Y'));
+        date_default_timezone_set('America/Caracas');
+        
+   // $date = date('d-m-Y'));
     
     $Servicio_Tecnico = new Servicio_Tecnico();
     $Servicio_Tecnico->id_recibo = $this->idrecibo;
@@ -518,14 +520,15 @@ if($this->identificacion != null){
     }
 
     $Servicio_Tecnico->monto_pendiente = $this->monto_pendiente;
-    $Servicio_Tecnico->fecha = date("Y-m-d",strtotime( $date ));
+    $Servicio_Tecnico->fecha = date("Y-m-d h:i:s");
     $Servicio_Tecnico->save();
   
     
     /**********se crea el pdf************** */
     $pdf = app('dompdf.wrapper');
         $datapdf = [
-            'fecha_servicio' => date('d/m/Y'),
+            'fecha_servicio' => date("d/m/Y"),
+            'hora' => date("h:i:s"),
             'name' => $this->name,
             'identificacion' => $this->identificacion,
             'telefono' => $this->telefono,

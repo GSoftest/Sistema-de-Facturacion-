@@ -9,20 +9,28 @@
 </head>
 <body>
     <header class="clearfix">
-      <h1>Factura</h1>
-      <div id="company" class="clearfix">
+
+      <h1 class="lineaTop"></h1>
+      <h1 class="factura">Seniat</h1>
+      <div class="companyfactura">
+        <div>J-xxxxxxxxx</div>
         <div>Company Name</div>
-        <div>direccion,<br /> direccion, VZ</div>
-        <div>(212) XXX-XX-XX</div>
+        <div>Av xxxxxxx xxxxx,<br /> xxxxxx, Caracas <br />(Plaza Venezuela) Distrito Capital</div>
+        <div>(0212) XXX-XX-XX</div>
         <div><a href="mailto:company@example.com">company@example.com</a></div>
       </div>
+      <h1 class="lineabottom"></h1>
+
+      <div class="clearfix"></div>
+
       <div id="project">
         <div><span>CLIENTE</span> {{$datapdf['name']}}</div>
         <div><span>CI/RIF</span> {{$datapdf['identificacion']}}</div>
-        <div><span>TELEFONO</span>{{$datapdf['telefono']}}</div>
         <div><span>DIRECCION</span>{{$datapdf['direccion']}}</div>
+        <div><span>TELEFONO</span>{{$datapdf['telefono']}}</div>
         <div><span>N° FACTURA</span>{{$datapdf['factura']}}</div>
         <div><span>FECHA</span>{{$datapdf['fecha_servicio']}}</div>
+        <div><span>HORA</span>{{$datapdf['hora']}}</div>
       </div>
     </header>
     <main>

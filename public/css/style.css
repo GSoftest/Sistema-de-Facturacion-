@@ -35,12 +35,38 @@ header {
   width: 90px;
 }
 
-h1 {
+.recibo{
   border-top: 1px solid  #5D6975;
   border-bottom: 1px solid  #5D6975;
   color: #5D6975;
   font-size: 2.4em;
   line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+.factura{
+  color: #5D6975;
+  font-size: 2.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 0 0;
+}
+
+.lineaTop{
+  border-top: 1px solid  #5D6975;
+  line-height: 1.4em;
+}
+
+.lineabottom{
+  border-bottom: 1px solid  #5D6975;
+  line-height: 1.4em;
+}
+
+.companyfactura {
+  color: #5D6975;
+  font-size: 0.8em;
   font-weight: normal;
   text-align: center;
   margin: 0 0 20px 0;
@@ -52,7 +78,7 @@ h1 {
 
 #project span {
   color: #5D6975;
-  text-align: right;
+  text-align: justify;
   width: 52px;
   margin-right: 10px;
   display: inline-block;
@@ -64,6 +90,7 @@ h1 {
   text-align: right;
 }
 
+.companyfactura div,
 #project div,
 #company div {
   white-space: nowrap;        

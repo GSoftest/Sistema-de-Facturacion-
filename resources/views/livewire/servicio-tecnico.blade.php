@@ -37,7 +37,7 @@
                             <div></div>
                         <div class="py-2 justify-self-start  w-3/4 md:flex md:items-center">
                                 <div>
-                                <label for="fecha_servicio" class="block text-sm font-medium text-gray-700">Fecha:</label>
+                                <label for="fecha_servicio" class="block text-sm font-medium text-gray-700">Fecha:&nbsp;</label>
                                 </div>
                                 <div>
                                 <label class="block text-sm font-medium text-gray-700">{{$fecha_servicio}}</label>
@@ -205,7 +205,7 @@
                     </form>
 
 
-<x-jet-dialog-modal wire:model="confirmingUserDeletion">
+<x-dialog-modal-factura wire:model="confirmingUserDeletion">
     <x-slot name="title">{{$Nombrepdf}}</x-slot>
     <x-slot name="content">
     <embed
@@ -216,7 +216,7 @@
 
     <x-slot name="footer">
     </x-slot>
-</x-jet-dialog-modal>
+</x-dialog-modal-factura>
 
 
             </div>

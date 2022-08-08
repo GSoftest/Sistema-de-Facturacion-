@@ -12,11 +12,12 @@
       <div id="logo">
         <img src="{{ URL::asset('/app/archivos/logo.jpg'); }}">
       </div>
-      <h1>Recibo</h1>
+      <h1 class="recibo">Recibo</h1>
       <div id="company" class="clearfix">
+        <div>J-xxxxxxxxx</div>
         <div>Company Name</div>
-        <div>direccion,<br /> direccion, VZ</div>
-        <div>(212) XXX-XX-XX</div>
+        <div>Av xxxxxxx xxxxx,<br /> xxxxxx, Caracas <br />(Plaza Venezuela) Distrito Capital</div>
+        <div>(0212) XXX-XX-XX</div>
         <div><a href="mailto:company@example.com">company@example.com</a></div>
       </div>
       <div id="project">
@@ -26,6 +27,7 @@
         <div><span>DIRECCION</span>{{$datapdf['direccion']}}</div>
         <div><span>N° RECIBO</span>{{$datapdf['recibo']}}</div>
         <div><span>FECHA</span>{{$datapdf['fecha_servicio']}}</div>
+        <div><span>HORA</span>{{$datapdf['hora']}}</div>
       </div>
     </header>
     <main>
