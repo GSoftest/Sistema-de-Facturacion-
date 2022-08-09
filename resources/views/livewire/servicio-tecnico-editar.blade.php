@@ -15,7 +15,7 @@
                     <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                         <div class="justify-self-center">
                             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ __('Actualizar Servicio Técnico') }}
+                                {{ __('Servicio Técnico') }}
                             </h2>
                         </div>
                     </div>

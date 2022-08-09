@@ -38,8 +38,9 @@
         <thead>
           <tr>
             <th class="service">CANTIDAD</th>
-            <th class="">DESCRIPCION</th>
-            <th>TOTAL</th>
+            <th class="service">PRODUCTOS</th>
+            <th class="service">IMPUESTO</th>
+            <th class="total">TOTAL</th>
           </tr>
         </thead>
         <tbody>
@@ -47,22 +48,31 @@
           <tr>
             <td class="service">{{$datapdf['cantidad'][$key]}}</td>
             <td class="desc">{{$value}}</td>
-            <td class="unit"></td>
+            <td class="service">
+            @if($datapdf['coniva'][$key] == 0)
+              EX
+            @else
+              GR
+            @endif
+            </td>
+            <td class="total">{{str_replace(" ",",", str_replace(".",",", str_replace(","," ",number_format($datapdf['productosMonto'][$key], 2))))}}</td>
           </tr>
           @endforeach
           <tr>
+            <td></td>
             <td colspan="2">SUBTOTAL</td>
             <td class="total">{{$datapdf['total_sin_iva']}}</td>
           </tr>
           <tr>
-            <td colspan="2">IVA %</td>
+            <td></td>
+            <td colspan="2">IVA {{$datapdf['porcentajeIva']}} %</td>
             <td class="total">{{$datapdf['total_IVA']}}</td>
           </tr>
           <tr>
+            <td class="grand total"></td>
             <td colspan="2" class="grand total">TOTAL</td>
             <td class="grand total">{{$datapdf['total_bs']}}</td>
           </tr>
-     
         </tbody>
       </table>
     </main>

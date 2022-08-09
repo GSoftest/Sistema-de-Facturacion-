@@ -127,13 +127,11 @@
 
 
                             <div class="py-2">
-                            @if(!empty($disponible))
+                            @if($disponible >= 0)
                                 <label for="id_categoria" class="block text-sm font-medium text-gray-700">Disponible</label>
-                                    @if($disponible != '')
                                     <input type='text' class="font-bold text-green-600 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md w-1/3" placeholder="{{$disponible}}" value="{{$disponible}}" disabled/>
-                                    &nbsp;&nbsp;
-                                    @endif
-                                @endif
+                                    &nbsp;&nbsp; 
+                            @endif
                             </div>
                         </div>
                         
@@ -153,10 +151,12 @@
   <tbody>
     <tr class="border-b">
       <td class="w-24 border-r">
+        <input type="hidden" name="disProducto.0" id="disProducto.0" wire:model='disProducto.0'>
         <input type="text" name="cantidad.0" wire:model='cantidad.0' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
       </td>
       <td class="border-r">
-       <input type="hidden" name="idP.0" id="idP.0" wire:model='idP.0'>
+        <input type="hidden" name="idP.0" id="idP.0" wire:model='idP.0'>
+        <input type="hidden" name="idProducto.0" id="idProducto.0" wire:model='idProducto.0'>
         <input type="text"  name="id_producto.0" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" wire:model="searchTerm.0" disabled>
       </td>
       <td  class="w-24 border-r">
@@ -187,16 +187,19 @@
            @foreach($ventas as $key => $value)
     <tr class="border-b">
         <td  class="w-24 border-r">
+            <input type="hidden" name="disProducto.{{ $key+1 }}" id="disProducto.{{ $key+1 }}" wire:model='disProducto.{{ $key+1 }}'>
             <input type="text"  name="cantidad.{{ $key+1 }}"  wire:model='cantidad.{{  $key+1 }}' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
         </td>
         <td class="border-r">
             <input type="hidden" name="idP.{{ $key+1 }}" id="idP.{{ $key+1 }}" wire:model='idP.{{ $key+1 }}'>
+            <input type="hidden" name="idProducto.{{ $key+1 }}" id="idProducto.{{ $key+1 }}" wire:model='idProducto.{{ $key+1 }}'>
             <input type="text" name="id_producto.{{ $key+1 }}" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" wire:model="searchTerm.{{ $key+1 }}" disabled>
         </td>
         <td  class="w-24 border-r">
             <input type="text" name="precio_sin_iva.{{ $key+1 }}"  wire:model='costo.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
         </td>
         <td  class="w-24 border-r">
+            <input type="hidden" name="montoP.{{ $key+1 }}"  wire:model='montoP.{{ $key+1 }}'>
             <input type="text" name="total.{{ $key+1 }}"  wire:model='total.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
         </td>
         <td  class="w-24 border-r">

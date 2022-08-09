@@ -154,7 +154,7 @@ class ServicioTecnicoEditar extends Component
 
       date_default_timezone_set('America/Caracas');
       $Servicio = Servicio_Tecnico::find($this->id_servicio);
-     $Recibo = Recibo::selectRaw('recibo, lpad(recibo, 15, 0), id,pdf')->where('id',$this->id_recibo)->first();;
+     $Recibo = Recibo::selectRaw('recibo, lpad(recibo, 15, 0), id,pdf')->where('id',$this->id_recibo)->first();
 
 
       if($this->boton === 'true'){

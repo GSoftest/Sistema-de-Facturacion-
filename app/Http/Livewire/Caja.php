@@ -36,6 +36,9 @@ class Caja extends Component
     public $count = 1;
     public $id_producto=[];
     public $idP=[];
+    public $idProducto=[];
+    public $montoP=[];
+    public $disProducto=[];
 
     public $confirmingUserDeletion = false;
     public $confirmingDeletion = false;
@@ -87,7 +90,11 @@ class Caja extends Component
                        //  $disponible = Productos::where('name',$this->searchTerm[$i])->get();
                         // $dispo = ($disponible[0]->unidad - $this->cantidad[($i)]);
                        //  array_push($this->stock,$dispo);
-                        $total = ($this->cantidad[$i]*$this->costo[ $i]);
+
+                       $costoi = str_replace(".","",$this->costo[$i]);
+                       $costoi = str_replace(",",".",$costoi);
+
+                        $total = ($this->cantidad[$i]*$costoi);
 
                         if($this->impuesto[$i] == 0){
                             $porcentaje = 0;
@@ -104,6 +111,8 @@ class Caja extends Component
 
                         $this->totalSINIVA[$i] = $total;
                         $this->totalIVA[$i] = $porcentaje;
+                        $this->idProducto[$i] =  $total;
+
                     }else{
                         $dispo = 0;
                     }
@@ -134,9 +143,9 @@ class Caja extends Component
                 $sum  = $sum+$total;
 
                    // dd($this->totalSINIVA[0]);
-                //$sinIVA = str_replace(".","",$this->totalSINIVA[$i]);
-                //$sinIVA = str_replace(",",".",$sinIVA);
-                 $sumSINIVA  = $sumSINIVA+$this->totalSINIVA[$i];
+                $sinIVA = str_replace(".","",$this->totalSINIVA[$i]);
+                $sinIVA = str_replace(",",".",$sinIVA);
+                $sumSINIVA  = $sumSINIVA+$this->totalSINIVA[$i];
 
 
                 $toIVA = str_replace(".","",$this->totalIVA[$i]);
@@ -325,28 +334,51 @@ public function seleccionBuscador()
     $cant = count($this->ventas);
     $dataProducto = Productos::find($this->id_producto);
     if($cant == 0){
-
+        if($this->id_producto != ''){ 
         if(count($this->searchTerm) == 0){
+           
+            if($dataProducto->unidad != 0){
             $this->searchTerm[0] = $dataProducto->name;
             $this->costo[0] = $dataProducto->precio_sin_iva;
+            $this->costo[0] = number_format($this->costo[0], 2);
+            $this->costo[0] = str_replace(","," ",$this->costo[0]);
+            $this->costo[0] = str_replace(".",",",$this->costo[0]);
+            $this->costo[0] = str_replace(" ",".",$this->costo[0]);
+
             $this->disponible = $dataProducto->unidad;
+            $this->disProducto[0] = $dataProducto->unidad;
             $this->impuesto[0] = $dataProducto->exento;
             $this->idP[0] = $dataProducto->id;
             $this->posicionInput=0; 
+            }else{
+                $this->disponible = 0;
+            }
         }else{
             $this->disponible = $dataProducto->unidad;
         }
-
+      }else{$this->disponible = '';}
     }else{
+        if($this->id_producto != ''){ 
         if(count($this->searchTerm) == count($this->ventas)){
+            if($dataProducto->unidad != 0){
             $this->searchTerm[($this->posicionInput)] = $dataProducto->name;
             $this->costo[($this->posicionInput)] = $dataProducto->precio_sin_iva;
+            $this->costo[($this->posicionInput)] = number_format($this->costo[($this->posicionInput)], 2);
+            $this->costo[($this->posicionInput)] = str_replace(","," ",$this->costo[($this->posicionInput)]);
+            $this->costo[($this->posicionInput)] = str_replace(".",",",$this->costo[($this->posicionInput)]);
+            $this->costo[($this->posicionInput)] = str_replace(" ",".",$this->costo[($this->posicionInput)]);
             $this->disponible = $dataProducto->unidad;
+            $this->disProducto[($this->posicionInput)] = $dataProducto->unidad;
             $this->idP[($this->posicionInput)] = $dataProducto->id;
             $this->impuesto[($this->posicionInput)] = $dataProducto->exento;
+            }else{
+                $this->disponible = 0;
+            }
+
         }else{
             $this->disponible = $dataProducto->unidad;
         }
+        }else{$this->disponible = '';}
     }
 
 }
@@ -372,7 +404,6 @@ public function seleccionBuscador()
             //dd('no va a agregar más');
         }
 
-       // dd($this);
         $this->view = 'livewire.caja';
     }
 
@@ -400,67 +431,6 @@ public function seleccionBuscador()
         $this->posicionInput = count($this->ventas)+1;
         $this->confirmingDeletion=false;
     }
-
-
-   /* public function CalcularTotal($i)
-    {
-    
-      /*- if($i=='0'){*/
-       //     $total = ($this->cantidad[$i]*$this->costo[$i]);
-         //   $this->total[$i] = $total;
-        /*}else{
-       // dd($this->cantidad[($i)]);
-       /* $total = ($this->cantidad[$i]*$this->costo[$i]);
-        $this->total[$i] = $total;*/
-       // }
-   // }*/
-   /* public function changeProductos(){
-
-
-        if ( $this->id_producto != '' &&  $this->id_producto != null) {
-            $dataProducto = Productos::find($this->id_producto);
-            $this->description = $dataProducto->description;
-            $this->costo_unitario = $dataProducto->costo_unitario;
-        }else{
-            $this->description = '';
-            $this->costo_unitario = '';
-        }
-
-        $this->view = 'livewire.servicio-tecnico';
-        
-    }*/
-
- /*   public function facturar($id)
-    {
-        $item = Productos::find($id);
-  
-
-        if(isset($this->item_id)){
-
-            $cant =  $this->cant+1;
-            $this->cant = $cant;
-            $this->costo_unitario = $this->costo_unitario+$item->costo_unitario;
-
-        }else{
-          
-            $this->item_id = $item->id;
-            $this->name = $item->name;
-            $this->costo_unitario = $item->costo_unitario;
-            $this->imagen_url = $item->imagen_url;
-            $this->cant = 1;
-        }
-        $this->view = 'livewire.caja';
-    }
-
-
-    public function destroy($id)
-    {
-        if($this->item_id == $id){
-            $this->item_id = '';
-        }
-
-        $this->view = 'livewire.caja';
-    }*/
 
     public function modal(){
         $this->confirmingUserDeletion=true;
@@ -514,12 +484,23 @@ public function seleccionBuscador()
         }
         
          $Factura->id_venta = $Venta->id;
-        $Factura->save();
+         $Factura->save();
          $facturanu = Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0), id')->where('nombre_factura',$Factura->nombre_factura)->first();
          $facturanumero = $facturanu['lpad(numero_factura, 15, 0)'];
 
-
+         $porcentajeIva = Ivas::where('estado',1)->get();
+         $porcentajeIva = $porcentajeIva[0]->iva;
    
+
+         /***************descontar lo disponible***************** */
+             $longitudDisP = count($this->disProducto);
+
+            for($i = 0; $i < $longitudDisP; $i++){
+                $updateProducto = Productos::find($this->idP[$i]);
+                $reduccion = $updateProducto->unidad-$this->cantidad[$i];
+                $updateProducto->unidad = $reduccion;
+                $updateProducto->save();
+            }
 
         /**********se crea el pdf************** */
         $pdf = app('dompdf.wrapper');
@@ -533,15 +514,17 @@ public function seleccionBuscador()
             'factura' => $facturanumero,
             'productos' => $this->searchTerm,
             'cantidad' => $this->cantidad,
-            'cantidad' => $this->cantidad,
             'total_IVA' => $this->total_IVA,
             'total_sin_iva' => $this->total_sin_iva,
             'total_bs' => $this->total_bs,
+            'porcentajeIva' => $porcentajeIva,
+            'productosMonto' => $this->idProducto,
+            'coniva' => $this->impuesto,
         ];
 
         $pdf->loadView('pdf.factura_venta',compact('datapdf'));
-        $pdf->save(public_path('app/archivos/facturas_ventas') .$Factura->nombre_factura);
-        $this->urlpdf='app/archivos/facturas_ventas'.$Factura->nombre_factura;
+        $pdf->save(public_path('app/archivos/facturas_ventas/') .$Factura->nombre_factura);
+        $this->urlpdf='app/archivos/facturas_ventas/'.$Factura->nombre_factura;
         $this->Nombrepdf= $Factura->nombre_factura;
         $pdf->render();
 
