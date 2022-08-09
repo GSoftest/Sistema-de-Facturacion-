@@ -43,22 +43,26 @@
           </tr>
         </thead>
         <tbody>
+          @foreach($datapdf['productos'] as $key => $value)
           <tr>
-            <td class="service">Servicio técnico</td>
-            <td class="desc"></td>
+            <td class="service">{{$datapdf['cantidad'][$key]}}</td>
+            <td class="desc">{{$value}}</td>
             <td class="unit"></td>
           </tr>
+          @endforeach
           <tr>
             <td colspan="2">SUBTOTAL</td>
-            <td class="total"></td>
+            <td class="total">{{$datapdf['total_sin_iva']}}</td>
           </tr>
           <tr>
             <td colspan="2">IVA %</td>
+            <td class="total">{{$datapdf['total_IVA']}}</td>
           </tr>
           <tr>
             <td colspan="2" class="grand total">TOTAL</td>
-            <td class="grand total"></td>
+            <td class="grand total">{{$datapdf['total_bs']}}</td>
           </tr>
+     
         </tbody>
       </table>
     </main>

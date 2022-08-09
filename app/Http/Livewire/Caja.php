@@ -514,9 +514,13 @@ public function seleccionBuscador()
         }
         
          $Factura->id_venta = $Venta->id;
-         $Factura->save();
+        $Factura->save();
          $facturanu = Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0), id')->where('nombre_factura',$Factura->nombre_factura)->first();
          $facturanumero = $facturanu['lpad(numero_factura, 15, 0)'];
+
+
+   
+
         /**********se crea el pdf************** */
         $pdf = app('dompdf.wrapper');
         $datapdf = [
@@ -527,6 +531,12 @@ public function seleccionBuscador()
             'telefono' => $this->telefono,
             'direccion' => $this->direccion,
             'factura' => $facturanumero,
+            'productos' => $this->searchTerm,
+            'cantidad' => $this->cantidad,
+            'cantidad' => $this->cantidad,
+            'total_IVA' => $this->total_IVA,
+            'total_sin_iva' => $this->total_sin_iva,
+            'total_bs' => $this->total_bs,
         ];
 
         $pdf->loadView('pdf.factura_venta',compact('datapdf'));
