@@ -29,7 +29,7 @@
         <div><span>DIRECCION</span>{{$datapdf['direccion']}}</div>
         <div><span>TELEFONO</span>{{$datapdf['telefono']}}</div>
         <div><span>N° FACTURA</span>{{$datapdf['factura']}}</div>
-        <div><span>FECHA</span>{{$datapdf['fecha_servicio']}}</div>
+        <div><span>FECHA</span>{{$datapdf['fecha']}}</div>
         <div><span>HORA</span>{{$datapdf['hora']}}</div>
       </div>
     </header>
@@ -37,7 +37,7 @@
       <table>
         <thead>
           <tr>
-            <th class="service">SERVICIO</th>
+            <th class="service">CANTIDAD</th>
             <th class="">DESCRIPCION</th>
             <th>TOTAL</th>
           </tr>
@@ -45,20 +45,19 @@
         <tbody>
           <tr>
             <td class="service">Servicio técnico</td>
-            <td class="desc">{{$datapdf['descripcion_equipo']}}</td>
-            <td class="unit">{{$datapdf['monto_sin_iva']}}</td>
+            <td class="desc"></td>
+            <td class="unit"></td>
           </tr>
           <tr>
             <td colspan="2">SUBTOTAL</td>
-            <td class="total">{{$datapdf['monto_sin_iva']}}</td>
+            <td class="total"></td>
           </tr>
           <tr>
-            <td colspan="2">IVA {{$datapdf['porcentajeIva']}}%</td>
-         <!--   <td class="total">{{$datapdf['montoIva']}}</td>-->
+            <td colspan="2">IVA %</td>
           </tr>
           <tr>
             <td colspan="2" class="grand total">TOTAL</td>
-            <td class="grand total">{{$datapdf['monto_con_iva']}}</td>
+            <td class="grand total"></td>
           </tr>
         </tbody>
       </table>

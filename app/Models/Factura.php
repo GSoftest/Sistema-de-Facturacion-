@@ -10,9 +10,10 @@ class Factura extends Model
     protected $table = 'factura';
 
     protected $fillable = [
+        'id',
         'id_venta',
         'numero_factura',
-        'url_factura',
+        'nombre_factura',
         ];
     
 }

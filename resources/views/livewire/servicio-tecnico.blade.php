@@ -206,7 +206,16 @@
 
 
 <x-dialog-modal-factura wire:model="confirmingUserDeletion">
-    <x-slot name="title">{{$Nombrepdf}}</x-slot>
+<x-slot name="title">
+        <div class="grid grid-cols-2 gap-4">
+            <div>{{$Nombrepdf}}</div>
+            <div class="flex justify-end">
+                <x-button-cerrar class="mx-8"  wire:loading.attr="disabled" wire:click="cerrarModalFactura">
+                <i class="fa fa-times fa-sm" aria-hidden="true"></i>
+                </x-jet-button-cerrar>
+            </div>
+        </div>
+    </x-slot>
     <x-slot name="content">
     <embed
     src="{{URL::asset($urlpdf)}}"

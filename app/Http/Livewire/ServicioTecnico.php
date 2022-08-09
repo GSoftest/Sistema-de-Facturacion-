@@ -10,6 +10,7 @@ use App\Models\Tasa_Otros;
 use App\Models\Servicio_Tecnico;
 use App\Models\Facturas_servicios;
 use App\Models\Recibo;
+use Illuminate\Support\Facades\Redirect;
 
 class ServicioTecnico extends Component
 {
@@ -480,6 +481,12 @@ if($this->identificacion != null){
     $this->view = 'livewire.servicio-tecnico';
 }
 
+}
+
+
+public function cerrarModalFactura()
+{
+  return Redirect::route('servicioTecnico');
 }
 
 }
