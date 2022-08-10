@@ -23,7 +23,7 @@ class ListaServicioTecnico extends Component
 
     public function download($file){
       
-        $file= public_path(). "/app/archivos/pdf/facturas/".$file;
+        $file= public_path(). "/app/archivos/recibos/".$file;
         return response()->download($file);
     }
 }

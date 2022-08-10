@@ -9,6 +9,7 @@ use App\Http\Livewire\ListaClientes;
 use App\Http\Livewire\ServicioTecnico;
 use App\Http\Livewire\ServicioTecnicoEditar;
 use App\Http\Livewire\ListaServicioTecnico;
+use App\Http\Livewire\ListaVentas;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -94,13 +95,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
   Route::post('/imprimirFactura', 'imprimirFactura')->name('imprimirFactura');
   Route::post('/imprimirReciboVenta', 'imprimirRecibo');
   });
-
-
   
      /************Ventas*************/
      Route::get('/caja', Caja::class)->name('caja');
-
-
+     Route::get('/listadoVentas', ListaVentas::class)->name('listadoVentas');
+     
+ 
 
         /************Tasa************ */
    Route::get('/tasa', Tasa::class)->name('tasa');
