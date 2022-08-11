@@ -10,6 +10,9 @@
             <div class="shadow overflow-hidden sm:rounded-md">
                 <div class="px-4 py-5 bg-white sm:p-6">
 
+
+
+
                 <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                     <div class="justify-self-center">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -18,10 +21,23 @@
                     </div>
                 </div>
 
-
-<div class="py-8 grid grid-cols-4 gap-4">
+                
+<div class="pt-8 pb-8 grid grid-cols-4 gap-4">
     <div class="py-4">
-        
+       <label for="">Desde:</label>
+       <input type="date" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+    </div>
+    <div class="py-4">
+       <label for="">Hasta:</label>
+       <input type="date" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+    </div>
+    <div class="py-4 grid grid-cols-2 gap-2 w-0.5">
+        <div class="pt-5">
+        <button type='button' wire:click='guardar' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-2 mt-2  border border-blue-500 rounded w-10"><i class="fa fa-search fa-sm" aria-hidden="true"></i></button>
+        </div>
+        <div class="pt-5">
+        <button type='button' wire:click='guardar' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-2 mt-2  border border-blue-500 rounded w-10"><i class="fa fa-download fa-sm" aria-hidden="true"></i></button>
+        </div>
     </div>
 </div>
 
@@ -78,9 +94,9 @@
                     @endif
                     @endforeach
                     </td>
-                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center"></td>
-                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center"></td>
-                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center"></td>
+                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$venta->sub_total}}</td>
+                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$venta->iva}}</td>
+                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$venta->total}}</td>
                     <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                         {{date('d/m/Y',strtotime($venta->fecha))}}
                     </td>

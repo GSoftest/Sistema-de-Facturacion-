@@ -239,8 +239,8 @@ function myFunction() {
   var abono = document.getElementById("abono");
   var abono_dolar = document.getElementById("abono_dolar");
   monto_sin_iva.value = monto_sin_iva.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');
-  abono.value = abono.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
-  abono_dolar.value = abono_dolar.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');;
+  abono.value = abono.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');
+  abono_dolar.value = abono_dolar.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');
 }
 
 function convertidor_decimal(donde, caracter, campo, id) {

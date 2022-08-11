@@ -43,7 +43,7 @@ class Caja extends Component
     public $confirmingUserDeletion = false;
     public $confirmingDeletion = false;
     public $descargarFactura = false;
-   // private $productos;
+    public $Deletion = false;
 
    public function updatingSearch()
    {
@@ -54,47 +54,21 @@ class Caja extends Component
     {
 
         $data = Categorias::All();
-       /* if($this->searchTerm){
-            $searchTerm = '%' .$this->searchTerm[0]. '%';
-        }else{
-            $searchTerm = '%' .''. '%';
-        }*/
-        
-     //   $productos = Productos::where('name','like', '%' .''. '%')->get();
+       
       $productos = Productos::all();
-      //  $links  = $productos;
-
-        //$this->costo_unitario = '';
-    
+     
         if(count($this->cantidad) != 0 ){
 
-         /* if(count($this->cantidad) == 1){
-            if($this->cantidad[0] != ''){
-            $disponible = Productos::where('name',$this->searchTerm[0])->get();
-
-            $dispo = ($disponible[0]->unidad - $this->cantidad[0]);
-            $total = ($this->cantidad[0]*$this->costo[0]);
-            $this->total[0] = $total;
-                dd('');
-            }else{
-               $dispo = 0;
-            }
-                //array_push($this->stock,$dispo);
-                $this->stock[0] = $dispo;
-
-            }else{*/
                 $cantidadProd=0;
                 for($i = 0; $i < count($this->cantidad); $i++){
-
+                    $e = (int)$this->cantidad[$i];
                     if($this->cantidad[$i] != ''){
-                       //  $disponible = Productos::where('name',$this->searchTerm[$i])->get();
-                        // $dispo = ($disponible[0]->unidad - $this->cantidad[($i)]);
-                       //  array_push($this->stock,$dispo);
 
+                    if(count($this->costo) == count($this->cantidad)){
                        $costoi = str_replace(".","",$this->costo[$i]);
                        $costoi = str_replace(",",".",$costoi);
 
-                        $total = ($this->cantidad[$i]*$costoi);
+                        $total = ($e*$costoi);
 
                         if($this->impuesto[$i] == 0){
                             $porcentaje = 0;
@@ -103,7 +77,7 @@ class Caja extends Component
                         $porcentaje = ($total*$iva[0]->iva)/100;
                         }
 
-                        $this->total[$i] = $total+$porcentaje;
+                        $this->total[$i] = $total;
                         $this->total[$i] = number_format($this->total[$i], 2);
                         $this->total[$i] = str_replace(","," ",$this->total[$i]);
                         $this->total[$i] = str_replace(".",",",$this->total[$i]);
@@ -112,25 +86,15 @@ class Caja extends Component
                         $this->totalSINIVA[$i] = $total;
                         $this->totalIVA[$i] = $porcentaje;
                         $this->idProducto[$i] =  $total;
+                    }
 
                     }else{
                         $dispo = 0;
                     }
-                    //$this->stock[$i] = $dispo;
-
-                    $cantidadProd += $this->cantidad[$i];
+                    $cantidadProd += $e;
                     $this->cantidadProducto = $cantidadProd;
                 }
-          //  }
-
-
-
-                
-           // $this->disponible = $disponible;
-        }/*else{
-            $disponible = 0;
-        }*/
-
+        }
         $sum = 0;
         $sumIVA = 0;
         $sumSINIVA = 0;
@@ -142,7 +106,6 @@ class Caja extends Component
                 $total = str_replace(",",".",$total);
                 $sum  = $sum+$total;
 
-                   // dd($this->totalSINIVA[0]);
                 $sinIVA = str_replace(".","",$this->totalSINIVA[$i]);
                 $sinIVA = str_replace(",",".",$sinIVA);
                 $sumSINIVA  = $sumSINIVA+$this->totalSINIVA[$i];
@@ -153,13 +116,6 @@ class Caja extends Component
                 $sumIVA  = $sumIVA+$toIVA;
                
             }
-            $this->total_bs = $sum;
-            $this->total_bs = number_format($this->total_bs, 2);
-            $this->total_bs = str_replace(","," ",$this->total_bs);
-            $this->total_bs = str_replace(".",",",$this->total_bs);
-            $this->total_bs = str_replace(" ",".",$this->total_bs);
-
-
             $this->total_IVA = $sumIVA;
             $this->total_IVA = number_format($this->total_IVA, 2);
             $this->total_IVA = str_replace(","," ",$this->total_IVA);
@@ -171,6 +127,13 @@ class Caja extends Component
             $this->total_sin_iva = str_replace(","," ",$this->total_sin_iva);
             $this->total_sin_iva = str_replace(".",",",$this->total_sin_iva);
             $this->total_sin_iva = str_replace(" ",".",$this->total_sin_iva);
+
+
+            $this->total_bs = $sum+$sumIVA;
+            $this->total_bs = number_format($this->total_bs, 2);
+            $this->total_bs = str_replace(","," ",$this->total_bs);
+            $this->total_bs = str_replace(".",",",$this->total_bs);
+            $this->total_bs = str_replace(" ",".",$this->total_bs);
 
             $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
 
@@ -205,13 +168,10 @@ class Caja extends Component
     ]);
     }
 
-    public function Buscar()
-    {
-        
-
+    public function Buscar(){
+    
      $cliente = Clientes::where('identificacion',$this->identificacion)->get();
 
-     
      if (isset($cliente[0])) {
 
         if($cliente[0]->estatus == 1){
@@ -228,108 +188,26 @@ class Caja extends Component
             $this->view = 'livewire.caja';
         }
 
-
     }else{
         session()->flash('message', 'No se encuentra registrado debe registrar el cliente');
         $this->botoncliente = 'true';
         $this->view = 'livewire.caja';
     }
 
-
-
     }
 
 
     public function change($valor){
-
-     //   $this->searchTerm[$valor] = '';
-      //  $this->costo[$valor] = '';
-
-        /*if($this->searchTerm){
-            $searchTerm = '%' .$this->searchTerm[$valor] . '%';
+        if ($this->id_categoria != '' && $this->id_categoria != null) {
+            $productos = Productos::where('id_categoria', $this->id_categoria)->get();
         }else{
-            $searchTerm = '%' .''. '%';
-        }*/
-        
-
-            if ($this->id_categoria != '' && $this->id_categoria != null) {
-               // $productos = Productos::where('id_categoria', $this->id_categoria)->where('name','like', $searchTerm)->get();
-               $productos = Productos::where('id_categoria', $this->id_categoria)->get();
-            }else{
-            
-           // $productos = Productos::where('name','like', $searchTerm)->get();
            $productos = Productos::all();
-            }
-
-
+        }
             $this->productos = $productos;
             $this->view = 'livewire.servicio-tecnico';
-        
     }
 
-
-
-
- /*   public function search($valor){
-
-    
-        $this->costo[$valor] = '';
-
-        if($this->searchTerm){
-           // dd($this->searchTerm[$valor]);
-            $searchTerm = $this->searchTerm[$valor];
-            $searchTerm =  '%'.$searchTerm.'%';
-            if($this->id_categoria){
-                if ($this->id_categoria != '' && $this->id_categoria != null) {
-                    $productos = Productos::where('id_categoria', $this->id_categoria)->where('name','like',$searchTerm)->get();
-                }else{
-                    $productos = Productos::where('name','like', $searchTerm)->get();
-                }
-            }else{
-                $productos = Productos::where('name','like',$searchTerm)->get();
-            }
-    
-       // $links  = $productos;
-       // $this->productos =  collect($productos->items());
-        /*$this->productos  = $productos;
-        $this->view = 'livewire.servicio-tecnico';*/
-    /*    }
-
-
-    }*/
-
-
-
-
- /*   public function seleccionBuscador($id)
-    {
-        $cant = count($this->ventas);
-        $dataProducto = Productos::find($id);
-        if($cant == 0){
-
-           
-            if(count($this->searchTerm) == 0){
-                $this->searchTerm[0] = $dataProducto->name;
-                $this->costo[0] = $dataProducto->costo_unitario;
-                $this->disponible = $dataProducto->unidad;
-                $this->impuesto[0] = $dataProducto->exento;
-                $this->posicionInput=0; 
-            }
- 
-        }else{
-            if(count($this->searchTerm) == count($this->ventas)){
-                $this->searchTerm[($this->posicionInput)] = $dataProducto->name;
-                $this->costo[($this->posicionInput)] = $dataProducto->costo_unitario;
-                $this->impuesto[($this->posicionInput)] = $dataProducto->exento;
-            } 
-        }
-        
-        $this->view = 'livewire.caja';
-    }
-*/
-
-public function seleccionBuscador()
-{
+public function seleccionBuscador(){
     
     $cant = count($this->ventas);
     $dataProducto = Productos::find($this->id_producto);
@@ -384,11 +262,9 @@ public function seleccionBuscador()
 }
 
 
-    public function agregarProductos()
-    {
+    public function agregarProductos(){
 
         $this->count++;
-
 
         if(count($this->ventas) != count($this->searchTerm)){
 
@@ -401,7 +277,7 @@ public function seleccionBuscador()
                 }
             }
         }else{
-            //dd('no va a agregar más');
+            $this->Deletion=true;
         }
 
         $this->view = 'livewire.caja';
@@ -409,8 +285,15 @@ public function seleccionBuscador()
 
     public function eliminarProductos()
     {
+
         $i =  $this->eliminarId;
-        unset($this->ventas[($i-1)]);
+        $this->confirmingDeletion=false;
+
+    
+
+        if(count($this->ventas) != count($this->searchTerm)){
+
+        unset($this->ventas[($i)]);
         $this->ventas = array_values($this->ventas);
 
         unset($this->searchTerm[($i)]);
@@ -428,8 +311,22 @@ public function seleccionBuscador()
         unset($this->impuesto[($i)]);
         $this->impuesto = array_values($this->impuesto);
 
+    
         $this->posicionInput = count($this->ventas)+1;
-        $this->confirmingDeletion=false;
+        }else{
+
+            if( $i == count($this->ventas)){
+                
+                array_pop($this->ventas);
+                $this->ventas = array_values($this->ventas);
+        
+
+              
+            }else{
+                $this->Deletion=true;
+            }
+        }
+
     }
 
     public function modal(){
@@ -446,6 +343,7 @@ public function seleccionBuscador()
     {
         $this->confirmingUserDeletion=false;
         $this->confirmingDeletion=false;
+        $this->Deletion=false;
     }
 
     public function submit(){
@@ -536,6 +434,4 @@ public function seleccionBuscador()
     {
       return Redirect::route('caja');
     }
-
-
 }

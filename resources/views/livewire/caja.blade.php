@@ -141,8 +141,8 @@
     <tr class="">
       <th class="text-sm font-medium text-white border-r">Cantidad</th>
       <th class="text-sm font-medium text-white border-r">Descripción</th>
-      <th class="text-sm font-medium text-white border-r">Precio</th>
-      <th class="text-sm font-medium text-white border-r">Precio + IVA</th>
+      <th class="text-sm font-medium text-white border-r">Precio de Ventas</th>
+      <th class="text-sm font-medium text-white border-r">Total Ventas</th>
       <th class="text-sm font-medium text-white border-r">Impuesto</th>
       <th class="text-sm font-medium text-white border-r">&nbsp;</th>
       <th class="text-sm font-medium text-white border-r">&nbsp;</th>
@@ -152,17 +152,17 @@
     <tr class="border-b">
       <td class="w-24 border-r">
         <input type="hidden" name="disProducto.0" id="disProducto.0" wire:model='disProducto.0'>
-        <input type="text" name="cantidad.0" wire:model='cantidad.0' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+        <input type="number" name="cantidad.0" wire:model='cantidad.0' id="cantidad.0" min="1" onkeypress="return validacionInt('cantidad.0')" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
       </td>
       <td class="border-r">
         <input type="hidden" name="idP.0" id="idP.0" wire:model='idP.0'>
         <input type="hidden" name="idProducto.0" id="idProducto.0" wire:model='idProducto.0'>
         <input type="text"  name="id_producto.0" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" wire:model="searchTerm.0" disabled>
       </td>
-      <td  class="w-24 border-r">
+      <td  class="w-28 border-r">
         <input type="text" name="costo_unitario.0"  wire:model='costo.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
       </td>
-      <td  class="w-24 border-r">
+      <td  class="w-28 border-r">
         <input type="text" name="total.0"  wire:model='total.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
      </td>
       <td class="w-24 border-r">
@@ -176,10 +176,10 @@
         <input type="text" class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
         @endif
       </td>
-      <td  class="w-24 border-r px-8 py-4">
+      <td  class="w-16 border-r px-8 py-4">
        <button type="button"><i class="fa fa-plus fa-sm" style="color: green;" wire:click='agregarProductos()'></i></button>
       </td>
-      <td  class="w-24 border-r px-8 py-4">
+      <td  class="w-16 border-r px-8 py-4">
         <button type="button"><i class="fa fa-trash-can fa-sm"style="color: red;" wire:click='modalEliminar(0)'></i></button>
       </td>
     </tr>
@@ -188,17 +188,17 @@
     <tr class="border-b">
         <td  class="w-24 border-r">
             <input type="hidden" name="disProducto.{{ $key+1 }}" id="disProducto.{{ $key+1 }}" wire:model='disProducto.{{ $key+1 }}'>
-            <input type="text"  name="cantidad.{{ $key+1 }}"  wire:model='cantidad.{{  $key+1 }}' class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+            <input type="number"  name="cantidad.{{ $key+1 }}"  wire:model='cantidad.{{  $key+1 }}' min="1" id="cantidad.{{$key+1}}" onkeypress="return validacionInt('cantidad.{{$key+1}}')"  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
         </td>
         <td class="border-r">
             <input type="hidden" name="idP.{{ $key+1 }}" id="idP.{{ $key+1 }}" wire:model='idP.{{ $key+1 }}'>
             <input type="hidden" name="idProducto.{{ $key+1 }}" id="idProducto.{{ $key+1 }}" wire:model='idProducto.{{ $key+1 }}'>
             <input type="text" name="id_producto.{{ $key+1 }}" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" wire:model="searchTerm.{{ $key+1 }}" disabled>
         </td>
-        <td  class="w-24 border-r">
+        <td  class="w-28 border-r">
             <input type="text" name="precio_sin_iva.{{ $key+1 }}"  wire:model='costo.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
         </td>
-        <td  class="w-24 border-r">
+        <td  class="w-28 border-r">
             <input type="hidden" name="montoP.{{ $key+1 }}"  wire:model='montoP.{{ $key+1 }}'>
             <input type="text" name="total.{{ $key+1 }}"  wire:model='total.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
         </td>
@@ -214,10 +214,10 @@
            <input type="text" class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
             @endif
         </td>
-        <td class="w-24 border-r px-8 py-4">
+        <td class="w-16 border-r px-8 py-4">
             <button class="py-2" type="button"><i class="fa fa-plus fa-sm" style="color: green;" wire:click='agregarProductos'></i></button>
         </td>
-        <td class="w-24 border-r px-8 py-4">
+        <td class="w-16 border-r px-8 py-4">
             <button class="py-2" type="button"><i class="fa fa-trash-can fa-sm"style="color: red;" wire:click='modalEliminar({{$key+1}})'></i></button>
         </td>
                       
@@ -235,15 +235,22 @@
 </div>
 
                  
-
-
                         <div class="grid grid-cols-4 gap-1 justify-items-stretc">
-                           <div class="justify-self-end w-3/4"></div>
-                           <div class="justify-self-end w-1/4"></div>
+                            <div class="justify-self-end w-3/4"></div>
+
+                            
                             <div class="justify-self-end w-3/4 md:flex md:items-center">
                                 <div class="md:w-2/3">
-                                    <input type="hidden" name="total_IVA" id="total_IVA" wire:model='total_IVA'>
-                                    <input type="hidden" name="total_sin_iva" id="total_sin_iva" wire:model='total_sin_iva'>
+                                    <label for="total_sin_iva" class="block text-sm font-medium text-gray-700">Sub Total Ventas</label>
+                                </div>
+                                <div class="md:w-full">
+                                <input type="text" name="total_sin_iva" id="total_sin_iva"  wire:model='total_sin_iva'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+                            
+
+                            <div class="justify-self-end w-3/4 md:flex md:items-center">
+                                <div class="md:w-2/3">
                                     <label for="total_bs" class="block text-sm font-medium text-gray-700">Total Bs</label>
                                 </div>
                                 <div class="md:w-full">
@@ -252,9 +259,19 @@
                             </div>
                         </div>
 
+
                         <div class="grid grid-cols-4 gap-1 justify-items-stretc">
-                           <div class="justify-self-start md:flex md:items-left"><label>Cantidad de productos:@if(isset($cantidadProducto))<strong>&nbsp;{{$cantidadProducto}}</strong>@else<strong>&nbsp;0</strong>@endif</label></div>
-                           <div class="justify-self-end w-1/4"></div>
+                            <div class="justify-self-start md:flex md:items-left"><label>Cantidad de productos:@if(isset($cantidadProducto))<strong>&nbsp;{{$cantidadProducto}}</strong>@else<strong>&nbsp;0</strong>@endif</label></div>
+                       
+                            <div class="justify-self-end w-3/4 md:flex md:items-center">
+                                <div class="md:w-2/3">
+                                    <label for="total_IVA" class="block text-sm font-medium text-gray-700">Total IVA</label>
+                                </div>
+                                <div class="md:w-full">
+                                <input type="text" name="total_IVA" id="total_IVA"  wire:model='total_IVA'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+
                             <div class="justify-self-end w-3/4 md:flex md:items-center">
                                 <div class="md:w-2/3">
                                     <label for="total_dolar" class="block text-sm font-medium text-gray-700">Total $</label>
@@ -263,6 +280,7 @@
                                 <input type="text" name="total_dolar" id="total_dolar"  wire:model='total_dolar' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 </div>
                             </div>
+
                         </div>
 
 
@@ -339,6 +357,30 @@
 </x-jet-dialog-modal>
 
 
+<x-jet-dialog-modal wire:model="Deletion">
+    <x-slot name="title">
+        <span class="flex justify-center">
+        <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: #dac52d;"></i>
+        </span>
+    </x-slot>
+    <x-slot name="content">
+        <span class="flex justify-center">
+          ¡Debe agregar algún producto a la casilla vacía o eliminarla!
+        </span>
+    </x-slot>
+        
+<x-slot name="footer">
+<span class="flex justify-center pt-2">
+        <div class="pb-3.5 pr-4">
+        <x-button-advertencia class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+            ok
+        </x-button-advertencia>
+        </div>
+        </span>
+</x-slot>
+</x-jet-dialog-modal>
+
+
 <x-dialog-modal-factura wire:model="descargarFactura">
 <x-slot name="title">
         <div class="grid grid-cols-2 gap-4">
@@ -368,3 +410,9 @@
       </div>
 </div>
 
+<script>
+function validacionInt(campo){
+  let cantidad = document.getElementById(campo);
+  cantidad.value = cantidad.value.replace(/[^0-9]/g, '');
+}
+</script>
