@@ -24,19 +24,25 @@
                 
 <div class="pt-8 pb-8 grid grid-cols-4 gap-4">
     <div class="py-4">
-       <label for="">Desde:</label>
-       <input type="date" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+       <label for="desde">Desde:</label>
+       <input type="date" name='desde' id="desde" wire:model='desde' max="{{$fecha}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
     </div>
     <div class="py-4">
-       <label for="">Hasta:</label>
-       <input type="date" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+       <label for="hasta">Hasta:</label>
+       <input type="date" name='hasta' id="hasta" wire:model='hasta' max="{{$fecha}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
     </div>
-    <div class="py-4 grid grid-cols-2 gap-2 w-0.5">
+    <div class="py-4">
         <div class="pt-5">
-        <button type='button' wire:click='guardar' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-2 mt-2  border border-blue-500 rounded w-10"><i class="fa fa-search fa-sm" aria-hidden="true"></i></button>
+        <button type='button' wire:click='buscar()' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-2 mt-2  border border-blue-500 rounded w-10"><i class="fa fa-search fa-sm" aria-hidden="true"></i></button>
         </div>
+    </div>
+    <div class="py-4 flex justify-end pr-4">
         <div class="pt-5">
-        <button type='button' wire:click='guardar' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-2 mt-2  border border-blue-500 rounded w-10"><i class="fa fa-download fa-sm" aria-hidden="true"></i></button>
+        <button type='button' wire:click='buscar' data-tooltip-target="tooltip-default" class="bg-white-500 hover:bg-white-700 text-white font-bold py-1.5 px-2 mt-2  border border-white-500 rounded w-10"><i class="fa fa-download fa-sm" aria-hidden="true" style="color: blue;"></i></button>
+        <div id="tooltip-default" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700">
+            Tooltip content
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
         </div>
     </div>
 </div>
@@ -87,16 +93,16 @@
                     @endif
                     @endforeach
                     </td>
-                    <td class="w-44 border-r text-gray-700 mr-3 text-center">
+                    <td class="w-44 border-r text-gray-700 mr-3 text-left">
                     @foreach ($cliente as $clien)
                     @if($clien->id == $venta->id_cliente) 
                         {{$clien->name}}
                     @endif
                     @endforeach
                     </td>
-                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$venta->sub_total}}</td>
-                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$venta->iva}}</td>
-                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-center">{{$venta->total}}</td>
+                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-right">{{$venta->sub_total}}</td>
+                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-right">{{$venta->iva}}</td>
+                    <td class="w-32 border-r appearance-none text-gray-700 mr-3 text-right">{{$venta->total}}</td>
                     <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                         {{date('d/m/Y',strtotime($venta->fecha))}}
                     </td>
@@ -116,6 +122,30 @@
                 <div class="mt-4">
                         {{ $ventas->links() }}
                </div>
+
+
+<x-jet-dialog-modal wire:model="negada">
+    <x-slot name="title">
+        <span class="flex justify-center">
+        <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: #dac52d;"></i>
+        </span>
+    </x-slot>
+    <x-slot name="content">
+        <span class="flex justify-center">
+          ¡Debe ingresar el rango de fecha para su busqueda!
+        </span>
+    </x-slot>
+        
+<x-slot name="footer">
+<span class="flex justify-center pt-2">
+        <div class="pb-3.5 pr-4">
+        <x-button-advertencia class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+            ok
+        </x-button-advertencia>
+        </div>
+        </span>
+</x-slot>
+</x-jet-dialog-modal>
 
                 </div>
             </div>

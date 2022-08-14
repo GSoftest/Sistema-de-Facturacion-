@@ -103,11 +103,11 @@
 
                         <div class="grid grid-cols-4 gap-4">
                             <div class="py-2">
-                            <label for="id_categoria" class="block text-sm font-medium text-gray-700">Categorias</label>
-                            <select wire:model="id_categoria" name="id_categoria" wire:change="change(0)" class="scroll appearance-none form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                 <option value="">{{ __("Seleccione") }}</option>                     
+                            <label for="id_categoria" class="block text-sm font-medium text-gray-700">Categorías</label>
+                            <select wire:model="id_categoria" name="id_categoria" wire:change="change()" class="scroll appearance-none form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                 <option value="" selected>{{ __("Seleccione") }}</option>                     
                                  @foreach ($categorias as $categoria)
-                                 <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+                                 <option value="{{ $categoria->id }}">{{$categoria->name }}</option>
                                 @endforeach
                             </select>
                             
@@ -118,9 +118,9 @@
                             <div class="py-2">
                             <label for="id_categoria" class="block text-sm font-medium text-gray-700">Productos</label>
                             <select wire:model="id_producto" name="id_producto" wire:change="seleccionBuscador()" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();'  class="scroll form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md appearance-none">
-                                <option value="">{{ __("Seleccione") }}</option>              
+                                <option value="0" selected>{{ __("Seleccione") }}</option>              
                                 @foreach ($productos as $producto)
-                                <option value="{{ $producto['id'] }}">{{ $producto['name'] }}</option>
+                                <option value="{{ $producto['id'] }}">{{$producto['name'] }}</option>
                                 @endforeach
                                 </select>
                             </div>
@@ -141,7 +141,7 @@
     <tr class="">
       <th class="text-sm font-medium text-white border-r">Cantidad</th>
       <th class="text-sm font-medium text-white border-r">Descripción</th>
-      <th class="text-sm font-medium text-white border-r">Precio de Ventas</th>
+      <th class="text-sm font-medium text-white border-r">Precio de Venta</th>
       <th class="text-sm font-medium text-white border-r">Total Ventas</th>
       <th class="text-sm font-medium text-white border-r">Impuesto</th>
       <th class="text-sm font-medium text-white border-r">&nbsp;</th>
@@ -234,27 +234,51 @@
 
 </div>
 
-                 
-                        <div class="grid grid-cols-4 gap-1 justify-items-stretc">
-                            <div class="justify-self-end w-3/4"></div>
 
+<table class="w-full">
+    <thead>
+        <tr class="">
+            <td colspan="2"><label>Cantidad de productos:@if(isset($cantidadProducto))<strong>&nbsp;{{$cantidadProducto}}</strong>@else<strong>&nbsp;0</strong>@endif</label></td>
+            <td class="text-center"><label for="total_sin_iva" class="block text-sm font-medium text-gray-700">Sub-Total</label></td>
+            <td class="text-center"><label for="total_sin_iva" class="block text-sm font-medium text-gray-700">IVA</label></td>
+            <td class="text-center"><label for="total_bs" class="block text-sm font-medium text-gray-700">Total Bs</label></td>
+            <td class="text-center"><label for="total_dolar" class="block text-sm font-medium text-gray-700">Total $</label></td>
+           <td></td>
+        </tr>
+    </thead>
+<tbody>
+    <tr>
+        <td colspan="2" class="w-38"></td>
+        <td class="w-28 px-2 text-center"><input type="text" name="total_sin_iva" id="total_sin_iva"  wire:model='total_sin_iva'  class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md"></td>
+        <td class="w-28 px-2 text-center"><input type="text" name="total_IVA" id="total_IVA"  wire:model='total_IVA'  class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md"></td>
+        <td class="w-28 px-2 text-center"><input type="text" name="total_bs" id="total_bs"  wire:model='total_bs'  class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md"></td>
+        <td class="w-28 px-2 text-center"><input type="text" name="total_dolar" id="total_dolar"  wire:model='total_dolar' class="text-right mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md"></td>
+      <td class="w-8"></td>
+    </tr>
+</tbody>
+</table>
+
+                 
+                       <!-- <div class="grid grid-cols-4 gap-1 justify-items-stretc">
+                            <div class="justify-self-end w-3/4"></div>
+                            <div class="justify-self-end w-3/4"></div>
                             
                             <div class="justify-self-end w-3/4 md:flex md:items-center">
                                 <div class="md:w-2/3">
-                                    <label for="total_sin_iva" class="block text-sm font-medium text-gray-700">Sub Total Ventas</label>
+                                    <label for="total_sin_iva" class="block text-sm font-medium text-gray-700">Sub-Total</label>
                                 </div>
-                                <div class="md:w-full">
-                                <input type="text" name="total_sin_iva" id="total_sin_iva"  wire:model='total_sin_iva'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <div class="md:w-2/3">
+                                    <label for="total_IVA" class="block text-sm font-medium text-gray-700">IVA</label>
                                 </div>
                             </div>
                             
 
-                            <div class="justify-self-end w-3/4 md:flex md:items-center">
+                            <div class="justify-self-end w-3/4 md:flex md:items-end">
                                 <div class="md:w-2/3">
                                     <label for="total_bs" class="block text-sm font-medium text-gray-700">Total Bs</label>
                                 </div>
-                                <div class="md:w-full">
-                                <input type="text" name="total_bs" id="total_bs"  wire:model='total_bs'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <div class="md:w-2/3">
+                                    <label for="total_dolar" class="block text-sm font-medium text-gray-700">Total $</label>
                                 </div>
                             </div>
                         </div>
@@ -262,10 +286,10 @@
 
                         <div class="grid grid-cols-4 gap-1 justify-items-stretc">
                             <div class="justify-self-start md:flex md:items-left"><label>Cantidad de productos:@if(isset($cantidadProducto))<strong>&nbsp;{{$cantidadProducto}}</strong>@else<strong>&nbsp;0</strong>@endif</label></div>
-                       
-                            <div class="justify-self-end w-3/4 md:flex md:items-center">
-                                <div class="md:w-2/3">
-                                    <label for="total_IVA" class="block text-sm font-medium text-gray-700">Total IVA</label>
+                            <div class="justify-self-end w-3/4"></div>
+                            <div class="justify-self-end w-3/4 md:flex md:items-end">
+                                <div class="md:w-full pr-4">
+                                <input type="text" name="total_sin_iva" id="total_sin_iva"  wire:model='total_sin_iva'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 </div>
                                 <div class="md:w-full">
                                 <input type="text" name="total_IVA" id="total_IVA"  wire:model='total_IVA'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -273,15 +297,15 @@
                             </div>
 
                             <div class="justify-self-end w-3/4 md:flex md:items-center">
-                                <div class="md:w-2/3">
-                                    <label for="total_dolar" class="block text-sm font-medium text-gray-700">Total $</label>
+                                <div class="md:w-full pr-4">
+                                <input type="text" name="total_bs" id="total_bs"  wire:model='total_bs'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 </div>
                                 <div class="md:w-full">
                                 <input type="text" name="total_dolar" id="total_dolar"  wire:model='total_dolar' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 </div>
                             </div>
 
-                        </div>
+                        </div>-->
 
 
                         <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
@@ -289,7 +313,7 @@
                         <div class="pb-3.5 pr-4">
                             @if($botonFactura == 'true')
                                 <input type="hidden" name="botonFactura" id="botonFactura" value="{{$botonFactura}}"/>
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button" wire:click='modal()'>Imprimir factura</button>
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button" wire:click='modal()'>Imprimir Factura</button>
                             @else
                               <input type="hidden" name="factura" id="factura" value="{{$botonFactura}}"/>
                                 <!--<p class="text-sm text-red-600">El abono supera el monto total</p>-->
@@ -366,6 +390,29 @@
     <x-slot name="content">
         <span class="flex justify-center">
           ¡Debe agregar algún producto a la casilla vacía o eliminarla!
+        </span>
+    </x-slot>
+        
+<x-slot name="footer">
+<span class="flex justify-center pt-2">
+        <div class="pb-3.5 pr-4">
+        <x-button-advertencia class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+            ok
+        </x-button-advertencia>
+        </div>
+        </span>
+</x-slot>
+</x-jet-dialog-modal>
+
+<x-jet-dialog-modal wire:model="negada">
+    <x-slot name="title">
+        <span class="flex justify-center">
+        <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: #dac52d;"></i>
+        </span>
+    </x-slot>
+    <x-slot name="content">
+        <span class="flex justify-center">
+          ¡Esta solicitando un producto que supera la cantidad disponible!
         </span>
     </x-slot>
         

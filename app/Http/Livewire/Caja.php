@@ -21,7 +21,7 @@ class Caja extends Component
 
     use WithPagination;
     public $cliente, $botoncliente,$total_bs,$sum,$total_dolar,$botonFactura,$id_cliente,$Nombrepdf, $urlpdf,
-    $identificacion,$Subtotal,$dispo,$posicionInput,$cantidadProducto,$eliminarId,$total_sin_iva;
+    $identificacion,$Subtotal,$dispo,$posicionInput,$cantidadProducto,$eliminarId,$total_sin_iva,$reduccionExiste;
     public $searchTerm=[];
     public $ventas = [];
     public $id_categoria = [];
@@ -44,6 +44,7 @@ class Caja extends Component
     public $confirmingDeletion = false;
     public $descargarFactura = false;
     public $Deletion = false;
+    public $negada = false;
 
    public function updatingSearch()
    {
@@ -55,7 +56,7 @@ class Caja extends Component
 
         $data = Categorias::All();
        
-      $productos = Productos::all();
+      $productos = Productos::where('unidad', '>', '0')->get();
      
         if(count($this->cantidad) != 0 ){
 
@@ -197,11 +198,11 @@ class Caja extends Component
     }
 
 
-    public function change($valor){
+    public function change(){
         if ($this->id_categoria != '' && $this->id_categoria != null) {
             $productos = Productos::where('id_categoria', $this->id_categoria)->get();
         }else{
-           $productos = Productos::all();
+           $productos = Productos::where('unidad', '>', '0')->get();
         }
             $this->productos = $productos;
             $this->view = 'livewire.servicio-tecnico';
@@ -344,11 +345,30 @@ public function seleccionBuscador(){
         $this->confirmingUserDeletion=false;
         $this->confirmingDeletion=false;
         $this->Deletion=false;
+        $this->negada=false;
     }
 
     public function submit(){
         date_default_timezone_set('America/Caracas');
 
+        
+        /***************descontar lo disponible***************** */
+            $longitudDisP = count($this->disProducto);
+
+            for($i = 0; $i < $longitudDisP; $i++){
+                $updateProducto = Productos::find($this->idP[$i]);
+                $reduccion = ($updateProducto->unidad-$this->cantidad[$i]);
+                $updateProducto->unidad = $reduccion;
+                $reduccion2 = (int)$reduccion;
+                if($reduccion < 0){
+                    $reduccionExiste = '1';
+                }else{
+                    $updateProducto->save();
+                }
+
+            }
+
+if(isset($reduccionExiste) == false){
         /*********Tabla Venta********* */
         $Venta = new Ventas();
         $Venta->id_cliente = $this->id_cliente;
@@ -370,6 +390,7 @@ public function seleccionBuscador(){
             $VentaP->save();
         }
 
+
          /*********Tabla factura********* */
          $ultimaFactura = Factura::orderBy('numero_factura', 'desc')->first();
          $Factura = new Factura();
@@ -389,16 +410,6 @@ public function seleccionBuscador(){
          $porcentajeIva = Ivas::where('estado',1)->get();
          $porcentajeIva = $porcentajeIva[0]->iva;
    
-
-         /***************descontar lo disponible***************** */
-             $longitudDisP = count($this->disProducto);
-
-            for($i = 0; $i < $longitudDisP; $i++){
-                $updateProducto = Productos::find($this->idP[$i]);
-                $reduccion = $updateProducto->unidad-$this->cantidad[$i];
-                $updateProducto->unidad = $reduccion;
-                $updateProducto->save();
-            }
 
         /**********se crea el pdf************** */
         $pdf = app('dompdf.wrapper');
@@ -428,10 +439,24 @@ public function seleccionBuscador(){
 
         $this->confirmingUserDeletion=false;
         $this->descargarFactura=true;
+
+    }else{
+        $this->negada=true;
+    }
+
     }
 
     public function cerrarModalFactura()
     {
       return Redirect::route('caja');
     }
+
+
+  /*  public function reducionNegada()
+    {
+        $this->confirmingUserDeletion=false;
+        $this->negada=true;
+
+        $this->view = 'livewire.caja';
+    }*/
 }
