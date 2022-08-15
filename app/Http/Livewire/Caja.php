@@ -290,7 +290,7 @@ public function seleccionBuscador(){
         $i =  $this->eliminarId;
         $this->confirmingDeletion=false;
 
-    
+
 
         if(count($this->ventas) != count($this->searchTerm)){
 
@@ -312,8 +312,13 @@ public function seleccionBuscador(){
         unset($this->impuesto[($i)]);
         $this->impuesto = array_values($this->impuesto);
 
-    
+        if($i== 1){
+            $this->posicionInput = 1;
+            $this->ventas = [];
+        }else{
         $this->posicionInput = count($this->ventas)+1;
+        }
+
         }else{
 
             if( $i == count($this->ventas)){

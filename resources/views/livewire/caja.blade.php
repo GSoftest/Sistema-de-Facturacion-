@@ -258,55 +258,6 @@
 </tbody>
 </table>
 
-                 
-                       <!-- <div class="grid grid-cols-4 gap-1 justify-items-stretc">
-                            <div class="justify-self-end w-3/4"></div>
-                            <div class="justify-self-end w-3/4"></div>
-                            
-                            <div class="justify-self-end w-3/4 md:flex md:items-center">
-                                <div class="md:w-2/3">
-                                    <label for="total_sin_iva" class="block text-sm font-medium text-gray-700">Sub-Total</label>
-                                </div>
-                                <div class="md:w-2/3">
-                                    <label for="total_IVA" class="block text-sm font-medium text-gray-700">IVA</label>
-                                </div>
-                            </div>
-                            
-
-                            <div class="justify-self-end w-3/4 md:flex md:items-end">
-                                <div class="md:w-2/3">
-                                    <label for="total_bs" class="block text-sm font-medium text-gray-700">Total Bs</label>
-                                </div>
-                                <div class="md:w-2/3">
-                                    <label for="total_dolar" class="block text-sm font-medium text-gray-700">Total $</label>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="grid grid-cols-4 gap-1 justify-items-stretc">
-                            <div class="justify-self-start md:flex md:items-left"><label>Cantidad de productos:@if(isset($cantidadProducto))<strong>&nbsp;{{$cantidadProducto}}</strong>@else<strong>&nbsp;0</strong>@endif</label></div>
-                            <div class="justify-self-end w-3/4"></div>
-                            <div class="justify-self-end w-3/4 md:flex md:items-end">
-                                <div class="md:w-full pr-4">
-                                <input type="text" name="total_sin_iva" id="total_sin_iva"  wire:model='total_sin_iva'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div>
-                                <div class="md:w-full">
-                                <input type="text" name="total_IVA" id="total_IVA"  wire:model='total_IVA'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div>
-                            </div>
-
-                            <div class="justify-self-end w-3/4 md:flex md:items-center">
-                                <div class="md:w-full pr-4">
-                                <input type="text" name="total_bs" id="total_bs"  wire:model='total_bs'  class="justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div>
-                                <div class="md:w-full">
-                                <input type="text" name="total_dolar" id="total_dolar"  wire:model='total_dolar' class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                </div>
-                            </div>
-
-                        </div>-->
-
 
                         <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
                         
