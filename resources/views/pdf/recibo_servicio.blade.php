@@ -23,8 +23,8 @@
       <div id="project">
         <div><span>CLIENTE</span> {{$datapdf['name']}}</div>
         <div><span>CI/RIF</span> {{$datapdf['identificacion']}}</div>
-        <div><span>TELEFONO</span>{{$datapdf['telefono']}}</div>
-        <div><span>DIRECCION</span>{{$datapdf['direccion']}}</div>
+        <div><span>TELÉFONO</span>{{$datapdf['telefono']}}</div>
+        <div><span>DIRECCIÓN</span>{{$datapdf['direccion']}}</div>
         <div><span>N° RECIBO</span>{{$datapdf['recibo']}}</div>
         <div><span>FECHA</span>{{$datapdf['fecha_servicio']}}</div>
         <div><span>HORA</span>{{$datapdf['hora']}}</div>
@@ -35,7 +35,7 @@
         <thead>
           <tr>
             <th class="service">SERVICIO</th>
-            <th class="">DESCRIPCION</th>
+            <th class="">DESCRIPCIÓN</th>
             <th>TOTAL</th>
           </tr>
         </thead>

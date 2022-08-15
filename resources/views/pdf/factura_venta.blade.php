@@ -26,8 +26,8 @@
       <div id="project">
         <div><span>CLIENTE</span> {{$datapdf['name']}}</div>
         <div><span>CI/RIF</span> {{$datapdf['identificacion']}}</div>
-        <div><span>DIRECCION</span>{{$datapdf['direccion']}}</div>
-        <div><span>TELEFONO</span>{{$datapdf['telefono']}}</div>
+        <div><span>DIRECCIÓN</span>{{$datapdf['direccion']}}</div>
+        <div><span>TELÉFONO</span>{{$datapdf['telefono']}}</div>
         <div><span>N° FACTURA</span>{{$datapdf['factura']}}</div>
         <div><span>FECHA</span>{{$datapdf['fecha']}}</div>
         <div><span>HORA</span>{{$datapdf['hora']}}</div>
