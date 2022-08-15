@@ -39,6 +39,8 @@ class Caja extends Component
     public $idProducto=[];
     public $montoP=[];
     public $disProducto=[];
+    public $costo_dolares=[];
+    public $total_dolar_input=[];
 
     public $confirmingUserDeletion = false;
     public $confirmingDeletion = false;
@@ -58,6 +60,16 @@ class Caja extends Component
        
       $productos = Productos::where('unidad', '>', '0')->get();
      
+      $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
+
+            if($tasadeldiaotros){
+                $tasadia = $tasadeldiaotros->tasa; 
+            }else{
+                $tasadeldiaBCV = Tasa_BCV::all();
+                $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
+                $tasadia = str_replace(",",".",$tasadia);
+            }
+
         if(count($this->cantidad) != 0 ){
 
                 $cantidadProd=0;
@@ -78,15 +90,25 @@ class Caja extends Component
                         $porcentaje = ($total*$iva[0]->iva)/100;
                         }
 
-                        $this->total[$i] = $total;
+                        $this->total[$i] = $total+$porcentaje;
+
                         $this->total[$i] = number_format($this->total[$i], 2);
                         $this->total[$i] = str_replace(","," ",$this->total[$i]);
                         $this->total[$i] = str_replace(".",",",$this->total[$i]);
                         $this->total[$i] = str_replace(" ",".",$this->total[$i]);
 
+                        $this->total_dolar_input[$i] = $total+$porcentaje;
+                        $this->total_dolar_input[$i] = ($this->total_dolar_input[$i]*1)/$tasadia;
+                        $this->total_dolar_input[$i] = number_format($this->total_dolar_input[$i], 2);
+                        $this->total_dolar_input[$i] = str_replace(","," ",$this->total_dolar_input[$i]);
+                        $this->total_dolar_input[$i] = str_replace(".",",",$this->total_dolar_input[$i]);
+                        $this->total_dolar_input[$i] = str_replace(" ",".",$this->total_dolar_input[$i]);
+
                         $this->totalSINIVA[$i] = $total;
                         $this->totalIVA[$i] = $porcentaje;
                         $this->idProducto[$i] =  $total;
+
+                     
                     }
 
                     }else{
@@ -136,15 +158,7 @@ class Caja extends Component
             $this->total_bs = str_replace(".",",",$this->total_bs);
             $this->total_bs = str_replace(" ",".",$this->total_bs);
 
-            $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
-
-            if($tasadeldiaotros){
-                $tasadia = $tasadeldiaotros->tasa; 
-            }else{
-                $tasadeldiaBCV = Tasa_BCV::all();
-                $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
-                $tasadia = str_replace(",",".",$tasadia);
-            }
+            
 
                 $total_dolar = ($sum*1)/$tasadia;
                 $this->total_dolar = number_format($total_dolar, 2);
@@ -212,6 +226,16 @@ public function seleccionBuscador(){
     
     $cant = count($this->ventas);
     $dataProducto = Productos::find($this->id_producto);
+    $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
+
+            if($tasadeldiaotros){
+                $tasadia = $tasadeldiaotros->tasa; 
+            }else{
+                $tasadeldiaBCV = Tasa_BCV::all();
+                $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
+                $tasadia = str_replace(",",".",$tasadia);
+            }
+
     if($cant == 0){
         if($this->id_producto != ''){ 
         if(count($this->searchTerm) == 0){
@@ -225,6 +249,15 @@ public function seleccionBuscador(){
             $this->costo[0] = str_replace(" ",".",$this->costo[0]);
 
             $this->disponible = $dataProducto->unidad;
+
+            $this->costo_dolares[0] = ($dataProducto->precio_sin_iva*1)/$tasadia;
+            $this->costo_dolares[0] = number_format($this->costo_dolares[0], 2);
+            $this->costo_dolares[0] = str_replace(","," ",$this->costo_dolares[0]);
+            $this->costo_dolares[0] = str_replace(".",",",$this->costo_dolares[0]);
+            $this->costo_dolares[0] = str_replace(" ",".",$this->costo_dolares[0]);
+
+
+
             $this->disProducto[0] = $dataProducto->unidad;
             $this->impuesto[0] = $dataProducto->exento;
             $this->idP[0] = $dataProducto->id;
@@ -246,6 +279,14 @@ public function seleccionBuscador(){
             $this->costo[($this->posicionInput)] = str_replace(","," ",$this->costo[($this->posicionInput)]);
             $this->costo[($this->posicionInput)] = str_replace(".",",",$this->costo[($this->posicionInput)]);
             $this->costo[($this->posicionInput)] = str_replace(" ",".",$this->costo[($this->posicionInput)]);
+
+            $this->costo_dolares[($this->posicionInput)] = ($dataProducto->precio_sin_iva*1)/$tasadia;
+            $this->costo_dolares[($this->posicionInput)] = number_format($this->costo_dolares[($this->posicionInput)], 2);
+            $this->costo_dolares[($this->posicionInput)] = str_replace(","," ",$this->costo_dolares[($this->posicionInput)]);
+            $this->costo_dolares[($this->posicionInput)] = str_replace(".",",",$this->costo_dolares[($this->posicionInput)]);
+            $this->costo_dolares[($this->posicionInput)] = str_replace(" ",".",$this->costo_dolares[($this->posicionInput)]);
+
+
             $this->disponible = $dataProducto->unidad;
             $this->disProducto[($this->posicionInput)] = $dataProducto->unidad;
             $this->idP[($this->posicionInput)] = $dataProducto->id;

@@ -141,8 +141,8 @@
     <tr class="">
       <th class="text-sm font-medium text-white border-r">Cantidad</th>
       <th class="text-sm font-medium text-white border-r">Descripción</th>
-      <th class="text-sm font-medium text-white border-r">Precio de Venta</th>
-      <th class="text-sm font-medium text-white border-r">Total Ventas</th>
+      <th class="text-sm font-medium text-white border-r">Precio</th>
+      <th class="text-sm font-medium text-white border-r">Precio+IVA</th>
       <th class="text-sm font-medium text-white border-r">Impuesto</th>
       <th class="text-sm font-medium text-white border-r">&nbsp;</th>
       <th class="text-sm font-medium text-white border-r">&nbsp;</th>
@@ -160,10 +160,12 @@
         <input type="text"  name="id_producto.0" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" wire:model="searchTerm.0" disabled>
       </td>
       <td  class="w-28 border-r">
-        <input type="text" name="costo_unitario.0"  wire:model='costo.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+        <input type="text" name="precio_sin_iva.0"  wire:model='costo.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+        <input type="text" name="costo_dolares.0"  wire:model='costo_dolares.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
       </td>
       <td  class="w-28 border-r">
         <input type="text" name="total.0"  wire:model='total.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+        <input type="text" name="total_dolar_input.0"  wire:model='total_dolar_input.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
      </td>
       <td class="w-24 border-r">
         @if($impuesto)
@@ -196,11 +198,13 @@
             <input type="text" name="id_producto.{{ $key+1 }}" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" wire:model="searchTerm.{{ $key+1 }}" disabled>
         </td>
         <td  class="w-28 border-r">
-            <input type="text" name="precio_sin_iva.{{ $key+1 }}"  wire:model='costo.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+            <input type="text" name="precio_sin_iva.{{ $key+1 }}"  wire:model='costo.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled> 
+            <input type="text" name="costo_dolares.{{ $key+1 }}"  wire:model='costo_dolares.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled> 
         </td>
         <td  class="w-28 border-r">
             <input type="hidden" name="montoP.{{ $key+1 }}"  wire:model='montoP.{{ $key+1 }}'>
             <input type="text" name="total.{{ $key+1 }}"  wire:model='total.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+            <input type="text" name="total_dolar_input.{{ $key+1 }}"  wire:model='total_dolar_input.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
         </td>
         <td  class="w-24 border-r">
             @if(count($impuesto) > $key+1)
@@ -264,10 +268,9 @@
                         <div class="pb-3.5 pr-4">
                             @if($botonFactura == 'true')
                                 <input type="hidden" name="botonFactura" id="botonFactura" value="{{$botonFactura}}"/>
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button" wire:click='modal()'>Imprimir Factura</button>
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button" wire:click='modal()'>Procesar Pago</button>
                             @else
                               <input type="hidden" name="factura" id="factura" value="{{$botonFactura}}"/>
-                                <!--<p class="text-sm text-red-600">El abono supera el monto total</p>-->
                             @endif
                         </div>
                     </div> 
