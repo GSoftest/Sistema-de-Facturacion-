@@ -52,10 +52,10 @@
                          <td class="w-64 border-r text-gray-700 mr-3">
                          {{ $item->descripcion }}</td>
                          <td class="w-20 border-r text-center">
-                         <a class="py-2" href="/categorias/{{$item->id}}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
+                         <a class="py-2" href="/categorias/{{$item->id}}" title='Editar' ><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
                         </td>
                          <td class="w-20 border-r text-center">
-                         <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $item->id }})'></i></button>
+                         <button class="py-2" title='Eliminar'><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $item->id }})'></i></button>
                          </td>
                      </tr>
                  @endforeach

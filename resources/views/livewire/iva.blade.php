@@ -65,16 +65,16 @@
                             <input type="hidden" wire:model='estado' name="estado">
                             @if ($iva->estado == 0)
 
-                             <button class="py-2"><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar({{ $iva->id }})'></i></button>
+                             <button class="py-2" title='Activar' ><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar({{ $iva->id }})'></i></button>
                             @else
-                            <button class="py-2"><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $iva->id }})'></i></button>
+                            <button class="py-2" title='Desactivar'><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $iva->id }})'></i></button>
                             @endif
                         </td>
                          <td class="w-24 border-r text-center">
-                             <button class="py-2"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true" wire:click='edit({{ $iva->id }})'></i></button>
+                             <button class="py-2" title='Editar'><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true" wire:click='edit({{ $iva->id }})'></i></button>
                          </td>
                          <td class="w-24 border-r text-center">
-                             <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $iva->id }})'></i></button>
+                             <button class="py-2" title='Eliminar'><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $iva->id }})'></i></button>
                          </td>
                      </tr>
                  @endforeach

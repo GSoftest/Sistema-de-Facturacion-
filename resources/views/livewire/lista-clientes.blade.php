@@ -64,13 +64,13 @@
                              {{ $cliente->correo }}
                          </td>
                          <td class="w-24 border-r text-center">
-                         <a class="py-2" href="/clientes/{{$cliente->id}}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
+                         <a class="py-2" href="/clientes/{{$cliente->id}}" title='Editar'><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
                         </td>
                          <td class="w-24 border-r text-center">
                          @if ($cliente->estatus == 0)
-                             <button class="py-2"><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar({{ $cliente->id }})'></i></button>
+                             <button class="py-2"><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar({{ $cliente->id }})' title='Activar'></i></button>
                         @else
-                            <button class="py-2"><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $cliente->id }})'></i></button>
+                            <button class="py-2"><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $cliente->id }})' title='Desactivar'></i></button>
                         @endif
                            <!-- <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='desactivar({{ $cliente->id }})'></i></button>-->
                          </td>

@@ -40,7 +40,7 @@
                     <div class="px-4 py-4">
                     <i class="fa-solid fa-percent fa-3x"></i>
                     </div>
-                    <label for=""><strong>Iva</strong></label>
+                    <label for=""><strong>IVA</strong></label>
                 </div>
                 </a>
         </div>

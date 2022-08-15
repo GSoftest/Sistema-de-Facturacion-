@@ -59,17 +59,17 @@
                     <td class="w-24 border-r text-center">
                         <input type="hidden" wire:model='estatus' name="estatus">
                         @if ($tasaOtro->estatus == 0)
-                             <button class="py-2"><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar({{ $tasaOtro->id }})'></i></button>
+                             <button class="py-2" title='Activar'><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar({{ $tasaOtro->id }})'></i></button>
                         @else
-                            <button class="py-2"><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $tasaOtro->id }})'></i></button>
+                            <button class="py-2" title='Desactivar'><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $tasaOtro->id }})'></i></button>
                         @endif
 
                     </td>
                     <td class="w-24 border-r text-center">
-                        <button class="py-2"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true" wire:click='edit({{ $tasaOtro->id }})'></i></button>
+                        <button class="py-2" title='Editar'><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true" wire:click='edit({{ $tasaOtro->id }})'></i></button>
                     </td>
                     <td class="w-24 border-r text-center">
-                        <button class="py-2"><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $tasaOtro->id }})'></i></button>
+                        <button class="py-2" title='Eliminar'><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $tasaOtro->id }})'></i></button>
                     </td>
                 </tr>
                 @endforeach

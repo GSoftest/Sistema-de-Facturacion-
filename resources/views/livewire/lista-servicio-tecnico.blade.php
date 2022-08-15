@@ -64,12 +64,12 @@
               <td class="w-16 border-r text-center">
                 @foreach ($recibo as $rec)
                     @if($rec->id == $servicio->id_recibo) 
-                    <button class="py-2" type="button" wire:click="download('{{$rec->pdf}}')"><i class="fa fa-download fa-sm" style="color: green;" aria-hidden="true"></i></button>
+                    <button class="py-2" type="button" wire:click="download('{{$rec->pdf}}')" title='Descargar Recibo'><i class="fa fa-download fa-sm" style="color: green;" aria-hidden="true"></i></button>
                     @endif
                 @endforeach
                 </td>
                 <td class="w-16 border-r text-center">
-               <a class="py-2" href="{{ route('servicioTecnicoEditar', $servicio->id) }}"><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
+               <a class="py-2" href="{{ route('servicioTecnicoEditar', $servicio->id) }}" title='Editar'><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
                 </td>
              </tr>
              @endforeach

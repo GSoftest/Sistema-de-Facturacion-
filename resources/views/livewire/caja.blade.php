@@ -177,10 +177,10 @@
         @endif
       </td>
       <td  class="w-16 border-r px-8 py-4">
-       <button type="button"><i class="fa fa-plus fa-sm" style="color: green;" wire:click='agregarProductos()'></i></button>
+       <button type="button" title='Agregar'><i class="fa fa-plus fa-sm" style="color: green;" wire:click='agregarProductos()'></i></button>
       </td>
       <td  class="w-16 border-r px-8 py-4">
-        <button type="button"><i class="fa fa-trash-can fa-sm"style="color: red;" wire:click='modalEliminar(0)'></i></button>
+        <button type="button" title='Eliminar'><i class="fa fa-trash-can fa-sm"style="color: red;" wire:click='modalEliminar(0)'></i></button>
       </td>
     </tr>
     @if($ventas)
@@ -215,10 +215,10 @@
             @endif
         </td>
         <td class="w-16 border-r px-8 py-4">
-            <button class="py-2" type="button"><i class="fa fa-plus fa-sm" style="color: green;" wire:click='agregarProductos'></i></button>
+            <button class="py-2" type="button" title='Agregar'><i class="fa fa-plus fa-sm" style="color: green;" wire:click='agregarProductos'></i></button>
         </td>
         <td class="w-16 border-r px-8 py-4">
-            <button class="py-2" type="button"><i class="fa fa-trash-can fa-sm"style="color: red;" wire:click='modalEliminar({{$key+1}})'></i></button>
+            <button class="py-2" type="button" title='Eliminar'><i class="fa fa-trash-can fa-sm"style="color: red;" wire:click='modalEliminar({{$key+1}})'></i></button>
         </td>
                       
     </tr>
