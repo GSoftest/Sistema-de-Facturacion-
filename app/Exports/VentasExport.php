@@ -22,16 +22,17 @@ class VentasExport implements FromView
     {
         date_default_timezone_set('America/Caracas');
         if($this->fechadesde != null &&  $this->fechahasta!=null){
-            $exportVenta = Ventas::whereDate('fecha','>=', $this->fechadesde)->whereDate('fecha','<=', $this->fechahasta)->paginate(20);
+            $exportVenta = Ventas::whereDate('fecha','>=', $this->fechadesde)->whereDate('fecha','<=', $this->fechahasta)->get();
         }else{
-            $exportVenta = Ventas::paginate(20);
+            $exportVenta = Ventas::all();
         }
 
-        return view('livewire.lista-ventas', [
-            'ventas' => $exportVenta,
-            'factura' => Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0),id,nombre_factura,id_venta')->get(),
-            'cliente' => Clientes::all(),
-            'fecha' => date('Y-m-d')
+        return view('components.export-datos',
+        [ 'ventas' => $exportVenta,
+          'factura' => Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0),id,nombre_factura,id_venta')->get(),
+          'cliente' => Clientes::all(),
+          'fecha' => date('Y-m-d')
+
         ]);
     }
 }

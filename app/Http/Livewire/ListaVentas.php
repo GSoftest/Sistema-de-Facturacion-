@@ -16,18 +16,19 @@ class ListaVentas extends Component
     use WithPagination;
     public $busquedaVenta,$busqueda,$desde,$hasta,$desdeexport,$hastaexport;
     
+    public $negada = false;
 
     public function render()
     {
         date_default_timezone_set('America/Caracas');
-        $ventas = Ventas::paginate(20);
+        $ventas = Ventas::paginate(10);
         $data2 = Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0),id,nombre_factura,id_venta')->get();
         $cliente = Clientes::all();
 
         if($this->busqueda == true){
             $this->desde = str_replace("-","/",$this->desde);
             $this->hasta = str_replace("-","/",$this->hasta);
-            $busquedaVenta = Ventas::whereDate('fecha','>=', $this->desde)->whereDate('fecha','<=',$this->hasta)->paginate(20);
+            $busquedaVenta = Ventas::whereDate('fecha','>=', $this->desde)->whereDate('fecha','<=',$this->hasta)->paginate(10);
             return view('livewire.lista-ventas',['ventas'  => $busquedaVenta, 'factura' => $data2,'cliente' => $cliente, 'fecha' => date('Y-m-d')]);
         }else{
             return view('livewire.lista-ventas',['ventas'  => $ventas, 'factura' => $data2,'cliente' => $cliente, 'fecha' => date('Y-m-d')]);
@@ -47,12 +48,18 @@ class ListaVentas extends Component
         if($this->desde != null && $this->hasta != null){
             $this->busqueda = true;
         }else{
-            session()->flash('message', 'Debe registrar un rango de fecha para la busqueda');
-            $this->view = 'livewire.lista-ventas';
+            $this->negada = true;
+           // session()->flash('message', 'Debe registrar un rango de fecha para la busqueda');
+          //  $this->view = 'livewire.lista-ventas';
         }
        
     }
 
+    public function cerrar(){
+
+        $this->negada = false;
+       
+    }
 
     public function limpiar(){
 

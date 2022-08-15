@@ -128,6 +128,30 @@
 
                 </div>
             </div>
+
+<x-jet-dialog-modal wire:model="negada">
+    <x-slot name="title">
+        <span class="flex justify-center">
+        <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: #dac52d;"></i>
+        </span>
+    </x-slot>
+    <x-slot name="content">
+        <span class="flex justify-center">
+          ¡Debe seleccionar un rango de fecha para la búsqueda!
+        </span>
+    </x-slot>
+        
+<x-slot name="footer">
+<span class="flex justify-center pt-2">
+        <div class="pb-3.5 pr-4">
+        <x-button-advertencia class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+            ok
+        </x-button-advertencia>
+        </div>
+        </span>
+</x-slot>
+</x-jet-dialog-modal>
+
         </div>
     </div>
 </div>
