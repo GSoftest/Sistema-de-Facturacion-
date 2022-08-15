@@ -7,13 +7,15 @@ use App\Models\Ventas;
 use App\Models\Factura;
 use App\Models\Clientes;
 use Livewire\WithPagination;
+use App\Exports\VentasExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Redirect;
 
 class ListaVentas extends Component
 {
     use WithPagination;
-    public $busquedaVenta,$busqueda,$desde,$hasta;
-
-    public $negada = false;
+    public $busquedaVenta,$busqueda,$desde,$hasta,$desdeexport,$hastaexport;
+    
 
     public function render()
     {
@@ -21,14 +23,11 @@ class ListaVentas extends Component
         $ventas = Ventas::paginate(20);
         $data2 = Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0),id,nombre_factura,id_venta')->get();
         $cliente = Clientes::all();
-        //'fecha_factura' => date('d/m/Y'),
 
         if($this->busqueda == true){
             $this->desde = str_replace("-","/",$this->desde);
             $this->hasta = str_replace("-","/",$this->hasta);
             $busquedaVenta = Ventas::whereDate('fecha','>=', $this->desde)->whereDate('fecha','<=',$this->hasta)->paginate(20);
-            $this->desde = null;
-            $this->hasta = null;
             return view('livewire.lista-ventas',['ventas'  => $busquedaVenta, 'factura' => $data2,'cliente' => $cliente, 'fecha' => date('Y-m-d')]);
         }else{
             return view('livewire.lista-ventas',['ventas'  => $ventas, 'factura' => $data2,'cliente' => $cliente, 'fecha' => date('Y-m-d')]);
@@ -48,15 +47,20 @@ class ListaVentas extends Component
         if($this->desde != null && $this->hasta != null){
             $this->busqueda = true;
         }else{
-            $this->negada=true;
+            session()->flash('message', 'Debe registrar un rango de fecha para la busqueda');
+            $this->view = 'livewire.lista-ventas';
         }
        
     }
 
-    public function cerrar()
-    {
-        $this->negada=false;
+
+    public function limpiar(){
+
+        $this->busqueda == false;
+        return Redirect::route('listadoVentas');
+       
     }
-
-
+    public function export() {
+        return Excel::download(new VentasExport($this->desde,$this->hasta), 'ventas.xlsx');
+    }
 }
