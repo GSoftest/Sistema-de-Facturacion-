@@ -362,6 +362,8 @@ public function seleccionBuscador(){
 
             for($i = 0; $i < $longitudDisP; $i++){
                 $updateProducto = Productos::find($this->idP[$i]);
+
+                if(isset($this->cantidad[$i])){
                 $reduccion = ($updateProducto->unidad-$this->cantidad[$i]);
                 $updateProducto->unidad = $reduccion;
                 $reduccion2 = (int)$reduccion;
@@ -370,6 +372,7 @@ public function seleccionBuscador(){
                 }else{
                     $updateProducto->save();
                 }
+              }
 
             }
 
