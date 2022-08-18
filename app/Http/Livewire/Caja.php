@@ -13,6 +13,8 @@ use App\Models\Tasa_Otros;
 use App\Models\Ventas;
 use App\Models\Ventas_Productos;
 use App\Models\Factura;
+use App\Models\TemporalVenta;
+use App\Models\TemporalVentaProducto;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -152,7 +154,7 @@ class Caja extends Component
             $this->total_sin_iva = str_replace(" ",".",$this->total_sin_iva);
 
 
-            $this->total_bs = $sum+$sumIVA;
+            $this->total_bs =  $sum;
             $this->total_bs = number_format($this->total_bs, 2);
             $this->total_bs = str_replace(","," ",$this->total_bs);
             $this->total_bs = str_replace(".",",",$this->total_bs);
@@ -376,10 +378,61 @@ public function seleccionBuscador(){
 
     }
 
-    public function modal(){
+
+   /* public function modal(){
         $this->confirmingUserDeletion=true;
+    }*/
+
+ public function redireccionar(){
+
+    /***************Venta**************** */
+    $temporalVenta = TemporalVenta::all();
+    if(count($temporalVenta) != 0){
+        TemporalVenta::destroy($temporalVenta[0]->id);
     }
 
+        $temporal_Venta = new TemporalVenta();
+        $temporal_Venta->id = 1;
+        $temporal_Venta->id_cliente = $this->id_cliente;
+        $temporal_Venta->sub_total = $this->total_sin_iva;
+        $temporal_Venta->iva = $this->total_IVA;
+        $temporal_Venta->total = $this->total_bs;
+
+        /***************Producto**************** */ 
+        $temporalVentaProducto = TemporalVentaProducto::all();   
+        $longitudP = count($this->searchTerm);
+
+        if(count($temporalVentaProducto) != 0){
+            TemporalVentaProducto::where('id_venta', '=', '1')->delete();
+        }
+
+        for($i = 0; $i < $longitudP; $i++){
+
+            if($i == 0){
+            $temporalVentaP = new TemporalVentaProducto();
+            $temporalVentaP->id = 1;
+            $temporalVentaP->id_venta = 1;
+            $temporalVentaP->id_producto = $this->idP[$i];
+            $temporalVentaP->cantidad = $this->cantidad[$i];
+            $temporalVentaP->total = $this->total[$i];
+            $temporalVentaP->save();
+            }else{
+                $temporalVentaP = new TemporalVentaProducto();
+                $temporalVentaP->id = $i+1;
+                $temporalVentaP->id_venta = 1;
+                $temporalVentaP->id_producto = $this->idP[$i];
+                $temporalVentaP->cantidad = $this->cantidad[$i];
+                $temporalVentaP->total = $this->total[$i];
+                $temporalVentaP->save(); 
+            }
+        }
+
+    $temporal_Venta->save();
+
+
+
+    return redirect()->to('/procesarPago');
+    }
 
     public function modalEliminar($eliminarId){
         $this->eliminarId = $eliminarId;
@@ -388,12 +441,13 @@ public function seleccionBuscador(){
 
     public function cerrar()
     {
-        $this->confirmingUserDeletion=false;
+      //  $this->confirmingUserDeletion=false;
         $this->confirmingDeletion=false;
         $this->Deletion=false;
         $this->negada=false;
     }
 
+    
     public function submit(){
         date_default_timezone_set('America/Caracas');
 
@@ -486,7 +540,7 @@ if(isset($reduccionExiste) == false){
         $this->Nombrepdf= $Factura->nombre_factura;
         $pdf->render();
 
-        $this->confirmingUserDeletion=false;
+      //  $this->confirmingUserDeletion=false;
         $this->descargarFactura=true;
 
     }else{

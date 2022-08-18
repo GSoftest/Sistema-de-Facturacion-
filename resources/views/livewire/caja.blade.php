@@ -61,8 +61,8 @@
                                 <div>
                                 <label for="fecha" class="block text-sm font-medium text-gray-700">Fecha:</label>
                                 </div>
-                                <div>
-                                <input type="text" name="fecha" id="fecha" wire:model='fecha' value="{{$fecha_factura}}" placeholder="{{$fecha_factura}}" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+                                <div class="pb-1">
+                                <input type="text" name="fecha" id="fecha" wire:model='fecha' value="{{$fecha_factura}}" placeholder="{{$fecha_factura}}" class="appearance-none bg-transparent border-none w-full focus:outline-none mt-1 block sm:text-sm" disabled>
                                 </div>
                             </div>
                     </div>
@@ -138,11 +138,11 @@
                         <div class="py-2">
 <table class="w-full border">
   <thead class="bg-gray-800 border-b">
-    <tr class="">
+    <tr>
       <th class="text-sm font-medium text-white border-r">Cantidad</th>
       <th class="text-sm font-medium text-white border-r">Descripción</th>
       <th class="text-sm font-medium text-white border-r">Precio</th>
-      <th class="text-sm font-medium text-white border-r">Precio+IVA</th>
+      <th class="text-sm font-medium text-white border-r">Precio + IVA</th>
       <th class="text-sm font-medium text-white border-r">Impuesto</th>
       <th class="text-sm font-medium text-white border-r">&nbsp;</th>
       <th class="text-sm font-medium text-white border-r">&nbsp;</th>
@@ -152,30 +152,33 @@
     <tr class="border-b">
       <td class="w-24 border-r">
         <input type="hidden" name="disProducto.0" id="disProducto.0" wire:model='disProducto.0'>
-        <input type="number" name="cantidad.0" wire:model='cantidad.0' id="cantidad.0" min="1" onkeypress="return validacionInt('cantidad.0')" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+        <input type="number" name="cantidad.0" wire:model='cantidad.0' id="cantidad.0" min="1" onkeypress="return validacionInt('cantidad.0')" class="block appearance-none text-left bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm">
       </td>
       <td class="border-r">
         <input type="hidden" name="idP.0" id="idP.0" wire:model='idP.0'>
         <input type="hidden" name="idProducto.0" id="idProducto.0" wire:model='idProducto.0'>
-        <input type="text"  name="id_producto.0" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" wire:model="searchTerm.0" disabled>
+        <input type="text"  name="id_producto.0" class="block appearance-none text-left bg-transparent border-none w-full focus:outline-none sm:text-sm" wire:model="searchTerm.0" disabled>
       </td>
       <td  class="w-28 border-r">
-        <input type="text" name="precio_sin_iva.0"  wire:model='costo.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
-        <input type="text" name="costo_dolares.0"  wire:model='costo_dolares.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
-      </td>
+        <input type="text" name="precio_sin_iva.0"  wire:model='costo.0' class="appearance-none text-right bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
+        <input type="text" name="costo_dolares.0"  wire:model='costo_dolares.0' class="appearance-none text-right bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
+ 
+    </td>
       <td  class="w-28 border-r">
-        <input type="text" name="total.0"  wire:model='total.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
-        <input type="text" name="total_dolar_input.0"  wire:model='total_dolar_input.0' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
-     </td>
+      <!--  <input type="text" name="total.0"  wire:model='total.0' class="text-right appearance-none bg-transparent border-none mt-1 focus:outline-none block w-full shadow-sm sm:text-sm border-gray-300" disabled>-->
+      <input type="text" name="total.0"  wire:model='total.0' class="appearance-none text-right bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
+      <input type="text" name="total_dolar_input.0"  wire:model='total_dolar_input.0' class="appearance-none text-right bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
+
+    </td>
       <td class="w-24 border-r">
         @if($impuesto)
             @if($impuesto[0] == 0)
-                <input type="text" placeholder="EX"  class="appearance-none text-center bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+                <input type="text" placeholder="EX"  class="appearance-none text-center bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
             @else
-               <input type="text" placeholder="GR"  class="appearance-none text-center bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+               <input type="text" placeholder="GR"  class="appearance-none text-center bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
             @endif
         @else
-        <input type="text" class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+        <input type="text" class="appearance-none text-center bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
         @endif
       </td>
       <td  class="w-16 border-r px-8 py-4">
@@ -190,32 +193,32 @@
     <tr class="border-b">
         <td  class="w-24 border-r">
             <input type="hidden" name="disProducto.{{ $key+1 }}" id="disProducto.{{ $key+1 }}" wire:model='disProducto.{{ $key+1 }}'>
-            <input type="number"  name="cantidad.{{ $key+1 }}"  wire:model='cantidad.{{  $key+1 }}' min="1" id="cantidad.{{$key+1}}" onkeypress="return validacionInt('cantidad.{{$key+1}}')"  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
+            <input type="number"  name="cantidad.{{ $key+1 }}"  wire:model='cantidad.{{  $key+1 }}' min="1" id="cantidad.{{$key+1}}" onkeypress="return validacionInt('cantidad.{{$key+1}}')"  class="block appearance-none text-left bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm">
         </td>
         <td class="border-r">
             <input type="hidden" name="idP.{{ $key+1 }}" id="idP.{{ $key+1 }}" wire:model='idP.{{ $key+1 }}'>
             <input type="hidden" name="idProducto.{{ $key+1 }}" id="idProducto.{{ $key+1 }}" wire:model='idProducto.{{ $key+1 }}'>
-            <input type="text" name="id_producto.{{ $key+1 }}" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" wire:model="searchTerm.{{ $key+1 }}" disabled>
+            <input type="text" name="id_producto.{{ $key+1 }}" class="block appearance-none text-left bg-transparent border-none w-full focus:outline-none sm:text-sm" wire:model="searchTerm.{{ $key+1 }}" disabled>
         </td>
         <td  class="w-28 border-r">
-            <input type="text" name="precio_sin_iva.{{ $key+1 }}"  wire:model='costo.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled> 
-            <input type="text" name="costo_dolares.{{ $key+1 }}"  wire:model='costo_dolares.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled> 
+            <input type="text" name="precio_sin_iva.{{ $key+1 }}"  wire:model='costo.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled> 
+            <input type="text" name="costo_dolares.{{ $key+1 }}"  wire:model='costo_dolares.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled> 
         </td>
         <td  class="w-28 border-r">
             <input type="hidden" name="montoP.{{ $key+1 }}"  wire:model='montoP.{{ $key+1 }}'>
-            <input type="text" name="total.{{ $key+1 }}"  wire:model='total.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
-            <input type="text" name="total_dolar_input.{{ $key+1 }}"  wire:model='total_dolar_input.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+            <input type="text" name="total.{{ $key+1 }}"  wire:model='total.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
+            <input type="text" name="total_dolar_input.{{ $key+1 }}"  wire:model='total_dolar_input.{{ $key+1 }}' class="appearance-none text-right bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
         </td>
         <td  class="w-24 border-r">
             @if(count($impuesto) > $key+1)
                 @if($impuesto[$key+1] == 0)
-                <input type="text" placeholder="EX"  class="appearance-none text-center bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+                <input type="text" placeholder="EX"  class="appearance-none text-center bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
                @else
-               <input type="text" placeholder="GR"  class="appearance-none text-center bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+               <input type="text" placeholder="GR"  class="appearance-none text-center bg-transparent border-none w-full  mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
                @endif
            @else
 
-           <input type="text" class="appearance-none text-right bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" disabled>
+           <input type="text" class="appearance-none text-center bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none sm:text-sm" disabled>
             @endif
         </td>
         <td class="w-16 border-r px-8 py-4">
@@ -242,7 +245,7 @@
 <table class="w-full">
     <thead>
         <tr class="">
-            <td colspan="2"><label>Cantidad de productos:@if(isset($cantidadProducto))<strong>&nbsp;{{$cantidadProducto}}</strong>@else<strong>&nbsp;0</strong>@endif</label></td>
+            <td colspan="2"><label  class="block text-sm font-medium text-gray-700">Cantidad de productos:@if(isset($cantidadProducto))<strong>&nbsp;{{$cantidadProducto}}</strong>@else<strong>&nbsp;0</strong>@endif</label></td>
             <td class="text-center"><label for="total_sin_iva" class="block text-sm font-medium text-gray-700">Sub-Total</label></td>
             <td class="text-center"><label for="total_sin_iva" class="block text-sm font-medium text-gray-700">IVA</label></td>
             <td class="text-center"><label for="total_bs" class="block text-sm font-medium text-gray-700">Total Bs</label></td>
@@ -268,7 +271,8 @@
                         <div class="pb-3.5 pr-4">
                             @if($botonFactura == 'true')
                                 <input type="hidden" name="botonFactura" id="botonFactura" value="{{$botonFactura}}"/>
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button" wire:click='modal()'>Procesar Pago</button>
+                            <!--    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button" wire:click='modal()'>Procesar Pago</button>-->
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button" wire:click='redireccionar()'>Procesar Pago</button>
                             @else
                               <input type="hidden" name="factura" id="factura" value="{{$botonFactura}}"/>
                             @endif
@@ -277,7 +281,7 @@
 
 
 
-<x-jet-dialog-modal wire:model="confirmingUserDeletion">
+<!--<x-jet-dialog-modal wire:model="confirmingUserDeletion">
     <x-slot name="title">
         <span class="flex justify-center">
         <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: red;"></i>
@@ -303,7 +307,7 @@
         </div>
         </span>
 </x-slot>
-</x-jet-dialog-modal>
+</x-jet-dialog-modal>-->
 
 
 <x-jet-dialog-modal wire:model="confirmingDeletion">

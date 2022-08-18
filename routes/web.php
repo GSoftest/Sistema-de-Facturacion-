@@ -10,6 +10,7 @@ use App\Http\Livewire\ServicioTecnico;
 use App\Http\Livewire\ServicioTecnicoEditar;
 use App\Http\Livewire\ListaServicioTecnico;
 use App\Http\Livewire\ListaVentas;
+use App\Http\Livewire\ProcesarPago;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -99,7 +100,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
      /************Ventas*************/
      Route::get('/caja', Caja::class)->name('caja');
      Route::get('/listadoVentas', ListaVentas::class)->name('listadoVentas');
-     
+     Route::get('/procesarPago', ProcesarPago::class)->name('procesarPago');
  
 
         /************Tasa************ */
