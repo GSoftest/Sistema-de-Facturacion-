@@ -55,17 +55,24 @@
 
                                     @if($conversion[$key] == true)
                                     <td class="w-30 px-2 text-center">
-                                        <input type="text"  id='conversionMonto1.{{$key}}' name='conversionMonto1.{{$key}}' wire:model="conversionMonto1.{{$key}}" placeholder="0,00" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
+                                        <input type="text"  id='conversionMonto1.{{$key}}' name='conversionMonto1.{{$key}}' wire:loading.remove wire:model="conversionMonto1.{{$key}}" placeholder="0,00" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                                     </td>
                                     @endif
                                 @endif
 
-                            <td class="w-8 px-8 py-4"><button type="button" wire:click='agregarCeldas({{$key}})'><i class="fa fa-plus fa-sm" style="color: green;"></i></button></td>
+                            <td class="w-8 px-8 py-4"><button type="button" wire:click='agregarCeldas({{$key}})' wire:click="$refresh"><i class="fa fa-plus fa-sm" style="color: green;"></i></button></td>
                             </tr>
                             @endforeach
                         @endif
                     </tbody>
                 </table>
+
+<div class="pt-8">
+<label  class="block text-sm font-medium text-gray-700"><strong>Total Bs: {{$total}}</strong></label>
+<label  class="block text-sm font-medium text-gray-700"><strong>Total IGTF Bs: {{$igtf}}</strong></label>
+<label  class="block text-sm font-medium text-gray-700"><strong>Gran Total Bs: {{$granTotal}}</strong></label>
+</div>
+
 
 
                 @if($habilitarBoton == true)
@@ -75,31 +82,31 @@
                 @endif
                 </div>
 
-<x-jet-dialog-modal wire:model="modalImprimirFactura">
+<x-dialog-modal-procesarpago wire:model="modalImprimirFactura">
     <x-slot name="title">
         <span class="flex justify-start">
-            Factura
+            <strong>Factura</strong>
         </span>
     </x-slot>
     <x-slot name="content">
-        <span class="flex justify-start">Subtotal Bs:</span>
-        <span class="flex justify-start">IVA Bs:</span>
-        <span class="flex justify-start">Total Bs:</span>
-        <span class="flex justify-start">Total IGTF Bs:</span>
-        <span class="flex justify-start">Gran Total Bs:</span>
+        <span class="flex justify-start">Subtotal Bs:{{$subtotal}}</span>
+        <span class="flex justify-start">IVA Bs:{{$iva}}</span>
+        <span class="flex justify-start">Total Bs:{{$total}}</span>
+        <span class="flex justify-start">Total IGTF Bs:{{$igtf}}</span>
+        <span class="flex justify-start">Gran Total Bs:{{$granTotal}}</span>
         <span class="flex justify-start">Total Debito Bs:</span>
     </x-slot>
         
 <x-slot name="footer">
 <span class="flex justify-center pt-2">
         <div class="pb-3.5 pr-4">
-        <x-jet-danger-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+        <x-blue-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
             Imprimir Factura
-        </x-jet-danger-button>
+        </x-blue-button>
         </div>
         </span>
 </x-slot>
-</x-jet-dialog-modal>
+</x-dialog-modal-procesarpago>
 
 
                 </form>
@@ -108,12 +115,12 @@
     </div>
 </div>
 <script>
-/*function myFunction(id) {
+function myFunction(id) {
   var pagobs = document.getElementById(id);
   var pagodolar = document.getElementById(id);
   pagobs.value = pagobs.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');
   pagodolar.value = pagodolar.value.replace(/[^0-9,,]/g, '').replace(/,/g, ',');
-}*/
+}
 
 function convertidor_decimal(donde, caracter, campo, id) {
 			var decimales = true;
