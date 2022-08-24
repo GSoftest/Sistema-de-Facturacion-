@@ -46,21 +46,23 @@
                             </td>
                    
                                 @if($habilitado[$key] == true)
-                                    <td class="w-28 px-2 text-center"><input type="text"  id='pago.{{$key}}' name='pago.{{$key}}' wire:model="pago.{{$key}}" placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'pago.{{$key}}')" onkeypress="return myFunction('{{$key}}')" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md"></td>
+                                    <td class="w-28 px-2 text-center"><input type="text"  id='pago.{{$key}}' name='pago.{{$key}}' wire:model="pago.{{$key}}"  placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'pago.{{$key}}')" onkeypress="return myFunction('{{$key}}')" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md"></td>
                                 @else
                                     <td class="w-28 px-2 text-center"><input type="text"  id='pago.{{$key}}' name='pago.{{$key}}' wire:model="pago.{{$key}}" placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'pago.{{$key}}')" onkeypress="return myFunction('{{$key}}')" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md" readonly></td>
                                 @endif
 
+                                <td class="w-30 px-2 text-center">
                                 @if(!empty($conversion[$key]))
 
                                     @if($conversion[$key] == true)
-                                    <td class="w-30 px-2 text-center">
-                                        <input type="text"  id='conversionMonto1.{{$key}}' name='conversionMonto1.{{$key}}' wire:loading.remove wire:model="conversionMonto1.{{$key}}" placeholder="0,00" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
-                                    </td>
+                                   
+                                        <input type="text"  id='conversionMonto1.{{$key}}' name='conversionMonto1.{{$key}}'  wire:model="conversionMonto1.{{$key}}" placeholder="0,00" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
+                                  
                                     @endif
                                 @endif
-
-                            <td class="w-8 px-8 py-4"><button type="button" wire:click='agregarCeldas({{$key}})' wire:click="$refresh"><i class="fa fa-plus fa-sm" style="color: green;"></i></button></td>
+                                </td>
+                            <td class="w-4 px-4 py-4"><button type="button" wire:click='agregarCeldas({{$key}})' wire:click="$refresh"><i class="fa fa-plus fa-sm" style="color: green;"></i></button></td>
+                            <td class="w-4 px-4 py-4"><button type="button" title='Eliminar' wire:click='modalEliminar({{$key}})'><i class="fa fa-trash-can fa-sm"style="color: red;"></i></button></td>
                             </tr>
                             @endforeach
                         @endif
@@ -74,13 +76,41 @@
 </div>
 
 
-
                 @if($habilitarBoton == true)
                 <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button"  wire:click='modalImprimir()'>Procesar factura</button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2  border border-blue-500 rounded py-1.5" type="button"  wire:click='modalImprimir()'>Procesar Factura</button>
                 </div>
                 @endif
                 </div>
+
+
+<x-jet-dialog-modal wire:model="confirmingDeletion">
+    <x-slot name="title">
+        <span class="flex justify-center">
+        <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: red;"></i>
+        </span>
+    </x-slot>
+    <x-slot name="content">
+        <span class="flex justify-center">
+        ¿Está seguro que desea eliminarlo?
+        </span>
+    </x-slot>
+        
+<x-slot name="footer">
+<span class="flex justify-center pt-2">
+        <div class="pb-3.5 pr-4">
+        <x-jet-secondary-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+            No
+        </x-jet-secondary-button>
+        </div>
+        <div class="">
+        <x-jet-danger-button class="mx-12" wire:loading.attr="disabled" wire:click="eliminarProductos">
+            Sí
+            </x-jet-danger-button>
+        </div>
+        </span>
+</x-slot>
+</x-jet-dialog-modal>
 
 <x-dialog-modal-procesarpago wire:model="modalImprimirFactura">
     <x-slot name="title">
@@ -89,18 +119,43 @@
         </span>
     </x-slot>
     <x-slot name="content">
-        <span class="flex justify-start">Subtotal Bs:{{$subtotal}}</span>
-        <span class="flex justify-start">IVA Bs:{{$iva}}</span>
-        <span class="flex justify-start">Total Bs:{{$total}}</span>
-        <span class="flex justify-start">Total IGTF Bs:{{$igtf}}</span>
-        <span class="flex justify-start">Gran Total Bs:{{$granTotal}}</span>
-        <span class="flex justify-start">Total Debito Bs:</span>
+        <table>
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>Subtotal Bs:</td>
+                    <td>{{$subtotal}}</td>
+                </tr>
+                <tr>
+                    <td>IVA {{$porcentajeiva}}% Bs:</td>
+                    <td>{{$iva}}</td>
+                </tr>
+                <tr>
+                    <td>Total Bs:</td>
+                    <td>{{$total}}</td>
+                </tr>
+                <tr>
+                    <td>Total IGTF Bs:</td>
+                    <td>{{$igtf}}</td>
+                </tr>
+                <tr>
+                    <td>Gran Total Bs:</td>
+                    <td>{{$granTotal}}</td>
+                </tr>
+                @foreach($tipo_metodo as $key => $value)
+                <tr>
+                    <td>{{str_replace('Bs','',$value)}} Bs:&nbsp;</td>
+                    <td>{{$list_pago_bs[$key]}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </x-slot>
         
 <x-slot name="footer">
 <span class="flex justify-center pt-2">
         <div class="pb-3.5 pr-4">
-        <x-blue-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+        <x-blue-button class="mx-8"  wire:loading.attr="disabled" wire:click="submit">
             Imprimir Factura
         </x-blue-button>
         </div>
@@ -108,6 +163,26 @@
 </x-slot>
 </x-dialog-modal-procesarpago>
 
+<x-dialog-modal-factura wire:model="descargarFactura">
+<x-slot name="title">
+        <div class="grid grid-cols-2 gap-4">
+            <div>{{$Nombrepdf}}</div>
+            <div class="flex justify-end">
+                <x-button-cerrar class="mx-8"  wire:loading.attr="disabled" wire:click="cerrarModalFactura">
+                <i class="fa fa-times fa-sm" aria-hidden="true"></i>
+                </x-jet-button-cerrar>
+            </div>
+        </div>
+    </x-slot>
+    <x-slot name="content">
+    <embed
+    src="{{URL::asset($urlpdf)}}"
+    style="width:600px; height:800px;"
+    frameborder="0">
+    </x-slot>
+    <x-slot name="footer">
+    </x-slot>
+</x-dialog-modal-factura>
 
                 </form>
             </div>

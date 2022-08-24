@@ -76,13 +76,19 @@ header {
   float: left;
 }
 
-#project span {
+#project .titulo{
   color: #5D6975;
   text-align: justify;
   width: 52px;
   margin-right: 10px;
   display: inline-block;
   font-size: 0.8em;
+}
+
+.texto{
+  text-align: justify;
+  margin-left: 120px;
+  margin-bottom: 10px;
 }
 
 #company {
@@ -126,7 +132,12 @@ table .desc {
 }
 
 table td {
-  padding: 20px;
+  padding: 10px;
+  text-align: right;
+}
+
+table td .small{
+  padding: 05px;
   text-align: right;
 }
 

@@ -7,6 +7,14 @@ use App\Models\MetodoPago;
 use App\Models\Tasa_BCV;
 use App\Models\Tasa_Otros;
 use App\Models\TemporalVenta;
+use App\Models\TemporalVentaProducto;
+use App\Models\Ivas;
+use App\Models\Productos;
+use App\Models\Ventas;
+use App\Models\Ventas_Productos;
+use App\Models\Factura;
+use App\Models\Clientes;
+use Illuminate\Support\Facades\Redirect;
 
 class ProcesarPago extends Component
 {
@@ -20,20 +28,34 @@ class ProcesarPago extends Component
      public $conversion = [];
      public $conversionMonto = [];
      public $conversionMonto1 = [];
-     public $habilitarBoton,$totalTemporal,$subtotal,$iva,$total,$igtf,$granTotal;
+     public $habilitarBoton,$totalTemporal,$subtotal,$iva,$total,$igtf,$granTotal,$porcentajeiva;
+     public $tipo_metodo = [];
+     public $list_pago_bs = [];
+     public $id_cliente,$id_venta_temporal,$Nombrepdf,$urlpdf;
+     public $productos = [];
+     public $cantidad = [];
+     public $totalp = [];
+     public $impuestop= [];
 
      public $modalImprimirFactura = false;
-     
+     public $descargarFactura = false;
+     public $confirmingDeletion = false;
 
      public function mount()
       {
         array_push($this->metodosCeldas ,1);
         array_push($this->habilitado ,false);
         array_push($this->conversion ,false);
+        $this->habilitarBoton = false;
         $totalTemporal = TemporalVenta::all();
         $this->subtotal = $totalTemporal[0]->sub_total;
         $this->iva = $totalTemporal[0]->iva;
         $this->total = $totalTemporal[0]->total;
+        $this->id_cliente = $totalTemporal[0]->id_cliente;
+        $this->id_venta_temporal = $totalTemporal[0]->id;
+        $porcentajeiva  = Ivas::where('estado', 1)->get();
+        $this->porcentajeiva  = $porcentajeiva[0]->iva;
+        $this->porcentajeiva = str_replace(".",",",$this->porcentajeiva);
 
       }
 
@@ -73,7 +95,14 @@ class ProcesarPago extends Component
                             $this->conversionMonto[$i] = $this->conversionMonto[$i];
                             $this->conversionMonto1[$i] = $this->conversionMonto[$i].'$';
                             $this->tipomoneda[$i] = '$';
-
+                            for($x = 0; $x < count($metodos); $x++){
+                                if(!empty($metodos[$x]->id)){
+                                    if($metodos[$x]->id == $this->id_metodo[$i]){
+                                        $this->tipo_metodo[$i] = $metodos[$x]->descripcion;
+                                    }
+                                }
+                            }
+                            $this->list_pago_bs[$i] = $this->pago[$i];
 
                         }
                     break;
@@ -97,6 +126,15 @@ class ProcesarPago extends Component
                             $this->conversionMonto1[$i] = $this->conversionMonto[$i].'Bs';
                             $this->tipomoneda[$i] = 'Bs';
                             $sumadolares += $montod;
+
+                            for($x = 0; $x < count($metodos); $x++){
+                                if(!empty($metodos[$x]->id)){
+                                    if($metodos[$x]->id == $this->id_metodo[$i]){
+                                        $this->tipo_metodo[$i] = $metodos[$x]->descripcion;
+                                    }
+                                }
+                            }
+                            $this->list_pago_bs[$i] = $this->conversionMonto[$i];
                         }
 
                     break;
@@ -126,6 +164,7 @@ class ProcesarPago extends Component
         $totalSumaFormato = str_replace(" ",".",$totalSumaFormato);
 
 
+       if($this->granTotal != null){
         switch($this->granTotal){
             case ($totalSumaFormato == $this->granTotal):
                 $this->habilitarBoton = true;
@@ -134,7 +173,7 @@ class ProcesarPago extends Component
                 $this->habilitarBoton = false;
             break;
         }
-       
+        }
 
         /*************Total************ */
         $formatototal = $this->total;
@@ -148,7 +187,6 @@ class ProcesarPago extends Component
         $granT = str_replace(".",",",$granT);
         $granT = str_replace(" ",".",$granT);
         $this->granTotal=$granT;
-
         return view('livewire.procesar-pago',['metodos' => $metodos]);
     }
 
@@ -189,15 +227,169 @@ class ProcesarPago extends Component
     public function cerrar()
     {
         $this->modalImprimirFactura = false;
+        $this->confirmingDeletion = false;
     }
-    
-    public function change()
-    {
 
-
-    }
     public function submit()
     {
+        date_default_timezone_set('America/Caracas');
 
+        /***************descontar lo disponible***************** */
+        $TemporalVentaProduto = TemporalVentaProducto::all();
+        $longitudP = count($TemporalVentaProduto);
+        for($i = 0; $i < $longitudP; $i++){
+            $updateProducto = Productos::find($TemporalVentaProduto[$i]->id_producto);
+            $reduccion = ($updateProducto->unidad-$TemporalVentaProduto[$i]->cantidad);
+            $updateProducto->unidad = $reduccion;
+            $reduccion2 = (int)$reduccion;
+            $productos[$i] = $updateProducto->name;
+            $cantidad[$i] = $TemporalVentaProduto[$i]->cantidad;
+            $totalp[$i] = $TemporalVentaProduto[$i]->total;
+            $impuestop[$i] = $updateProducto->exento;
+          
+            if($reduccion < 0){
+                $reduccionExiste = '1';
+            }else{
+                $updateProducto->save();
+            }
+        }
+      
+        if(isset($reduccionExiste) == false){
+
+              /*********Tabla Venta********* */
+            $Venta = new Ventas();
+            $Venta->id_cliente = $this->id_cliente;
+            $Venta->sub_total = $this->subtotal;
+            $Venta->iva = $this->iva;
+            $Venta->total = $this->total;
+            $Venta->total_igtf = $this->iva;
+            $Venta->gran_total = $this->total;
+            $Venta->fecha = date("Y-m-d h:i:s");
+            $Venta->save();
+            TemporalVenta::destroy($this->id_venta_temporal);
+
+            /*********Tabla Venta_Productos********* */
+            
+
+            for($i = 0; $i < $longitudP; $i++){
+                $VentaP = new Ventas_Productos();
+                $VentaP->id_venta = $Venta->id;
+                $VentaP->id_producto = $TemporalVentaProduto[$i]->id_producto;
+                $VentaP->cantidad = $TemporalVentaProduto[$i]->cantidad;
+                $VentaP->total = $TemporalVentaProduto[$i]->total;
+                $VentaP->save();
+            }
+
+            /*********factura********* */
+            $ultimaFactura = Factura::orderBy('numero_factura', 'desc')->first();
+            $Factura = new Factura();
+            if($ultimaFactura == null){
+               $Factura->numero_factura = 1;
+               $Factura->nombre_factura = 'Factura'.$Factura->numero_factura.'.pdf';
+           }else{
+               $Factura->numero_factura = $ultimaFactura->numero_factura+1;
+               $Factura->nombre_factura = 'Factura'.$Factura->numero_factura.'.pdf';
+           }
+
+            $Factura->id_venta = $Venta->id;
+            $Factura->save();
+            $facturanu = Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0), id')->where('nombre_factura',$Factura->nombre_factura)->first();
+            $facturanumero = $facturanu['lpad(numero_factura, 15, 0)'];
+
+            /**********se crea el pdf************** */
+            $pdf = app('dompdf.wrapper');
+
+            $cliente = Clientes::find($this->id_cliente);
+
+            $datapdf = [
+                'fecha' => date("d/m/Y"),
+                'hora' => date("h:i:s"),
+                'name' => $cliente->name,
+                'identificacion' => $cliente->identificacion,
+                'telefono' => $cliente->telefono,
+                'direccion' => $cliente->direccion,
+                'factura' => $facturanumero,
+                'productos' => $productos,
+                'cantidad' => $cantidad,
+                'totalp' => $totalp,
+                'impuestop' => $impuestop,
+                'SubtotalF' => $this->subtotal,
+                'ivaF' => $this->iva,
+                'total_bs' => $this->total,
+                'porcentajeIva' => $this->porcentajeiva,
+                'total_igtf' => $this->igtf,
+                'gran_total' => $this->granTotal,
+                'tipo_metodo' => $this->tipo_metodo,
+                'list_pago_bs' =>$this->list_pago_bs,
+            ];
+
+            $pdf->loadView('pdf.factura_venta',compact('datapdf'));
+            $pdf->save(public_path('app/archivos/facturas_ventas/') .$Factura->nombre_factura);
+            $this->urlpdf='app/archivos/facturas_ventas/'.$Factura->nombre_factura;
+            $this->Nombrepdf = $Factura->nombre_factura;
+            $pdf->render();
+            $this->descargarFactura=true;
+        }else{
+            //$this->negada=true;
+        }
+    }
+
+    public function cerrarModalFactura()
+    {
+      $this->descargarFactura=false;
+      $this->modalImprimirFactura = false;
+      return Redirect::route('caja');
+    }
+
+    public function modalEliminar($eliminarId){
+        $this->eliminarId = $eliminarId;
+        $this->confirmingDeletion=true;
+    }
+
+
+    public function eliminarProductos()
+    {
+        if($this->eliminarId != 0){
+            unset($this->metodosCeldas[($this->eliminarId)]);
+            $this->metodosCeldas = array_values($this->metodosCeldas);
+
+            unset($this->pago[($this->eliminarId)]);
+            $this->pago = array_values($this->pago);
+
+            unset($this->conversion[($this->eliminarId)]);
+            $this->conversion = array_values($this->conversion);
+
+            unset($this->conversionMonto1[($this->eliminarId)]);
+            $this->conversionMonto1 = array_values($this->conversionMonto1);
+        }else{
+           // dd(count($this->metodosCeldas));
+            if(count($this->metodosCeldas) == 1){
+
+                $this->reset('id_metodo');
+
+                unset($this->pago[($this->eliminarId)]);
+                $this->pago = array_values($this->pago);
+    
+                unset($this->conversion[($this->eliminarId)]);
+                $this->conversion = array_values($this->conversion);
+    
+                unset($this->conversionMonto1[($this->eliminarId)]);
+                $this->conversionMonto1 = array_values($this->conversionMonto1);
+            }else{
+                unset($this->metodosCeldas[($this->eliminarId)]);
+                $this->metodosCeldas = array_values($this->metodosCeldas);
+
+            unset($this->pago[($this->eliminarId)]);
+            $this->pago = array_values($this->pago);
+
+            unset($this->conversion[($this->eliminarId)]);
+            $this->conversion = array_values($this->conversion);
+
+            unset($this->conversionMonto1[($this->eliminarId)]);
+            $this->conversionMonto1 = array_values($this->conversionMonto1);
+            
+            }
+        }
+        $this->confirmingDeletion=false;
     }
 }
