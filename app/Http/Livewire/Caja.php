@@ -216,7 +216,7 @@ class Caja extends Component
 
     public function change(){
         if ($this->id_categoria != '' && $this->id_categoria != null) {
-            $productos = Productos::where('id_categoria', $this->id_categoria)->get();
+            $productos = Productos::where('unidad', '>', '0')->where('id_categoria',$this->id_categoria)->get();
         }else{
            $productos = Productos::where('unidad', '>', '0')->get();
         }
@@ -265,11 +265,12 @@ public function seleccionBuscador(){
             $this->idP[0] = $dataProducto->id;
             $this->posicionInput=0; 
             }else{
-                $this->disponible = 0;
+                $this->disponible = '';
             }
         }else{
-            $this->disponible = $dataProducto->unidad;
+            $this->disponible = 0;
         }
+
       }else{$this->disponible = '';}
     }else{
         if($this->id_producto != ''){ 

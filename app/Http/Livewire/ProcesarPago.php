@@ -41,6 +41,9 @@ class ProcesarPago extends Component
      public $descargarFactura = false;
      public $confirmingDeletion = false;
 
+
+     public $listeners = ['Refresh' => 'render'];
+
      public function mount()
       {
         array_push($this->metodosCeldas ,1);
@@ -93,7 +96,7 @@ class ProcesarPago extends Component
                             $this->conversionMonto[$i] = str_replace(".",",",$this->conversionMonto[$i]);
                             $this->conversionMonto[$i] = str_replace(" ",".",$this->conversionMonto[$i]);
                             $this->conversionMonto[$i] = $this->conversionMonto[$i];
-                            $this->conversionMonto1[$i] = $this->conversionMonto[$i].'$';
+                            $this->conversionMonto1[$i] = '$ '.$this->conversionMonto[$i];
                             $this->tipomoneda[$i] = '$';
                             for($x = 0; $x < count($metodos); $x++){
                                 if(!empty($metodos[$x]->id)){
@@ -123,7 +126,7 @@ class ProcesarPago extends Component
                             $this->conversionMonto[$i] = str_replace(","," ",$this->conversionMonto[$i]);
                             $this->conversionMonto[$i] = str_replace(".",",",$this->conversionMonto[$i]);
                             $this->conversionMonto[$i] = str_replace(" ",".",$this->conversionMonto[$i]);
-                            $this->conversionMonto1[$i] = $this->conversionMonto[$i].'Bs';
+                            $this->conversionMonto1[$i] = 'Bs '.$this->conversionMonto[$i];
                             $this->tipomoneda[$i] = 'Bs';
                             $sumadolares += $montod;
 
@@ -165,6 +168,7 @@ class ProcesarPago extends Component
 
 
        if($this->granTotal != null){
+        //dd($totalSumaFormato.' '.$this->granTotal);
         switch($this->granTotal){
             case ($totalSumaFormato == $this->granTotal):
                 $this->habilitarBoton = true;
@@ -173,6 +177,7 @@ class ProcesarPago extends Component
                 $this->habilitarBoton = false;
             break;
         }
+
         }
 
         /*************Total************ */
@@ -324,6 +329,7 @@ class ProcesarPago extends Component
             ];
 
             $pdf->loadView('pdf.factura_venta',compact('datapdf'));
+          //  $pdf->setPaper('b7', 'portrait');
             $pdf->save(public_path('app/archivos/facturas_ventas/') .$Factura->nombre_factura);
             $this->urlpdf='app/archivos/facturas_ventas/'.$Factura->nombre_factura;
             $this->Nombrepdf = $Factura->nombre_factura;
@@ -362,7 +368,6 @@ class ProcesarPago extends Component
             unset($this->conversionMonto1[($this->eliminarId)]);
             $this->conversionMonto1 = array_values($this->conversionMonto1);
         }else{
-           // dd(count($this->metodosCeldas));
             if(count($this->metodosCeldas) == 1){
 
                 $this->reset('id_metodo');
@@ -376,8 +381,12 @@ class ProcesarPago extends Component
                 unset($this->conversionMonto1[($this->eliminarId)]);
                 $this->conversionMonto1 = array_values($this->conversionMonto1);
             }else{
-                unset($this->metodosCeldas[($this->eliminarId)]);
-                $this->metodosCeldas = array_values($this->metodosCeldas);
+
+            unset($this->id_metodo[($this->eliminarId)]);
+            $this->id_metodo = array_values($this->id_metodo);
+
+            unset($this->metodosCeldas[($this->eliminarId)]);
+            $this->metodosCeldas = array_values($this->metodosCeldas);
 
             unset($this->pago[($this->eliminarId)]);
             $this->pago = array_values($this->pago);
@@ -391,5 +400,9 @@ class ProcesarPago extends Component
             }
         }
         $this->confirmingDeletion=false;
+    }
+
+    public function refrescar(){
+        $this->emit('Refresh');
     }
 }

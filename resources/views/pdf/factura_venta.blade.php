@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {!! Html::style('/css/style.css') !!}
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body>
     <header class="clearfix">
@@ -34,7 +35,7 @@
       </div>
     </header>
     <main>
-      <table>
+      <table class="table-fixed">
         <thead>
           <tr>
             <th class="service">CANTIDAD</th>

@@ -28,7 +28,12 @@
                         <tr class="">
                             <td class="text-center"><label for="" class="block text-sm font-medium text-gray-700">Método de Pagos</label></td>
                             <td class="text-center"><label for="" class="block text-sm font-medium text-gray-700">Monto</label></td>
-                            <td class="text-center"><label for="" class="block text-sm font-medium text-gray-700"></label></td>
+                            <td class="text-center"><label for="" class="block text-sm font-medium text-gray-700">
+                             @if(!empty($conversionMonto1))
+                             <label for="" class="block text-sm font-medium text-gray-700">Conversión
+                            </label>
+                            @endif
+                            </td>
                             <td class="text-center"><label for="" class="block text-sm font-medium text-gray-700"></label></td>
                         </tr>
                     </thead>
@@ -46,7 +51,7 @@
                             </td>
                    
                                 @if($habilitado[$key] == true)
-                                    <td class="w-28 px-2 text-center"><input type="text"  id='pago.{{$key}}' name='pago.{{$key}}' wire:model="pago.{{$key}}"  placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'pago.{{$key}}')" onkeypress="return myFunction('{{$key}}')" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md"></td>
+                                    <td class="w-28 px-2 text-center"><input type="text"  id='pago.{{$key}}' name='pago.{{$key}}' wire:model="pago.{{$key}}" wire:change='refrescar'  placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'pago.{{$key}}')" onkeypress="return myFunction('{{$key}}')" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md"></td>
                                 @else
                                     <td class="w-28 px-2 text-center"><input type="text"  id='pago.{{$key}}' name='pago.{{$key}}' wire:model="pago.{{$key}}" placeholder="0,00" onkeyup="convertidor_decimal(this,this.value.charAt(this.value.length-1),2,'pago.{{$key}}')" onkeypress="return myFunction('{{$key}}')" class="text-right justify-self-end mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-24 shadow-sm sm:text-sm border-gray-300 rounded-md" readonly></td>
                                 @endif
@@ -61,7 +66,7 @@
                                     @endif
                                 @endif
                                 </td>
-                            <td class="w-4 px-4 py-4"><button type="button" wire:click='agregarCeldas({{$key}})' wire:click="$refresh"><i class="fa fa-plus fa-sm" style="color: green;"></i></button></td>
+                            <td class="w-4 px-4 py-4"><button type="button" wire:click='agregarCeldas({{$key}})'><i class="fa fa-plus fa-sm" style="color: green;"></i></button></td>
                             <td class="w-4 px-4 py-4"><button type="button" title='Eliminar' wire:click='modalEliminar({{$key}})'><i class="fa fa-trash-can fa-sm"style="color: red;"></i></button></td>
                             </tr>
                             @endforeach
@@ -69,11 +74,35 @@
                     </tbody>
                 </table>
 
-<div class="pt-8">
-<label  class="block text-sm font-medium text-gray-700"><strong>Total Bs: {{$total}}</strong></label>
-<label  class="block text-sm font-medium text-gray-700"><strong>Total IGTF Bs: {{$igtf}}</strong></label>
-<label  class="block text-sm font-medium text-gray-700"><strong>Gran Total Bs: {{$granTotal}}</strong></label>
-</div>
+
+<div class="pt-8 flex justify-center">
+    <table class="w-3/4 border bg-gray-100 border-gray-100">
+        <thead>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="px-2"><label  class="text-sm font-medium text-gray-700">Total:&nbsp;</label></td>
+            
+                <td class="text-right px-2"><label  class="text-sm font-medium text-gray-700"><strong>Bs&nbsp;{{$total}}</strong></label></td>
+            </tr>
+            <tr>
+                <td class="px-2"><label  class="text-sm font-medium text-gray-700">Total IGTF:&nbsp;</label></td>
+            
+                <td class="text-right px-2"><label  class="text-sm font-medium text-gray-700"><strong>Bs&nbsp;{{$igtf}}</strong></label></td>
+            </tr>
+            <tr>
+                <td class="px-2"><label  class="text-sm font-medium text-gray-700">Gran Total:&nbsp;</label></td>
+             
+                <td class="text-right px-2"><label  class="text-sm font-medium text-gray-700"><strong>Bs&nbsp;{{$granTotal}}</strong></label></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
 
 
                 @if($habilitarBoton == true)
@@ -92,7 +121,7 @@
     </x-slot>
     <x-slot name="content">
         <span class="flex justify-center">
-        ¿Está seguro que desea eliminarlo?
+        ¿Está seguro que desea eliminar?
         </span>
     </x-slot>
         
@@ -119,33 +148,33 @@
         </span>
     </x-slot>
     <x-slot name="content">
-        <table>
+        <table class="w-full border bg-gray-100 border-gray-100">
             <thead></thead>
             <tbody>
                 <tr>
-                    <td>Subtotal Bs:</td>
-                    <td>{{$subtotal}}</td>
+                    <td class="text-sm font-medium text-gray-700 px-2">Subtotal:&nbsp;</td>
+                    <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$subtotal}}</strong></td>
                 </tr>
                 <tr>
-                    <td>IVA {{$porcentajeiva}}% Bs:</td>
-                    <td>{{$iva}}</td>
+                    <td class="text-sm font-medium text-gray-700 px-2">IVA {{$porcentajeiva}}%:&nbsp;</td>
+                    <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$iva}}</strong></td>
                 </tr>
                 <tr>
-                    <td>Total Bs:</td>
-                    <td>{{$total}}</td>
+                    <td class="text-sm font-medium text-gray-700 px-2">Total:&nbsp;</td>
+                    <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$total}}</strong></td>
                 </tr>
                 <tr>
-                    <td>Total IGTF Bs:</td>
-                    <td>{{$igtf}}</td>
+                    <td class="text-sm font-medium text-gray-700 px-2">Total IGTF:&nbsp;</td>
+                    <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$igtf}}</strong></td>
                 </tr>
                 <tr>
-                    <td>Gran Total Bs:</td>
-                    <td>{{$granTotal}}</td>
+                    <td class="text-sm font-medium text-gray-700 px-2">Gran Total:&nbsp;</td>
+                    <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$granTotal}}</strong></td>
                 </tr>
                 @foreach($tipo_metodo as $key => $value)
                 <tr>
-                    <td>{{str_replace('Bs','',$value)}} Bs:&nbsp;</td>
-                    <td>{{$list_pago_bs[$key]}}</td>
+                    <td class="text-sm font-medium text-gray-700 px-2">{{str_replace('Bs','',$value)}}:&nbsp;</td>
+                    <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$list_pago_bs[$key]}}</strong></td>
                 </tr>
                 @endforeach
             </tbody>
