@@ -43,6 +43,7 @@ class Caja extends Component
     public $disProducto=[];
     public $costo_dolares=[];
     public $total_dolar_input=[];
+    public $select;
 
     public $confirmingUserDeletion = false;
     public $confirmingDeletion = false;
@@ -60,7 +61,7 @@ class Caja extends Component
 
         $data = Categorias::All();
        
-      $productos = Productos::where('unidad', '>', '0')->get();
+      $productos = Productos::where('unidad', '>', '0')->orderBy('name', 'asc')->get();
      
       $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
 
@@ -177,6 +178,12 @@ class Caja extends Component
             $this->cantidadProducto = '0';
         }
 
+
+        /*********Si tiene cambio el select productos************** */
+        if($this->select != 0){
+                $this->seleccionBuscador();
+        }
+
         date_default_timezone_set('America/Caracas');
         return view('livewire.caja',['categorias'  => $data,
         'productos'  => $productos,
@@ -216,9 +223,9 @@ class Caja extends Component
 
     public function change(){
         if ($this->id_categoria != '' && $this->id_categoria != null) {
-            $productos = Productos::where('unidad', '>', '0')->where('id_categoria',$this->id_categoria)->get();
+            $productos = Productos::where('unidad', '>', '0')->where('id_categoria',$this->id_categoria)->orderBy('name', 'asc')->get();
         }else{
-           $productos = Productos::where('unidad', '>', '0')->get();
+           $productos = Productos::where('unidad', '>', '0')->orderBy('name', 'asc')->get();
         }
             $this->productos = $productos;
             $this->view = 'livewire.servicio-tecnico';
@@ -227,7 +234,7 @@ class Caja extends Component
 public function seleccionBuscador(){
     
     $cant = count($this->ventas);
-    $dataProducto = Productos::find($this->id_producto);
+    $dataProducto = Productos::find($this->select);
     $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
 
             if($tasadeldiaotros){
@@ -239,7 +246,7 @@ public function seleccionBuscador(){
             }
 
     if($cant == 0){
-        if($this->id_producto != ''){ 
+        if($this->select != ''){ 
         if(count($this->searchTerm) == 0){
            
             if($dataProducto->unidad != 0){
@@ -303,7 +310,7 @@ public function seleccionBuscador(){
         }
         }else{$this->disponible = '';}
     }
-
+    $this->reset('select');       
 }
 
 

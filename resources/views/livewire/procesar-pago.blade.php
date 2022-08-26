@@ -127,7 +127,7 @@
         
 <x-slot name="footer">
 <span class="flex justify-center pt-2">
-        <div class="pb-3.5 pr-4">
+        <div class="">
         <x-jet-secondary-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
             No
         </x-jet-secondary-button>
@@ -164,8 +164,10 @@
                     <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$total}}</strong></td>
                 </tr>
                 <tr>
+                    @if($igtf > '0,00')
                     <td class="text-sm font-medium text-gray-700 px-2">Total IGTF:&nbsp;</td>
                     <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$igtf}}</strong></td>
+                    @endif
                 </tr>
                 <tr>
                     <td class="text-sm font-medium text-gray-700 px-2">Gran Total:&nbsp;</td>

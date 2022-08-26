@@ -104,7 +104,7 @@
 
                             <div>
                                 <label for="id_iva" class="block text-sm font-medium text-gray-700">IVA</label>
-                                <select wire:model="id_iva" name="id_iva" wire:click="change()" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <select wire:model="id_iva" name="id_iva" id="id_iva" wire:click="change()" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                                  <option value="">{{ __("Seleccione") }}</option>                     
                                  @foreach ($ivas as $iva)
                                  <option value="{{ $iva->id }}">{{str_replace(".",",",str_replace(",","",number_format($iva->iva, 2 )))}}</option>
@@ -325,4 +325,12 @@ function convertidor_decimal(donde, caracter, campo, id) {
 			}
 			donde.focus()
 		}
+
+
+$(document).ready(function() {
+    $('#id_iva').select2({
+    minimumResultsForSearch: Infinity
+});
+});
+
 </script>

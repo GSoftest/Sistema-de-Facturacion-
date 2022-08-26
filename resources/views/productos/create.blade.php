@@ -37,7 +37,7 @@
                             </div>
                             <div>
                                 <label for="id_categoria" class="block text-sm font-medium text-gray-700">Categorías</label>
-                                <select wire:model="id_categoria" name="id_categoria" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>  
+                                <select wire:model="id_categoria" name="id_categoria"  id="id_categoria" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>  
                                     <option value="">{{ __("Seleccione") }}</option>                   
                                     @foreach ($categorias as $categoria)
                                     <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
@@ -138,4 +138,17 @@
         </div>
 
     </div>
+
+<script>
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('#id_categoria').select2({
+    minimumResultsForSearch: Infinity
+});
+$('#medida').select2({
+    minimumResultsForSearch: Infinity
+});
+});
+
+</script>
 </x-app-layout>

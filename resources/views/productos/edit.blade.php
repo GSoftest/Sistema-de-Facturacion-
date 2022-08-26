@@ -38,7 +38,7 @@
                             </div>
                             <div>
                                 <label for="id_categoria" class="block text-sm font-medium text-gray-700">Categorías</label>
-                                <select wire:model="id_categoria" name="id_categoria" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                <select wire:model="id_categoria" name="id_categoria"  id="id_categoria" class="form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                                  <option value="">{{ __("Seleccione") }}</option>                     
                                  @foreach ($categorias as $categoria)
                                     <option value="{{ $categoria->id }}" @if($producto->id_categoria==$categoria->id) selected @endif>{{ $categoria->name }}</option>
@@ -58,7 +58,7 @@
                             <input type="text" name="contenido_neto" id="contenido_neto" wire:model='contenido_neto' value="{{$producto->contenido_neto}}" autocomplete="given-contenido_neto" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                     <div class="absolute inset-y-0 right-0 flex items-center">
                                     <label for="medida" class="sr-only">Medida</label>
-                                    <select wire:model="medida" name="medida" class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md">             
+                                    <select wire:model="medida" name="medida"  id="medida" class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md">             
                                         @foreach ($medidas as $medida)
                                         <option value="{{ $medida->id }}" @if($producto->id_medida==$medida->id) selected @endif>{{ $medida->unidad }}</option>
                                         @endforeach
@@ -146,4 +146,16 @@
         </div>
 
     </div>
+    <script>
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('#id_categoria').select2({
+    minimumResultsForSearch: Infinity
+});
+$('#medida').select2({
+    minimumResultsForSearch: Infinity
+});
+});
+
+</script>
 </x-app-layout>

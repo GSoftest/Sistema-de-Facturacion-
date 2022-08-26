@@ -100,8 +100,18 @@
                         </div>
                         </div>
 
-
                         <div class="grid grid-cols-4 gap-4">
+                            <div class="py-2" wire:ignore>
+                            <label for="id_categoria" class="block text-sm font-medium text-gray-700 pb-1">Productos</label>
+                            <select wire:model="id_producto" name="id_producto" id="id_producto" class="pt-1 scroll appearance-none form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <option value="0" selected>{{ __("Seleccione") }}</option>         
+                            @foreach ($productos as $producto)
+                                <option value="{{ $producto['id'] }}">{{$producto['name'] }}</option>
+                                @endforeach
+                            </select>
+                            </div>
+                       
+                        <!--<div class="grid grid-cols-4 gap-4">
                             <div class="py-2">
                             <label for="id_categoria" class="block text-sm font-medium text-gray-700">Categorías</label>
                             <select wire:model="id_categoria" name="id_categoria" wire:change="change()" class="scroll appearance-none form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -111,20 +121,20 @@
                                 @endforeach
                             </select>
                             
-                            </div>
+                            </div>-->
 
 
 
-                            <div class="py-2">
+                        <!--    <div class="py-2">
                             <label for="id_categoria" class="block text-sm font-medium text-gray-700">Productos</label>
-                            <select wire:model="id_producto" name="id_producto" wire:change="seleccionBuscador()" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();'  class="scroll form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md appearance-none">
+                            <select wire:model="id_producto" name="id_producto"  id="id_producto" wire:change="seleccionBuscador()" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();'  class="scroll form-control mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md appearance-none">
                                 <option value="0" selected>{{ __("Seleccione") }}</option>              
                                 @foreach ($productos as $producto)
                                 <option value="{{ $producto['id'] }}">{{$producto['name'] }}</option>
                                 @endforeach
                                 </select>
                             </div>
-
+-->
 
                             <div class="py-2">
                             @if($disponible >= 0)
@@ -133,6 +143,9 @@
                                     &nbsp;&nbsp; 
                             @endif
                             </div>
+
+                            
+
                         </div>
                         
                         <div class="py-2">
@@ -420,4 +433,13 @@ function validacionInt(campo){
   let cantidad = document.getElementById(campo);
   cantidad.value = cantidad.value.replace(/[^0-9]/g, '');
 }
+
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('#id_producto').select2();
+    $('#id_producto').on('change',function(){
+        @this.set('select',this.value);
+    });
+});
+
 </script>

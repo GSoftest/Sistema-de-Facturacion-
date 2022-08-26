@@ -55,20 +55,46 @@
             <td class="total">{{$datapdf['totalp'][$key]}}</td>
           </tr>
           @endforeach
+          <tr>
+            <td class="total"></td>
+            <td colspan="2">SUBTOTAL Bs:</td>
+            <td class="total">{{$datapdf['SubtotalF']}}</td>
+          </tr>
+          <tr>
+            <td class="total"></td>
+            <td colspan="2">IVA {{$datapdf['porcentajeIva']}} % Bs:</td>
+            <td class="total">{{$datapdf['ivaF']}}</td>
+          </tr>
+          <tr>
+            <td class="grand total"></td>
+            <td colspan="2" class="grand">TOTAL Bs:</td>
+            <td class="grand total">{{$datapdf['total_bs']}}</td>
+          </tr>
+          @if($datapdf['total_igtf'] > '0,00')
+          <tr>
+            <td class="total"></td>
+            <td colspan="2">TOTAL IGTF Bs:</td>
+            <td class="total">{{$datapdf['total_igtf']}}</td>
+          </tr>
+          @endif
+          <tr>
+            <td class="grand total"></td>
+            <td colspan="2" class="grand total">GRAN TOTAL Bs:</td>
+            <td class="grand total">{{$datapdf['gran_total']}}</td>
+          </tr>
+          @foreach($datapdf['tipo_metodo'] as $key => $value)
+          <tr>
+            <td class="total"></td>
+            <td colspan="2">{{str_replace('BS','',mb_strtoupper($value))}} Bs:&nbsp;</td>
+            <td class="total">{{$datapdf['list_pago_bs'][$key]}}</td>
+          </tr>
+          @endforeach
         </tbody>
       </table>
-      <div id="project">
-        <div><span class="titulo">SUBTOTAL Bs:</span><span class="texto">{{$datapdf['SubtotalF']}}</span></div>
-        <div><span class="titulo">IVA {{$datapdf['porcentajeIva']}} % Bs:</span><span class="texto">{{$datapdf['ivaF']}}</span></div>
-        <div><span class="titulo">TOTAL Bs:</span><span class="texto">{{$datapdf['total_bs']}}</span></div>
-        <div><span class="titulo">TOTAL IGTF Bs:</span><span class="texto">{{$datapdf['total_igtf']}}</span></div>
-        <div><span class="titulo">GRAN TOTAL Bs:</span><span class="texto">{{$datapdf['gran_total']}}</span></div>
-        @foreach($datapdf['tipo_metodo'] as $key => $value)
-          <div>
-            <span class="titulo">{{str_replace('BS','',mb_strtoupper($value))}} Bs:&nbsp;</span><span class="texto">{{$datapdf['list_pago_bs'][$key]}}</span>
-          </div>
-          @endforeach
-      </div>
+
+
+
+
       
     </main>
     <footer>
