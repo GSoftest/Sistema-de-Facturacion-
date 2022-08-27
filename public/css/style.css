@@ -76,12 +76,13 @@ header {
   float: left;
 }
 
-#project .titulo{
+#project span{
   color: #5D6975;
   text-align: justify;
   width: 52px;
-  display: inline-block;
-  font-size: 0.8em;
+  margin-right:15px;
+  padding: right 10px;
+  display:inline-block;
 }
 
 .texto{

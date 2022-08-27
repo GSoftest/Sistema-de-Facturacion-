@@ -25,13 +25,13 @@
       <div class="clearfix"></div>
 
       <div id="project">
-        <div><span class="titulo">CLIENTE</span> {{$datapdf['name']}}</div>
-        <div><span class="titulo">CI/RIF</span> {{$datapdf['identificacion']}}</div>
-        <div><span class="titulo">DIRECCIÓN</span>{{$datapdf['direccion']}}</div>
-        <div><span class="titulo">TELÉFONO</span>{{$datapdf['telefono']}}</div>
-        <div><span class="titulo">N° FACTURA</span>{{$datapdf['factura']}}</div>
-        <div><span class="titulo">FECHA</span>{{$datapdf['fecha']}}</div>
-        <div><span class="titulo">HORA</span>{{$datapdf['hora']}}</div>
+        <div><span>CLIENTE</span> {{$datapdf['name']}}</div>
+        <div><span>CI/RIF</span> {{$datapdf['identificacion']}}</div>
+        <div><span>DIRECCIÓN</span>{{$datapdf['direccion']}}</div>
+        <div><span>TELÉFONO</span>{{$datapdf['telefono']}}</div>
+        <div><span>N° FACTURA</span>{{$datapdf['factura']}}</div>
+        <div><span>FECHA</span>{{$datapdf['fecha']}}</div>
+        <div><span>HORA</span>{{$datapdf['hora']}}</div>
       </div>
     </header>
     <main>
