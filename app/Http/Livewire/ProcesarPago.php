@@ -12,6 +12,7 @@ use App\Models\Ivas;
 use App\Models\Productos;
 use App\Models\Ventas;
 use App\Models\Ventas_Productos;
+use App\Models\VentasMetodosPago;
 use App\Models\Factura;
 use App\Models\Clientes;
 use Illuminate\Support\Facades\Redirect;
@@ -37,10 +38,11 @@ class ProcesarPago extends Component
      public $totalp = [];
      public $impuestop= [];
 
+
      public $modalImprimirFactura = false;
      public $descargarFactura = false;
      public $confirmingDeletion = false;
-
+     public $factura_radio = 'yes';
 
      public $listeners = ['Refresh' => 'render'];
 
@@ -271,7 +273,7 @@ class ProcesarPago extends Component
             $Venta->gran_total = $this->total;
             $Venta->fecha = date("Y-m-d h:i:s");
             $Venta->save();
-            TemporalVenta::destroy($this->id_venta_temporal);
+
 
             /*********Tabla Venta_Productos********* */
             
@@ -284,6 +286,20 @@ class ProcesarPago extends Component
                 $VentaP->total = $TemporalVentaProduto[$i]->total;
                 $VentaP->save();
             }
+
+
+            /****************Tabla Venta_metodo_pago**************** */
+
+            $longitudMetodo = count($this->id_metodo);
+            for($i = 0; $i < $longitudMetodo; $i++){
+                $VentaMetodo = new VentasMetodosPago();
+                $VentaP->id_venta = $Venta->id;
+                $VentaP->id_metodo_pago = $this->id_metodo[$i];
+                $VentaP->monto_pago = $this->list_pago_bs[$i];
+
+
+            }
+
 
             /*********factura********* */
             $ultimaFactura = Factura::orderBy('numero_factura', 'desc')->first();
@@ -300,6 +316,12 @@ class ProcesarPago extends Component
             $Factura->save();
             $facturanu = Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0), id')->where('nombre_factura',$Factura->nombre_factura)->first();
             $facturanumero = $facturanu['lpad(numero_factura, 15, 0)'];
+
+
+
+                /*************Limpiar las tablas temporales******* */
+            TemporalVentaProducto::destroy($this->id_venta_temporal);
+            TemporalVenta::destroy($this->id_venta_temporal);
 
             /**********se crea el pdf************** */
             $pdf = app('dompdf.wrapper');
@@ -328,10 +350,18 @@ class ProcesarPago extends Component
                 'list_pago_bs' =>$this->list_pago_bs,
             ];
 
-            $pdf->loadView('pdf.factura_venta',compact('datapdf'));
-          //  $pdf->setPaper('b7', 'portrait');
+
+
+                if($this->factura_radio == 'no'){
+                    $pdf->loadView('pdf.factura_fiscal',compact('datapdf'));
+                    $pdf->setPaper('b7', 'portrait');
+                }else{
+                    $pdf->loadView('pdf.factura_venta',compact('datapdf'));
+                }
+            
             $pdf->save(public_path('app/archivos/facturas_ventas/') .$Factura->nombre_factura);
             $this->urlpdf='app/archivos/facturas_ventas/'.$Factura->nombre_factura;
+
             $this->Nombrepdf = $Factura->nombre_factura;
             $pdf->render();
             $this->descargarFactura=true;

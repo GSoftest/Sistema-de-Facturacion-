@@ -181,16 +181,25 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="mt-6">
+        <label for="" class="text-sm font-medium text-gray-700">Tamaño de la Factura</label>
+
+        <div class="grid grid-cols-2 gap-1">
+            <div><input type="radio" wire:model="factura_radio" value="yes"><label for="" class="text-sm font-medium text-gray-700">&nbsp;Factura Simple</label></div>
+            <div><input type="radio" wire:model="factura_radio" value="no"><label for="" class="text-sm font-medium text-gray-700">&nbsp;Factura Fiscal</label></div>
+        </div>
+        </div>
     </x-slot>
         
 <x-slot name="footer">
-<span class="flex justify-center pt-2">
-        <div class="pb-3.5 pr-4">
+    <span class="flex justify-center pt-2">
+        <div class="">
         <x-blue-button class="mx-8"  wire:loading.attr="disabled" wire:click="submit">
             Imprimir Factura
         </x-blue-button>
         </div>
-        </span>
+    </span>
 </x-slot>
 </x-dialog-modal-procesarpago>
 
