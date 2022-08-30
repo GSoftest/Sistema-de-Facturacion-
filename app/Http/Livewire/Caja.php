@@ -10,12 +10,8 @@ use App\Models\Ivas;
 use Livewire\WithPagination;
 use App\Models\Tasa_BCV;
 use App\Models\Tasa_Otros;
-use App\Models\Ventas;
-use App\Models\Ventas_Productos;
-use App\Models\Factura;
 use App\Models\TemporalVenta;
 use App\Models\TemporalVentaProducto;
-use Illuminate\Support\Facades\Redirect;
 
 
 class Caja extends Component
@@ -35,7 +31,7 @@ class Caja extends Component
     public $disponible;
     public $stock=[];
     public $impuesto = [];
-    public $count = 1;
+    public $count = 0;
     public $id_producto=[];
     public $idP=[];
     public $idProducto=[];
@@ -45,9 +41,7 @@ class Caja extends Component
     public $total_dolar_input=[];
     public $select;
 
-    public $confirmingUserDeletion = false;
     public $confirmingDeletion = false;
-    public $descargarFactura = false;
     public $Deletion = false;
     public $negada = false;
 
@@ -56,14 +50,12 @@ class Caja extends Component
        $this->resetPage();
    }
 
-    public function render()
-    {
 
-        $data = Categorias::All();
-       
-      $productos = Productos::where('unidad', '>', '0')->orderBy('name', 'asc')->get();
-     
-      $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
+   public function mount()
+      {
+        array_push($this->ventas ,1);
+        $this->posicionInput=0; 
+        $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
 
             if($tasadeldiaotros){
                 $tasadia = $tasadeldiaotros->tasa; 
@@ -72,6 +64,15 @@ class Caja extends Component
                 $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
                 $tasadia = str_replace(",",".",$tasadia);
             }
+        $this->tasadia = $tasadia;
+      }
+
+    public function render()
+    {
+
+        
+        $data = Categorias::All();
+        $productos = Productos::where('unidad', '>', '0')->orderBy('name', 'asc')->get();
 
         if(count($this->cantidad) != 0 ){
 
@@ -101,7 +102,7 @@ class Caja extends Component
                         $this->total[$i] = str_replace(" ",".",$this->total[$i]);
 
                         $this->total_dolar_input[$i] = $total+$porcentaje;
-                        $this->total_dolar_input[$i] = ($this->total_dolar_input[$i]*1)/$tasadia;
+                        $this->total_dolar_input[$i] = ($this->total_dolar_input[$i]*1)/$this->tasadia;
                         $this->total_dolar_input[$i] = number_format($this->total_dolar_input[$i], 2);
                         $this->total_dolar_input[$i] = str_replace(","," ",$this->total_dolar_input[$i]);
                         $this->total_dolar_input[$i] = str_replace(".",",",$this->total_dolar_input[$i]);
@@ -163,7 +164,7 @@ class Caja extends Component
 
             
 
-                $total_dolar = ($sum*1)/$tasadia;
+                $total_dolar = ($sum*1)/$this->tasadia;
                 $this->total_dolar = number_format($total_dolar, 2);
                 $this->total_dolar = str_replace(","," ",$this->total_dolar);
                 $this->total_dolar = str_replace(".",",",$this->total_dolar);
@@ -181,7 +182,8 @@ class Caja extends Component
 
         /*********Si tiene cambio el select productos************** */
         if($this->select != 0){
-                $this->seleccionBuscador();
+            $this->id_producto = $this->select;
+            $this->seleccionBuscador();
         }
 
         date_default_timezone_set('America/Caracas');
@@ -221,178 +223,147 @@ class Caja extends Component
     }
 
 
-    public function change(){
-        if ($this->id_categoria != '' && $this->id_categoria != null) {
-            $productos = Productos::where('unidad', '>', '0')->where('id_categoria',$this->id_categoria)->orderBy('name', 'asc')->get();
-        }else{
-           $productos = Productos::where('unidad', '>', '0')->orderBy('name', 'asc')->get();
-        }
-            $this->productos = $productos;
-            $this->view = 'livewire.servicio-tecnico';
-    }
+    public function seleccionBuscador(){
 
-public function seleccionBuscador(){
+        $dataProducto = Productos::find($this->select);
+            if($this->id_producto != ''){ 
+
+                if($dataProducto->unidad != 0){
+                $this->searchTerm[($this->posicionInput)] = $dataProducto->name;
+                $this->costo[($this->posicionInput)] = $dataProducto->precio_sin_iva;
+                $this->costo[($this->posicionInput)] = number_format($this->costo[($this->posicionInput)], 2);
+                $this->costo[($this->posicionInput)] = str_replace(","," ",$this->costo[($this->posicionInput)]);
+                $this->costo[($this->posicionInput)] = str_replace(".",",",$this->costo[($this->posicionInput)]);
+                $this->costo[($this->posicionInput)] = str_replace(" ",".",$this->costo[($this->posicionInput)]);
     
-    $cant = count($this->ventas);
-    $dataProducto = Productos::find($this->select);
-    $tasadeldiaotros = Tasa_Otros::where('estatus',1)->first();
-
-            if($tasadeldiaotros){
-                $tasadia = $tasadeldiaotros->tasa; 
-            }else{
-                $tasadeldiaBCV = Tasa_BCV::all();
-                $tasadia = str_replace("USD ","",$tasadeldiaBCV[0]->tasa);
-                $tasadia = str_replace(",",".",$tasadia);
-            }
-
-    if($cant == 0){
-        if($this->select != ''){ 
-        if(count($this->searchTerm) == 0){
-           
-            if($dataProducto->unidad != 0){
-            $this->searchTerm[0] = $dataProducto->name;
-            $this->costo[0] = $dataProducto->precio_sin_iva;
-            $this->costo[0] = number_format($this->costo[0], 2);
-            $this->costo[0] = str_replace(","," ",$this->costo[0]);
-            $this->costo[0] = str_replace(".",",",$this->costo[0]);
-            $this->costo[0] = str_replace(" ",".",$this->costo[0]);
-
-            $this->disponible = $dataProducto->unidad;
-
-            $this->costo_dolares[0] = ($dataProducto->precio_sin_iva*1)/$tasadia;
-            $this->costo_dolares[0] = number_format($this->costo_dolares[0], 2);
-            $this->costo_dolares[0] = str_replace(","," ",$this->costo_dolares[0]);
-            $this->costo_dolares[0] = str_replace(".",",",$this->costo_dolares[0]);
-            $this->costo_dolares[0] = str_replace(" ",".",$this->costo_dolares[0]);
-
-
-
-            $this->disProducto[0] = $dataProducto->unidad;
-            $this->impuesto[0] = $dataProducto->exento;
-            $this->idP[0] = $dataProducto->id;
-            $this->posicionInput=0; 
-            }else{
-                $this->disponible = '';
-            }
-        }else{
-            $this->disponible = 0;
-        }
-
-      }else{$this->disponible = '';}
-    }else{
-        if($this->id_producto != ''){ 
-        if(count($this->searchTerm) == count($this->ventas)){
-            if($dataProducto->unidad != 0){
-            $this->searchTerm[($this->posicionInput)] = $dataProducto->name;
-            $this->costo[($this->posicionInput)] = $dataProducto->precio_sin_iva;
-            $this->costo[($this->posicionInput)] = number_format($this->costo[($this->posicionInput)], 2);
-            $this->costo[($this->posicionInput)] = str_replace(","," ",$this->costo[($this->posicionInput)]);
-            $this->costo[($this->posicionInput)] = str_replace(".",",",$this->costo[($this->posicionInput)]);
-            $this->costo[($this->posicionInput)] = str_replace(" ",".",$this->costo[($this->posicionInput)]);
-
-            $this->costo_dolares[($this->posicionInput)] = ($dataProducto->precio_sin_iva*1)/$tasadia;
-            $this->costo_dolares[($this->posicionInput)] = number_format($this->costo_dolares[($this->posicionInput)], 2);
-            $this->costo_dolares[($this->posicionInput)] = str_replace(","," ",$this->costo_dolares[($this->posicionInput)]);
-            $this->costo_dolares[($this->posicionInput)] = str_replace(".",",",$this->costo_dolares[($this->posicionInput)]);
-            $this->costo_dolares[($this->posicionInput)] = str_replace(" ",".",$this->costo_dolares[($this->posicionInput)]);
-
-
-            $this->disponible = $dataProducto->unidad;
-            $this->disProducto[($this->posicionInput)] = $dataProducto->unidad;
-            $this->idP[($this->posicionInput)] = $dataProducto->id;
-            $this->impuesto[($this->posicionInput)] = $dataProducto->exento;
-            }else{
-                $this->disponible = 0;
-            }
-
-        }else{
-            $this->disponible = $dataProducto->unidad;
-        }
-        }else{$this->disponible = '';}
+                $this->costo_dolares[($this->posicionInput)] = ($dataProducto->precio_sin_iva*1)/$this->tasadia;
+                $this->costo_dolares[($this->posicionInput)] = number_format($this->costo_dolares[($this->posicionInput)], 2);
+                $this->costo_dolares[($this->posicionInput)] = str_replace(","," ",$this->costo_dolares[($this->posicionInput)]);
+                $this->costo_dolares[($this->posicionInput)] = str_replace(".",",",$this->costo_dolares[($this->posicionInput)]);
+                $this->costo_dolares[($this->posicionInput)] = str_replace(" ",".",$this->costo_dolares[($this->posicionInput)]);
+    
+                $this->disponible = $dataProducto->unidad;
+                $this->disProducto[($this->posicionInput)] = $dataProducto->unidad;
+                $this->idP[($this->posicionInput)] = $dataProducto->id;
+                $this->impuesto[($this->posicionInput)] = $dataProducto->exento;
+      
+                }else{
+                    $this->disponible = 0;
+                }
+            }else{$this->disponible = '';}
+        $this->reset('select');       
     }
-    $this->reset('select');       
-}
-
 
     public function agregarProductos(){
 
         $this->count++;
-
-        if(count($this->ventas) != count($this->searchTerm)){
+        if(count($this->ventas) == count($this->searchTerm)){
 
             if(count($this->cantidad) == count($this->searchTerm)){
                 array_push($this->ventas ,$this->count);
-                if(count($this->searchTerm) == $this->posicionInput){
-                    $this->posicionInput = count($this->searchTerm);
-                }else{
-                    $this->posicionInput = count($this->ventas);
-                }
+                $this->posicionInput = $this->count;
             }
         }else{
             $this->Deletion=true;
         }
-
         $this->view = 'livewire.caja';
     }
 
     public function eliminarProductos()
     {
-
-        $i =  $this->eliminarId;
         $this->confirmingDeletion=false;
-
-
-
-        if(count($this->ventas) != count($this->searchTerm)){
-
-        unset($this->ventas[($i)]);
+    if($this->eliminarId != 0){
+        unset($this->ventas[($this->eliminarId)]);
         $this->ventas = array_values($this->ventas);
 
-        unset($this->searchTerm[($i)]);
+        unset($this->searchTerm[($this->eliminarId)]);
         $this->searchTerm = array_values($this->searchTerm);
 
-        unset($this->costo[($i)]);
+        unset($this->costo[($this->eliminarId)]);
         $this->costo = array_values($this->costo);
 
-        unset($this->cantidad[($i)]);
+        unset($this->cantidad[($this->eliminarId)]);
         $this->cantidad = array_values($this->cantidad);
 
-        unset($this->total[($i)]);
+        unset($this->total[($this->eliminarId)]);
         $this->total = array_values($this->total);
 
-        unset($this->impuesto[($i)]);
+        unset($this->impuesto[($this->eliminarId)]);
         $this->impuesto = array_values($this->impuesto);
 
-        if($i== 1){
-            $this->posicionInput = 1;
-            $this->ventas = [];
-        }else{
-        $this->posicionInput = count($this->ventas)+1;
-        }
+        unset($this->costo_dolares[($this->eliminarId)]);
+        $this->costo_dolares = array_values($this->costo_dolares);
+
+        unset($this->total_dolar_input[($this->eliminarId)]);
+        $this->total_dolar_input = array_values($this->total_dolar_input);
+
+        $this->posicionInput = $this->posicionInput-1;
+        $this->count = $this->count-1;
+
+    }else{
+        if(count($this->ventas) == 1){
+
+            unset($this->searchTerm[($this->eliminarId)]);
+            $this->searchTerm = array_values($this->searchTerm);
+    
+            unset($this->costo[($this->eliminarId)]);
+            $this->costo = array_values($this->costo);
+    
+            unset($this->cantidad[($this->eliminarId)]);
+            $this->cantidad = array_values($this->cantidad);
+    
+            unset($this->total[($this->eliminarId)]);
+            $this->total = array_values($this->total);
+    
+            unset($this->impuesto[($this->eliminarId)]);
+            $this->impuesto = array_values($this->impuesto);
+    
+            unset($this->costo_dolares[($this->eliminarId)]);
+            $this->costo_dolares = array_values($this->costo_dolares);
+    
+            unset($this->total_dolar_input[($this->eliminarId)]);
+            $this->total_dolar_input = array_values($this->total_dolar_input);
+
+            $this->posicionInput = 0;
+            $this->count = 0;
 
         }else{
 
-            if( $i == count($this->ventas)){
-                
-                array_pop($this->ventas);
-                $this->ventas = array_values($this->ventas);
-        
+            unset($this->ventas[($this->eliminarId)]);
+            $this->ventas = array_values($this->ventas);
 
-              
-            }else{
-                $this->Deletion=true;
-            }
+            unset($this->searchTerm[($this->eliminarId)]);
+            $this->searchTerm = array_values($this->searchTerm);
+
+            unset($this->costo[($this->eliminarId)]);
+            $this->costo = array_values($this->costo);
+
+            unset($this->cantidad[($this->eliminarId)]);
+            $this->cantidad = array_values($this->cantidad);
+
+            unset($this->total[($this->eliminarId)]);
+            $this->total = array_values($this->total);
+
+            unset($this->impuesto[($this->eliminarId)]);
+            $this->impuesto = array_values($this->impuesto);
+
+            unset($this->costo_dolares[($this->eliminarId)]);
+            $this->costo_dolares = array_values($this->costo_dolares);
+
+            unset($this->total_dolar_input[($this->eliminarId)]);
+            $this->total_dolar_input = array_values($this->total_dolar_input);
+
+            $this->posicionInput = $this->posicionInput-1;
+            $this->count = $this->count-1;
         }
-
+    }
+        $this->view = 'livewire.caja';
     }
 
 
-   /* public function modal(){
-        $this->confirmingUserDeletion=true;
-    }*/
-
  public function redireccionar(){
 
+    if($this->identificacion !== null){
     /***************Venta**************** */
     $temporalVenta = TemporalVenta::all();
     if(count($temporalVenta) != 0){
@@ -436,11 +407,13 @@ public function seleccionBuscador(){
         }
 
     $temporal_Venta->save();
-
-
-
     return redirect()->to('/procesarPago');
-    }
+}else{
+    session()->flash('message', 'Debe llenar los campos del cliente');
+    $this->view = 'livewire.caja';
+}
+
+}
 
     public function modalEliminar($eliminarId){
         $this->eliminarId = $eliminarId;
@@ -449,125 +422,8 @@ public function seleccionBuscador(){
 
     public function cerrar()
     {
-      //  $this->confirmingUserDeletion=false;
         $this->confirmingDeletion=false;
         $this->Deletion=false;
         $this->negada=false;
     }
-
-    
-    public function submit(){
-        date_default_timezone_set('America/Caracas');
-
-        
-        /***************descontar lo disponible***************** */
-            $longitudDisP = count($this->disProducto);
-
-            for($i = 0; $i < $longitudDisP; $i++){
-                $updateProducto = Productos::find($this->idP[$i]);
-
-                if(isset($this->cantidad[$i])){
-                $reduccion = ($updateProducto->unidad-$this->cantidad[$i]);
-                $updateProducto->unidad = $reduccion;
-                $reduccion2 = (int)$reduccion;
-                if($reduccion < 0){
-                    $reduccionExiste = '1';
-                }else{
-                    $updateProducto->save();
-                }
-              }
-
-            }
-
-if(isset($reduccionExiste) == false){
-        /*********Tabla Venta********* */
-        $Venta = new Ventas();
-        $Venta->id_cliente = $this->id_cliente;
-        $Venta->sub_total = $this->total_sin_iva;
-        $Venta->iva = $this->total_IVA;
-        $Venta->total = $this->total_bs;
-        $Venta->fecha = date("Y-m-d h:i:s");
-        $Venta->save();
-
-         /*********Tabla Venta_Productos********* */
-        $longitudP = count($this->searchTerm);
-
-        for($i = 0; $i < $longitudP; $i++){
-            $VentaP = new Ventas_Productos();
-            $VentaP->id_venta = $Venta->id;
-            $VentaP->id_producto = $this->idP[$i];
-            $VentaP->cantidad = $this->cantidad[$i];
-            $VentaP->total = $this->total[$i];
-            $VentaP->save();
-        }
-
-
-         /*********Tabla factura********* */
-         $ultimaFactura = Factura::orderBy('numero_factura', 'desc')->first();
-         $Factura = new Factura();
-         if($ultimaFactura == null){
-            $Factura->numero_factura = 1;
-            $Factura->nombre_factura = 'Factura'.$Factura->numero_factura.'.pdf';
-        }else{
-            $Factura->numero_factura = $ultimaFactura->numero_factura+1;
-            $Factura->nombre_factura = 'Factura'.$Factura->numero_factura.'.pdf';
-        }
-        
-         $Factura->id_venta = $Venta->id;
-         $Factura->save();
-         $facturanu = Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0), id')->where('nombre_factura',$Factura->nombre_factura)->first();
-         $facturanumero = $facturanu['lpad(numero_factura, 15, 0)'];
-
-         $porcentajeIva = Ivas::where('estado',1)->get();
-         $porcentajeIva = $porcentajeIva[0]->iva;
-   
-
-        /**********se crea el pdf************** */
-        $pdf = app('dompdf.wrapper');
-        $datapdf = [
-            'fecha' => date("d/m/Y"),
-            'hora' => date("h:i:s"),
-            'name' => $this->name,
-            'identificacion' => $this->identificacion,
-            'telefono' => $this->telefono,
-            'direccion' => $this->direccion,
-            'factura' => $facturanumero,
-            'productos' => $this->searchTerm,
-            'cantidad' => $this->cantidad,
-            'total_IVA' => $this->total_IVA,
-            'total_sin_iva' => $this->total_sin_iva,
-            'total_bs' => $this->total_bs,
-            'porcentajeIva' => $porcentajeIva,
-            'productosMonto' => $this->idProducto,
-            'coniva' => $this->impuesto,
-        ];
-
-        $pdf->loadView('pdf.factura_venta',compact('datapdf'));
-        $pdf->save(public_path('app/archivos/facturas_ventas/') .$Factura->nombre_factura);
-        $this->urlpdf='app/archivos/facturas_ventas/'.$Factura->nombre_factura;
-        $this->Nombrepdf= $Factura->nombre_factura;
-        $pdf->render();
-
-      //  $this->confirmingUserDeletion=false;
-        $this->descargarFactura=true;
-
-    }else{
-        $this->negada=true;
-    }
-
-    }
-
-    public function cerrarModalFactura()
-    {
-      return Redirect::route('caja');
-    }
-
-
-  /*  public function reducionNegada()
-    {
-        $this->confirmingUserDeletion=false;
-        $this->negada=true;
-
-        $this->view = 'livewire.caja';
-    }*/
 }

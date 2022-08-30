@@ -98,12 +98,12 @@
 <x-slot name="footer">
 <span class="flex justify-center pt-2">
         <div class="pb-3.5 pr-4">
-        <x-jet-secondary-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+        <x-jet-secondary-button  wire:loading.attr="disabled" wire:click="cerrar">
             No
         </x-jet-secondary-button>
         </div>
         <div class="">
-        <x-jet-danger-button class="mx-12" wire:click="activar2" wire:loading.attr="disabled">
+        <x-jet-danger-button  wire:click="activar2" wire:loading.attr="disabled">
             Sí
             </x-jet-danger-button>
         </div>
@@ -127,12 +127,12 @@
 <x-slot name="footer">
 <span class="flex justify-center pt-2">
         <div class="pb-3.5 pr-4">
-        <x-jet-secondary-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+        <x-jet-secondary-button  wire:loading.attr="disabled" wire:click="cerrar">
             No
         </x-jet-secondary-button>
         </div>
         <div class="">
-        <x-jet-danger-button class="mx-12" wire:click="desactivar2" wire:loading.attr="disabled">
+        <x-jet-danger-button  wire:click="desactivar2" wire:loading.attr="disabled">
             Sí
             </x-jet-danger-button>
         </div>

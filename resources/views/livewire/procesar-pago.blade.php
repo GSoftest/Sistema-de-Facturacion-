@@ -127,13 +127,13 @@
         
 <x-slot name="footer">
 <span class="flex justify-center pt-2">
-        <div class="">
-        <x-jet-secondary-button class="mx-8"  wire:loading.attr="disabled" wire:click="cerrar">
+        <div class="pb-3.5 pr-4">
+        <x-jet-secondary-button wire:loading.attr="disabled" wire:click="cerrar">
             No
         </x-jet-secondary-button>
         </div>
         <div class="">
-        <x-jet-danger-button class="mx-12" wire:loading.attr="disabled" wire:click="eliminarProductos">
+        <x-jet-danger-button wire:loading.attr="disabled" wire:click="eliminarProductos">
             Sí
             </x-jet-danger-button>
         </div>
@@ -163,11 +163,10 @@
                     <td class="text-sm font-medium text-gray-700 px-2">Total:&nbsp;</td>
                     <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$total}}</strong></td>
                 </tr>
+                @if($igtf > '0,00')
                 <tr>
-                    @if($igtf > '0,00')
                     <td class="text-sm font-medium text-gray-700 px-2">Total IGTF:&nbsp;</td>
                     <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$igtf}}</strong></td>
-                    @endif
                 </tr>
                 <tr>
                     <td class="text-sm font-medium text-gray-700 px-2">Gran Total:&nbsp;</td>
@@ -179,11 +178,12 @@
                     <td class="text-sm font-medium text-gray-700 text-right px-2"><strong>Bs&nbsp;{{$list_pago_bs[$key]}}</strong></td>
                 </tr>
                 @endforeach
+                @endif
             </tbody>
         </table>
 
         <div class="mt-6">
-        <label for="" class="text-sm font-medium text-gray-700">Tamaño de la Factura</label>
+        <label for="" class="text-sm font-medium text-gray-700">Formato de la Factura</label>
 
         <div class="grid grid-cols-2 gap-1">
             <div><input type="radio" wire:model="factura_radio" value="yes"><label for="" class="text-sm font-medium text-gray-700">&nbsp;Factura Simple</label></div>

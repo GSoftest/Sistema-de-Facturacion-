@@ -56,9 +56,9 @@
           </tr>
           @endforeach
           <tr>
-            <td class="total"></td>
-            <td colspan="2">SUBTOTAL Bs:</td>
-            <td class="total">{{$datapdf['SubtotalF']}}</td>
+            <td class="grand total"></td>
+            <td colspan="2" class="grand">SUBTOTAL Bs:</td>
+            <td class="grand total">{{$datapdf['SubtotalF']}}</td>
           </tr>
           <tr>
             <td class="total"></td>
@@ -76,7 +76,7 @@
             <td colspan="2">TOTAL IGTF Bs:</td>
             <td class="total">{{$datapdf['total_igtf']}}</td>
           </tr>
-          @endif
+          
           <tr>
             <td class="grand total"></td>
             <td colspan="2" class="grand total">GRAN TOTAL Bs:</td>
@@ -89,6 +89,7 @@
             <td class="total">{{$datapdf['list_pago_bs'][$key]}}</td>
           </tr>
           @endforeach
+          @endif
         </tbody>
       </table>
 

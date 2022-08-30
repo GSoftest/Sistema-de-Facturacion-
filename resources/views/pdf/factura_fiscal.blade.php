@@ -11,12 +11,12 @@ $medidaTicket = 180;
     <title>Document</title>
     <style>
         * {
-            font-size: 9px;
+            font-size: 7px;
             font-family: 'DejaVu Sans', serif;
         }
 
         h1 {
-            font-size: 14px;
+            font-size: 10px;
         }
 
         .ticket {
@@ -38,16 +38,16 @@ $medidaTicket = 180;
         table .sinborde{
             border: hidden;
             margin: 0 auto;
-            font-size: 9px;
+            font-size: 7px;
         }
 
         td.precio {
             text-align: right;
-            font-size: 9px;
+            font-size: 7px;
         }
 
         td.cantidad {
-            font-size: 9px;
+            font-size: 7px;
         }
 
         td.producto {
@@ -122,7 +122,7 @@ $medidaTicket = 180;
             <td class="sinborde" colspan="2">{{$datapdf['telefono']}}</td>
         </tr>
         <tr class="sinborde">
-            <td class="sinborde">N° FACTURA</td>
+            <td class="sinborde">FACTURA N°</td>
             <td class="sinborde" colspan="2">{{$datapdf['factura']}}</td>
         </tr>
         <tr class="sinborde">
@@ -131,7 +131,7 @@ $medidaTicket = 180;
         </tr>
     </tbody>
 </table>
-        <table class="borde" style="width: 100%;">
+        <table class="borde" style="width: 100%;margin-top: 10px;">
             <thead class="borde">
                 <tr class="centrado">
                     <th class="cantidad">CANT&nbsp;</th>
@@ -149,6 +149,9 @@ $medidaTicket = 180;
                     </tr>
                 @endforeach
             </tbody>
+        </table>  
+        <table class="sinborde" style="width: 100%;margin-top: 10px;"> 
+            <tbody class="sinborde"> 
             <tr>
                 <td class="cantidad" colspan="3">
                     <strong>SUBTOTAL Bs:</strong>
@@ -182,7 +185,7 @@ $medidaTicket = 180;
                     {{$datapdf['total_igtf']}}
                 </td>
             </tr>
-            @endif
+            
             <tr>
                 <td class="cantidad" colspan="3">
                     <strong>GRAN TOTAL Bs:</strong>
@@ -201,6 +204,8 @@ $medidaTicket = 180;
                 </td>
             </tr>
             @endforeach
+            @endif
+            </tbody>
         </table>
         <p class="centrado">¡GRACIAS POR SU COMPRA!
     </div>

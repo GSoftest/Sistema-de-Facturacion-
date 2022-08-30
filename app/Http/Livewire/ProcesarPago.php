@@ -42,7 +42,7 @@ class ProcesarPago extends Component
      public $modalImprimirFactura = false;
      public $descargarFactura = false;
      public $confirmingDeletion = false;
-     public $factura_radio = 'yes';
+     public $factura_radio = 'no';
 
      public $listeners = ['Refresh' => 'render'];
 
@@ -61,7 +61,6 @@ class ProcesarPago extends Component
         $porcentajeiva  = Ivas::where('estado', 1)->get();
         $this->porcentajeiva  = $porcentajeiva[0]->iva;
         $this->porcentajeiva = str_replace(".",",",$this->porcentajeiva);
-
       }
 
     public function render()
@@ -170,7 +169,7 @@ class ProcesarPago extends Component
 
 
        if($this->granTotal != null){
-        //dd($totalSumaFormato.' '.$this->granTotal);
+        
         switch($this->granTotal){
             case ($totalSumaFormato == $this->granTotal):
                 $this->habilitarBoton = true;
@@ -296,8 +295,6 @@ class ProcesarPago extends Component
                 $VentaP->id_venta = $Venta->id;
                 $VentaP->id_metodo_pago = $this->id_metodo[$i];
                 $VentaP->monto_pago = $this->list_pago_bs[$i];
-
-
             }
 
 
@@ -317,9 +314,7 @@ class ProcesarPago extends Component
             $facturanu = Factura::selectRaw('numero_factura, lpad(numero_factura, 15, 0), id')->where('nombre_factura',$Factura->nombre_factura)->first();
             $facturanumero = $facturanu['lpad(numero_factura, 15, 0)'];
 
-
-
-                /*************Limpiar las tablas temporales******* */
+            /*************Limpiar las tablas temporales******* */
             TemporalVentaProducto::destroy($this->id_venta_temporal);
             TemporalVenta::destroy($this->id_venta_temporal);
 
@@ -349,8 +344,6 @@ class ProcesarPago extends Component
                 'tipo_metodo' => $this->tipo_metodo,
                 'list_pago_bs' =>$this->list_pago_bs,
             ];
-
-
 
                 if($this->factura_radio == 'no'){
                     $pdf->loadView('pdf.factura_fiscal',compact('datapdf'));
