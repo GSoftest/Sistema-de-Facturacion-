@@ -5,12 +5,14 @@ use App\Http\Livewire\Iva;
 use App\Http\Livewire\Caja;
 use App\Http\Livewire\ListaCategoria;
 use App\Http\Livewire\ListaProductos;
+use App\Http\Livewire\ListaProveedores;
 use App\Http\Livewire\ListaClientes;
 use App\Http\Livewire\ServicioTecnico;
 use App\Http\Livewire\ServicioTecnicoEditar;
 use App\Http\Livewire\ListaServicioTecnico;
 use App\Http\Livewire\ListaVentas;
 use App\Http\Livewire\ProcesarPago;
+use App\Http\Livewire\Tasa;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -23,7 +25,8 @@ use App\Http\Controllers\CajaController;
 use App\Http\Controllers\FacturaVentaController;
 use App\Http\Controllers\ScraperController;
 use App\Http\Controllers\EditarServicioController;
-use App\Http\Livewire\Tasa;
+use App\Http\Controllers\ProveedoresController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -107,11 +110,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
    Route::get('/tasa', Tasa::class)->name('tasa');
 
 
-    /*************Sin configurar***** */
      /************PROVEEDORES*************/
-     Route::get('/proveedores', ListaProductos::class)->name('proveedores');
+     Route::get('/proveedores', ListaProveedores::class)->name('proveedores');
      Route::get('/proveedores/nuevo', function () {return view('proveedores.create');})->name('proveedoresNuevo');
 
+    Route::controller(ProveedoresController::class)->group(function(){
+     Route::post('/proveedores/save', 'create')->name('nuevoproveedores');
+     Route::get('/proveedores/{id}', 'show');
+     Route::post('/proveedores/editar', 'editar')->name('editarproveedores');
+    });
 
 
 });

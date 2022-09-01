@@ -24,7 +24,8 @@ class Productos extends Model
         'id_categoria',
         'exento',
         'imagen_url',
-        'id_medida'];
+        'id_medida',
+        'id_proveedor'];
     
 
         

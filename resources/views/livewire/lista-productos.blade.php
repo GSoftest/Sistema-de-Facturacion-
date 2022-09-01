@@ -35,16 +35,19 @@
                         Productos
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
+                        UPC
+                     </th>
+                     <th scope="col" class="text-sm font-medium text-white border-r">
                         Unidad Disponible
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
                          Costo Unitario
                      </th>
-                      <th scope="col" class="text-sm font-medium text-white border-r">
-                         Contenido Neto
-                     </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
                         Precio sin IVA
+                     </th>
+                      <th scope="col" class="text-sm font-medium text-white border-r">
+                         Contenido Neto
                      </th>
                      <th scope="col" class="text-sm font-medium text-white border-r">
                          &nbsp;
@@ -58,16 +61,23 @@
              @foreach ($productos as $producto)
                      <tr class="border-b">
                          <td class="w-32 border-r text-gray-700 mr-3 text-center">
-                             {{ $producto->upc }}</td>
+                             {{ $producto->id }}</td>
                          <td class="w-44 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->name }}
                          </td>
+                         <td class="w-32 border-r text-gray-700 mr-3 text-center">
+                             {{ $producto->upc }}</td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->unidad }}
                          </td>
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{str_replace(".",",",str_replace(",","",number_format($producto->costo_unitario, 2 )))}}
                          </td>
+                         
+                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
+                         {{str_replace(".",",",str_replace(",","",number_format($producto->precio_sin_iva, 2 )))}}
+                         </td>
+                         
                          <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
                              {{ $producto->contenido_neto }} 
                              @foreach ($medidas as $medida)
@@ -75,9 +85,6 @@
                                {{ $medida->unidad }}
                                @endif
                              @endforeach
-                         </td>
-                         <td class="w-28 border-r appearance-none text-gray-700 mr-3 text-center">
-                         {{str_replace(".",",",str_replace(",","",number_format($producto->precio_sin_iva, 2 )))}}
                          </td>
                          <td class="w-16 border-r text-center">
                          <a class="py-2"

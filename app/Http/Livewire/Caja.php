@@ -95,8 +95,9 @@ class Caja extends Component
                         }
 
                         $this->total[$i] = $total+$porcentaje;
-
+                        
                         $this->total[$i] = number_format($this->total[$i], 2);
+                       
                         $this->total[$i] = str_replace(","," ",$this->total[$i]);
                         $this->total[$i] = str_replace(".",",",$this->total[$i]);
                         $this->total[$i] = str_replace(" ",".",$this->total[$i]);
@@ -110,8 +111,9 @@ class Caja extends Component
 
                         $this->totalSINIVA[$i] = $total;
                         $this->totalIVA[$i] = $porcentaje;
+                        //dd($porcentaje);
                         $this->idProducto[$i] =  $total;
-
+                       
                      
                     }
 
@@ -137,9 +139,9 @@ class Caja extends Component
                 $sinIVA = str_replace(",",".",$sinIVA);
                 $sumSINIVA  = $sumSINIVA+$this->totalSINIVA[$i];
 
-
-                $toIVA = str_replace(".","",$this->totalIVA[$i]);
-                $toIVA = str_replace(",",".",$toIVA);
+                $toIVA = $this->totalIVA[$i];
+               // $toIVA = str_replace(".","",$this->totalIVA[$i]);
+               // $toIVA = str_replace(",",".",$toIVA);
                 $sumIVA  = $sumIVA+$toIVA;
                
             }
@@ -185,6 +187,7 @@ class Caja extends Component
             $this->id_producto = $this->select;
             $this->seleccionBuscador();
         }
+
 
         date_default_timezone_set('America/Caracas');
         return view('livewire.caja',['categorias'  => $data,
@@ -387,13 +390,18 @@ class Caja extends Component
 
         for($i = 0; $i < $longitudP; $i++){
 
+            $montoSinIvaP = number_format($this->totalSINIVA[$i], 2);
+            $montoSinIvaP = str_replace(","," ",$montoSinIvaP);
+            $montoSinIvaP = str_replace(".",",",$montoSinIvaP);
+            $montoSinIvaP = str_replace(" ",".",$montoSinIvaP);
+
             if($i == 0){
             $temporalVentaP = new TemporalVentaProducto();
             $temporalVentaP->id = 1;
             $temporalVentaP->id_venta = 1;
             $temporalVentaP->id_producto = $this->idP[$i];
             $temporalVentaP->cantidad = $this->cantidad[$i];
-            $temporalVentaP->total = $this->total[$i];
+            $temporalVentaP->total = $montoSinIvaP;
             $temporalVentaP->save();
             }else{
                 $temporalVentaP = new TemporalVentaProducto();
@@ -401,7 +409,7 @@ class Caja extends Component
                 $temporalVentaP->id_venta = 1;
                 $temporalVentaP->id_producto = $this->idP[$i];
                 $temporalVentaP->cantidad = $this->cantidad[$i];
-                $temporalVentaP->total = $this->total[$i];
+                $temporalVentaP->total = $montoSinIvaP;
                 $temporalVentaP->save(); 
             }
         }

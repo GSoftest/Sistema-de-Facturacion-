@@ -221,7 +221,7 @@
         <tr class="">
             <td colspan="2"><label  class="block text-sm font-medium text-gray-700">Cantidad de productos:@if(isset($cantidadProducto))<strong>&nbsp;{{$cantidadProducto}}</strong>@else<strong>&nbsp;0</strong>@endif</label></td>
             <td class="text-center"><label for="total_sin_iva" class="block text-sm font-medium text-gray-700">Sub-Total</label></td>
-            <td class="text-center"><label for="total_sin_iva" class="block text-sm font-medium text-gray-700">IVA</label></td>
+            <td class="text-center"><label for="total_IVA" class="block text-sm font-medium text-gray-700">IVA</label></td>
             <td class="text-center"><label for="total_bs" class="block text-sm font-medium text-gray-700">Total Bs</label></td>
             <td class="text-center"><label for="total_dolar" class="block text-sm font-medium text-gray-700">Total $</label></td>
            <td></td>

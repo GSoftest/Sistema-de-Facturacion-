@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Categorias;
 use App\Models\Ivas;
 use App\Models\Medidas;
+use App\Models\Proveedores;
 
 class ProductosController extends Controller
 {
@@ -19,11 +20,13 @@ class ProductosController extends Controller
         $categorias = Categorias::all();
         $medidas = Medidas::all();
         $ivas = Ivas::all();
+        $proveedores = Proveedores::all();
 
         $data = [
             'ivas' => $ivas,
             'categorias' => $categorias,
             'medidas' => $medidas,
+            'proveedores' => $proveedores,
        ];
 
         return view('productos.create')->with($data);     
@@ -42,6 +45,7 @@ class ProductosController extends Controller
         $productos->description = $request->description;
         $productos->upc = $request->upc;
         $productos->id_categoria = $request->id_categoria;
+        $productos->id_proveedor = $request->id_proveedor;
         $productos->id_medida = $request->medida;
         $productos->exento = $request->exento;
 
@@ -71,6 +75,7 @@ class ProductosController extends Controller
         $categorias = Categorias::all();
         $ivas = Ivas::all();
         $medidas = Medidas::all();
+        $proveedores = Proveedores::all();
         $producto = Productos::find($id);
 
         $producto->precio_sin_iva = number_format($producto->precio_sin_iva, 2);
@@ -86,7 +91,8 @@ class ProductosController extends Controller
             'ivas' => $ivas,
             'categorias' => $categorias,
             'medidas' => $medidas,
-            'producto' => $producto
+            'producto' => $producto,
+            'proveedores' => $proveedores,
        ];
 
         return view('productos.edit')->with($data);
@@ -106,6 +112,7 @@ class ProductosController extends Controller
         $producto->description = $request->description;
         $producto->upc = $request->upc;
         $producto->id_categoria = $request->id_categoria;
+        $producto->id_proveedor = $request->id_proveedor;
         $producto->exento = $request->exento;
         $producto->id_medida = $request->medida;
 

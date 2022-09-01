@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Auth;
 class ProductoRequest extends FormRequest
 {
     /**
@@ -13,7 +13,7 @@ class ProductoRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -28,6 +28,7 @@ class ProductoRequest extends FormRequest
             'precio_sin_iva' => 'required|regex:/^[\d]+([,][\d]+)?$/',
             'costo_unitario' => 'required|regex:/^[\d]+([,][\d]+)?$/',
             'id_categoria' => 'required',
+            'id_proveedor' => 'required',
             'exento' => 'required',
             'description' => 'required',
             'upc' => 'nullable|numeric|digits_between:12,12',
@@ -47,6 +48,7 @@ class ProductoRequest extends FormRequest
             'costo_unitario.required' => 'Obligatorio.',
             'costo_unitario.regex' => 'El costo con formato inválido.',
             'id_categoria.required' => 'Obligatorio.',
+            'id_proveedor.required' => 'Obligatorio.',
             'exento.required' => 'Obligatorio.',
             'description.required' => 'Obligatorio.',
             'upc.required' => 'Obligatorio.',

@@ -19,6 +19,15 @@
                 </div>
                 </a>
 
+                <a  href="/proveedores">
+                <div class="px-4 py-4 bg-white sm:p-6 w-72 hover:shadow-2xl">
+                    <div class="px-4 py-4">
+                        <i class="fa-solid fa-user-tie fa-3x" style="color: #644215;"></i>
+                    </div>
+                    <label for=""><strong>Proveedores</strong></label>
+                </div>
+                </a>
+    
                 <a  href="/productos">
                 <div class="px-4 py-4 bg-white sm:p-6 w-72 hover:shadow-2xl">
                     <div class="px-4 py-4">
@@ -27,20 +36,11 @@
                     <label for=""><strong>Productos</strong></label>
                 </div>
                 </a>
-    
+
                 <a  href="/categorias">
                 <div class="px-4 py-4 bg-white sm:p-6 w-72 hover:shadow-2xl">
                 <div class="px-4 py-4"><i class="fa-solid fa-dice-d6 fa-3x" style="color: green;"></i></div>
                     <label for=""><strong>Categorías</strong></label>
-                </div>
-                </a>
-
-                <a  href="/iva">
-                <div class="px-4 py-4 bg-white sm:p-6 w-72 hover:shadow-2xl">
-                    <div class="px-4 py-4">
-                    <i class="fa-solid fa-percent fa-3x"></i>
-                    </div>
-                    <label for=""><strong>IVA</strong></label>
                 </div>
                 </a>
         </div>
@@ -84,6 +84,16 @@
     <div class="flex flex-col justify-center items-center">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12 inline-grid grid-cols-4 gap-4 text-center">
       
+
+                <a  href="/iva">
+                <div class="px-4 py-4 bg-white sm:p-6 w-72 hover:shadow-2xl">
+                    <div class="px-4 py-4">
+                    <i class="fa-solid fa-percent fa-3x"></i>
+                    </div>
+                    <label for=""><strong>IVA</strong></label>
+                </div>
+                </a>
+
               <a  href="/tasa">
                 <div class="px-4 py-4 bg-white sm:p-6 w-72 hover:shadow-2xl">
                 <div class="px-4 py-4"><i class="fa-solid fa-dollar-sign fa-3x" style="color: #0337aa;"></i></div>

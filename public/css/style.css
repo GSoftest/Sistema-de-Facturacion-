@@ -171,3 +171,21 @@ footer {
   padding: 8px 0;
   text-align: center;
 }
+
+input[type=file].hidden {
+  color: transparent;
+}
+
+.filelabel{
+  appearance: none;
+    background-color: initial;
+    cursor: default;
+    align-items: baseline;
+    color: inherit;
+    text-overflow: ellipsis;
+    white-space: pre;
+    text-align: start !important;
+    padding: initial;
+    border: initial;
+    overflow: hidden !important;
+}
