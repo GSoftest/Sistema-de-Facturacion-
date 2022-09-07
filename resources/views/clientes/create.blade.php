@@ -23,34 +23,34 @@
 
                         <div class="pt-8 py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social</label>
-                                <input type="text" name="name" id="name" wire:model='name' autocomplete="given-name" minlength="3" maxlength="50" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="name"/>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social *</label>
+                                <input type="text" name="name" id="name" wire:model='name' autocomplete="given-name" minlength="3" maxlength="50" onkeydown="ocultarError('ocultarNameCliente')" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="name" id='ocultarNameCliente'/>
                             </div>
                             
                             <div>
-                                <label for="identificacion" class="block text-sm font-medium text-gray-700">RIF/CI</label>
-                                <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' maxlength="11" placeholder="V-xxxxxxxx" autocomplete="given-identificacion" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="identificacion"/>
+                                <label for="identificacion" class="block text-sm font-medium text-gray-700">RIF/CI *</label>
+                                <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' maxlength="11" placeholder="V-xxxxxxxx" onkeydown="ocultarError('ocultaridentificacionCliente')" autocomplete="given-identificacion" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="identificacion" id='ocultaridentificacionCliente'/>
                             </div>
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div>
-                                <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
-                                <input type="text" name="telefono" id="telefono" wire:model='telefono' maxlength="12" placeholder="0xxx-xxxxxxx" autocomplete="given-telefono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="telefono"/>
+                                <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono *</label>
+                                <input type="text" name="telefono" id="telefono" wire:model='telefono' maxlength="12" placeholder="0xxx-xxxxxxx" onkeydown="ocultarError('ocultartelefonoCliente')" autocomplete="given-telefono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="telefono" id='ocultartelefonoCliente'/>
                             </div>
                             <div>
-                                <label for="correo" class="block text-sm font-medium text-gray-700">Correo</label>
-                                <input type="text" name="correo" id="correo" wire:model='correo' autocomplete="given-correo" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="correo"/>
+                                <label for="correo" class="block text-sm font-medium text-gray-700">Correo *</label>
+                                <input type="text" name="correo" id="correo" wire:model='correo' autocomplete="given-correo" onkeydown="ocultarError('ocultarCorreoCliente')" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="correo" id='ocultarCorreoCliente'/>
                             </div>
                        </div>
                        <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div class="col-span-2 sm:col-span-2">
-                                <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
-                                <textarea type="text" name="direccion" id="direccion" wire:model='direccion' autocomplete="given-direccion" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
-                                <x-jet-input-error for="direccion"/>
+                                <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección *</label>
+                                <textarea type="text" name="direccion" id="direccion" wire:model='direccion' autocomplete="given-direccion" onkeydown="ocultarError('ocultarDireccionCliente')" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                <x-jet-input-error for="direccion" id='ocultarDireccionCliente'/>
                             </div> 
                             <div class="col-span-2 sm:col-span-2"></div>
                         </div>

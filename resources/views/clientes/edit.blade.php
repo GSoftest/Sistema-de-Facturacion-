@@ -26,33 +26,33 @@
                         <div class="pt-8 py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                         <input type="hidden" name="id" id="id" value="{{$data->id}}">
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social</label>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre/Razón Social *</label>
                                 <input type="text" name="name" id="name" wire:model='name' value="{{$data->name}}"  autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="name"/>
+                                <x-jet-input-error for="name" id='ocultarNameClienteEdit'/>
                             </div>
                             <div>
-                                <label for="identificacion" class="block text-sm font-medium text-gray-700">RIF/CI</label>
+                                <label for="identificacion" class="block text-sm font-medium text-gray-700">RIF/CI *</label>
                                 <input type="text" name="identificacion" id="identificacion" wire:model='identificacion' value="{{$data->identificacion}}" maxlength="11" autocomplete="given-identificacion" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="identificacion"/>
+                                <x-jet-input-error for="identificacion" id='ocultaridentificacionClienteEdit'/>
                             </div>
                         </div>
 
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div>
-                                <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                                <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono *</label>
                                 <input type="text" name="telefono" id="telefono" wire:model='telefono' maxlength="12" value="{{$data->telefono}}" placeholder="0xxx-xxxxxxx"  autocomplete="given-telefono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
-                                <x-jet-input-error for="telefono"/>
+                                <x-jet-input-error for="telefono" id='ocultartelefonoClienteEdit'/>
                             </div>
                             <div>
-                                <label for="correo" class="block text-sm font-medium text-gray-700">Correo</label>
+                                <label for="correo" class="block text-sm font-medium text-gray-700">Correo *</label>
                                 <input type="text" name="correo" id="correo" wire:model='correo' value="{{$data->correo}}"  autocomplete="given-correo" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
-                                <x-jet-input-error for="correo"/>
+                                <x-jet-input-error for="correo" id=''/>
                             </div>
                         </div>
 
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div class="col-span-2 sm:col-span-2"> 
-                                <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+                                <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección *</label>
                                 <textarea type="text" name="direccion" id="direccion" wire:model='direccion' autocomplete="given-direccion" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{$data->direccion}}</textarea>
                                 <x-jet-input-error for="direccion"/>
                             </div>

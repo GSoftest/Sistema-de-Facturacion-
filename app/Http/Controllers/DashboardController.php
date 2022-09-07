@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Goutte\Client;
 use App\Models\Tasa_BCV;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -41,8 +42,12 @@ if($file_headers !=  false){
        $fechaActual = explode('T',date(DATE_ATOM));
 
         $request->tasa = $tasa;
+        try{
         $tasadeldia = Tasa_BCV::all();
-    
+        }catch(\Illuminate\Database\QueryException $e){
+            Session::flash('advertencia', 'No se pudo consultar la tasa');
+        }
+
         if($fecha[0] == $fechaActual[0]){
             
 

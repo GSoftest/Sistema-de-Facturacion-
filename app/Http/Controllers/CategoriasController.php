@@ -7,29 +7,21 @@ use App\Models\Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class CategoriasController extends Controller
 {
      public function create(CategoriaRequest $request)
      {
-        
+      try{
        $categorias = new Categorias();
        $categorias->name = $request->name;
        $categorias->descripcion = $request->descripcion;
-       
-       // script para subir la imagen
-     /*  if($request->hasFile("imagen")){
-
-           $imagen = $request->file("imagen");
-           $nombreimagen =  $imagen->getClientOriginalName();
-           $ruta = public_path("app/archivos/categorias/");
-
-           $imagen->move($ruta,$nombreimagen);
-           $categorias->imagen = $nombreimagen;            
-           
-       }
-*/
        $categorias->save();
+       Session::flash('notificacion', '¡Categoría Registrada Exitosamente!');
+      }catch(\Illuminate\Database\QueryException $e){
+        Session::flash('advertencia', '¡Categoría No Puede Ser Registrada!');
+      }
        return Redirect::route('categorias');
 
      }
@@ -43,19 +35,15 @@ class CategoriasController extends Controller
 
       public function editar(CategoriaRequest $request){
 
+        try{
         $data = Categorias::find($request->id);
         $data->name = $request->name;
         $data->descripcion = $request->descripcion;
-      /*  if($request->hasFile("imagen")){
-            /*****eliminar la img anterior */ 
-         /*   unlink(public_path('app/archivos/categorias/'.$data->imagen));
-            $imagen = $request->file("imagen");
-            $nombreimagen =  $imagen->getClientOriginalName();
-            $ruta = public_path("app/archivos/categorias/");
-            $imagen->move($ruta,$nombreimagen);
-            $data->imagen = $nombreimagen;       
-        }*/
-            $data->save();
+        $data->save();
+        Session::flash('notificacion', '¡Categoría Actualizada Exitosamente!');
+      }catch(\Illuminate\Database\QueryException $e){
+        Session::flash('advertencia', '¡Categoría No Puede Ser Editada!');
+      }
             return Redirect::route('categorias');
     }
 }

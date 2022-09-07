@@ -23,24 +23,28 @@
                         <div class="pt-8 py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-700">Nombre *</label>
-                                <input type="text" name="name" id="name" wire:model='name' autocomplete="given-name" minlength="3" maxlength="50" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="name"/>
+                                <input type="text" name="name" id="name" wire:model='name' onkeydown="ocultarError('ocultarName')" autocomplete="given-name" minlength="3" maxlength="50" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="name" id='ocultarName'/>
                             </div>
                             
                             <div>
                                 <label for="phone_number" class="block text-sm font-medium text-gray-700">Teléfono *</label>
-                                <input type="text" name="phone_number" id="phone_number" wire:model='phone_number' maxlength="12" placeholder="0xxx-xxxxxxx" autocomplete="given-telefono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="phone_number"/>
+                                <input type="text" name="phone_number" id="phone_number" onkeydown="ocultarError('ocultarPhone')" wire:model='phone_number' maxlength="12" placeholder="0xxx-xxxxxxx" autocomplete="given-telefono" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="phone_number" id='ocultarPhone'/>
                             </div>
                         </div>
 
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700">Correo *</label>
-                                <input type="text" name="email" id="email" wire:model='email' autocomplete="given-email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="email"/>
+                                <input type="text" name="email" id="email" wire:model='email' onkeydown="ocultarError('ocultarEmail')" autocomplete="given-email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="email" id='ocultarEmail'/>
                             </div>
                        </div>
+
+                       @if (session()->has('message'))
+                        <div class="alert alert-success"> {{ session('message') }} </div>
+                        @endif
 
                        <div class="flex justify-center py-2 font-light px-6 py-4 whitespace-nowrap">
                             <div class="pb-3.5 pr-4">

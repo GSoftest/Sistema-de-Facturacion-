@@ -28,13 +28,13 @@
                         <div class="py-2">
                             <label for="name" class="block text-sm font-medium text-gray-700">Nombre *</label>
                             <input type="text" name="name" id="name" wire:model='name' value="{{$producto->name}}" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="name"/>
+                                <x-jet-input-error for="name" id='ocultarNameProductoEdit'/>
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                                 <label for="upc" class="block text-sm font-medium text-gray-700">UPC</label>
                                 <input type="text" name="upc" id="upc" wire:model='upc' value="{{$producto->upc}}" placeholder="000000000000" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="upc"/>
+                                <x-jet-input-error for="upc" id='ocultarUPCProductoEdit'/>
                             </div>
                             <div>
                                 <label for="id_categoria" class="block text-sm font-medium text-gray-700">Categorías *</label>
@@ -44,7 +44,7 @@
                                     <option value="{{ $categoria->id }}" @if($producto->id_categoria==$categoria->id) selected @endif>{{ $categoria->name }}</option>
                                 @endforeach
                             </select>
-                            <x-jet-input-error for="id_categoria"/>
+                            <x-jet-input-error for="id_categoria" id='ocultarCategoriaProductoEdit'/>
                             </div>
                         </div>
                     </div>
@@ -65,24 +65,24 @@
                                     </select>
                                     </div>
                                 </div>
-                                <x-jet-input-error for="contenido_neto"/>
+                                <x-jet-input-error for="contenido_neto" id='ocultarContenidoNetoProductoEdit'/>
                             </div>
                             <div>
                                 <label for="altura" class="block text-sm font-medium text-gray-700">Altura</label>
                                 <input type="text" name="altura" id="altura" wire:model='altura' value="{{$producto->altura}}" placeholder="0" autocomplete="given-altura" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="altura"/>
+                                <x-jet-input-error for="altura" id='ocultarAlturaProductoEdit'/>
                             </div>
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
                             <div>
                                 <label for="ancho" class="block text-sm font-medium text-gray-700">Ancho</label>
                                 <input type="text" name="ancho" id="ancho" wire:model='ancho' value="{{$producto->ancho}}" placeholder="0" autocomplete="given-ancho" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="ancho"/>
+                                <x-jet-input-error for="ancho" id='ocultarAnchoProductoEdit'/>
                             </div>
                             <div>
                             <label for="unidad" class="block text-sm font-medium text-gray-700">Unidad disponible *</label>
                             <input type="text" name="unidad" id="unidad" wire:model='unidad' autocomplete="given-unidad" value="{{$producto->unidad}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="unidad"/>
+                                <x-jet-input-error for="unidad" id='ocultarUnidadProductoEdit'/>
                             </div>
                         </div>
                     </div>
@@ -92,12 +92,12 @@
                             <div>
                                 <label for="precio_sin_iva" class="block text-sm font-medium text-gray-700">Precio sin IVA *</label>
                                 <input type="text" name="precio_sin_iva" id="precio_sin_iva" wire:model='precio_sin_iva' placeholder="0,00" value="{{$producto->precio_sin_iva}}" autocomplete="given-precio_sin_iva" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="precio_sin_iva"/>
+                                <x-jet-input-error for="precio_sin_iva" id='ocultarPrecioSinIVAProductoEdit'/>
                             </div>
                             <div>
                                 <label for="costo_unitario" class="block text-sm font-medium text-gray-700">Costo unitario *</label>
                                 <input type="text" name="costo_unitario" id="costo_unitario" wire:model='costo_unitario' placeholder="0,00" value="{{$producto->costo_unitario}}" autocomplete="given-costo_unitario" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="costo_unitario"/>
+                                <x-jet-input-error for="costo_unitario" id='ocultarCostoProductoEdit'/>
                             </div>
                         </div>
                         <div class="py-2 grid grid-cols-2 gap-4">
@@ -109,7 +109,7 @@
                                     <option value="{{ $proveedor->id }}" @if($producto->id_proveedor==$proveedor->id) selected @endif>{{ $proveedor->name }}</option>
                                 @endforeach
                             </select>
-                            <x-jet-input-error for="id_proveedor"/>
+                            <x-jet-input-error for="id_proveedor" id='ocultarProveedorProductoEdit'/>
                             </div>
                         <div>
                             <label for="exento" class="block text-sm font-medium text-gray-700">Exento de IVA *</label>
@@ -117,7 +117,7 @@
                                 <input type="radio" name="exento" wire:model='exento' class="" value="1" @if($producto->exento=="1") checked @endif>&nbsp;Sí&nbsp;&nbsp;
                                 <input type="radio" name="exento" wire:model='exento' class="" value="0" @if($producto->exento=="0") checked @endif>&nbsp;No
                                 </div>
-                                <x-jet-input-error for="exento"/>
+                                <x-jet-input-error for="exento" id='ocultarExentoProductoEdit'/>
                         </div>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                                     @if(isset($producto->imagen_url))
                                     <img src="{{ URL::asset('app/archivos/productos/'.$producto->imagen_url) }}" class="flex-shrink-0 w-28"/>
                                     @endif
-                                    <x-jet-input-error for="imagen_url"/>
+                                    <x-jet-input-error for="imagen_url" id='ocultarImgProductoEdit'/>
                                 <x-button-file class="mr-2" type="button">
                                 <label for="imagen_url" id="filelabel">
                                     Seleccionar archivo
@@ -152,7 +152,7 @@
                         <div class="py-2">
                         <label for="description" class="block text-sm font-medium text-gray-700">Descripción *</label>
                         <textarea type="text" name="description" id="description" wire:model='description' value="{{$producto->description}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full h-32 shadow-sm sm:text-sm border-gray-300 resize-y rounded-md">{{$producto->description}}</textarea>
-                            <x-jet-input-error for="description"/>
+                            <x-jet-input-error for="description" id='ocultarDescripcionProductoEdit'/>
                         </div>
                     </div>
                         

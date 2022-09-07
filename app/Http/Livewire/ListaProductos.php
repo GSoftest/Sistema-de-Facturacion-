@@ -6,6 +6,11 @@ use App\Models\Medidas;
 use Livewire\Component;
 use App\Models\Productos;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\QueryException;
+use Exception;
+use Illuminate\Support\Facades\Redirect;
+
 
 class ListaProductos extends Component
 {
@@ -21,14 +26,19 @@ class ListaProductos extends Component
 
     public function destroy($id)
     {
-        $this->eliminar=$id;
         $this->confirmingUserDeletion=true;
+        $this->eliminar=$id;
     }
  
     public function destroy2()
     {
         $this->confirmingUserDeletion=false;
-        Productos::destroy($this->eliminar);
+        try {
+            Productos::destroy($this->eliminar);
+        }catch(\Illuminate\Database\QueryException $e){
+            Session::flash('message2', 'El producto no se puede eliminar, pertenece a una venta realizada');
+        }
+        return redirect()->to('/productos');
     }
 
     public function cerrar()

@@ -1,3 +1,11 @@
+<div>
+@if (Session::has('notificacion'))
+<x-notificacion on="{{ session('notificacion') }}"></x-notificacion>
+@endif
+
+@if (Session::has('advertencia'))
+<x-advertencia on="{{ session('advertencia') }}"></x-advertencia>
+@endif
  <div class="flex flex-col justify-center items-center">
     <!-- <x-slot name="header">
          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -22,8 +30,8 @@
                      <div class="pt-8 grid grid-cols-2 gap-4">
                    <!--  <div class="col-span-3 sm:col-span-3">-->
                         <div>
-                            <label for="iva" class="block text-sm font-medium text-gray-700">IVA</label>
-                            <input type="text" name="iva" id="iva" wire:model='iva' autocomplete="given-name" maxlength="5" placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <label for="iva" class="block text-sm font-medium text-gray-700">IVA *</label>
+                            <input type="text" name="iva" id="iva" wire:model='iva' autocomplete="given-name" maxlength="5" onkeydown="ocultarError('ocultariva')" placeholder="0,00" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </div>
                    
                          <div class="py-4">
@@ -32,10 +40,7 @@
                          <!--   </div>-->
                      </div>
                      <div class="py-4">
-                     @if (session()->has('message'))
-                            <p class="text-sm text-red-600">{{ session('message') }}</p>
-                            @endif
-                            <x-jet-input-error for="iva"/>
+                        <x-jet-input-error for="iva" id='ocultariva'/>
                     </div>  
   
          <table class="w-full border">
@@ -65,9 +70,9 @@
                             <input type="hidden" wire:model='estado' name="estado">
                             @if ($iva->estado == 0)
 
-                             <button class="py-2" title='Activar' ><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar({{ $iva->id }})'></i></button>
+                             <button class="py-2" title='Activar' ><i class="fa fa-toggle-off fa-sm" style="color: red;" aria-hidden="true" wire:click='activar2({{ $iva->id }})'></i></button>
                             @else
-                            <button class="py-2" title='Desactivar'><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar({{ $iva->id }})'></i></button>
+                            <button class="py-2" title='Desactivar'><i class="fa fa-toggle-on fa-sm" style="color: green;" aria-hidden="true" wire:click='desactivar2({{ $iva->id }})'></i></button>
                             @endif
                         </td>
                          <td class="w-24 border-r text-center">
@@ -85,7 +90,7 @@
             {{ $ivas->links() }}
         </div>
 
-        <x-jet-dialog-modal wire:model="confirmingUserDeletion">
+<x-jet-dialog-modal wire:model="confirmingUserDeletion">
     <x-slot name="title">
         <span class="flex justify-center">
         <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: red;"></i>
@@ -114,8 +119,65 @@
 
 </x-jet-dialog-modal>
 
+<x-jet-dialog-modal wire:model="confirmingActivar">
+    <x-slot name="title">
+        <span class="flex justify-center">
+        <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: red;"></i>
+        </span>
+    </x-slot>
+    <x-slot name="content">
+        <span class="flex justify-center">
+        ¿Está seguro que desea activarlo?
+        </span>
+    </x-slot>
+        
+<x-slot name="footer">
+<span class="flex justify-center pt-2">
+        <div class="pb-3.5 pr-4">
+        <x-jet-secondary-button  wire:loading.attr="disabled" wire:click="cerrar">
+            No
+        </x-jet-secondary-button>
+        </div>
+        <div class="">
+        <x-jet-danger-button  wire:click="activar" wire:loading.attr="disabled">
+            Sí
+            </x-jet-danger-button>
+        </div>
+        </span>
+</x-slot>
+</x-jet-dialog-modal>
+
+<x-jet-dialog-modal wire:model="confirmingDesactivar">
+    <x-slot name="title">
+        <span class="flex justify-center">
+        <i class="fa fa-exclamation-circle fa-3x" aria-hidden="true" style="color: red;"></i>
+        </span>
+    </x-slot>
+    <x-slot name="content">
+        <span class="flex justify-center">
+        ¿Está seguro que desea desactivar?
+        </span>
+    </x-slot>
+        
+<x-slot name="footer">
+<span class="flex justify-center pt-2">
+        <div class="pb-3.5 pr-4">
+        <x-jet-secondary-button  wire:loading.attr="disabled" wire:click="cerrar">
+            No
+        </x-jet-secondary-button>
+        </div>
+        <div class="">
+        <x-jet-danger-button  wire:click="desactivar" wire:loading.attr="disabled">
+            Sí
+            </x-jet-danger-button>
+        </div>
+        </span>
+</x-slot>
+</x-jet-dialog-modal>
+
      </div>
         </div>
+ </div>
  </div>
  </div>
  </div>

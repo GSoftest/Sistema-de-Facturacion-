@@ -1,4 +1,13 @@
 <div>
+@if (Session::has('notificacion'))
+<x-notificacion on="{{ session('notificacion') }}"></x-notificacion>
+@endif
+
+@if (Session::has('advertencia'))
+<x-advertencia on="{{ session('advertencia') }}"></x-advertencia>
+@endif
+
+<div>
    <!-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Productos') }}
@@ -91,7 +100,7 @@
                             href="/productos/{{$producto->id}}" title='Editar'><i class="fa fa-pencil fa-sm" style="color: blue;" aria-hidden="true"></i></a>
                          </td>
                          <td class="w-16 border-r text-center">
-                             <button class="py-2" title='Eliminar'><i class="fa fa-trash-can fa-sm" style="color: red;" wire:click='destroy({{ $producto->id }})'></i></button>
+                             <button class="py-2" title='Eliminar' type="button" wire:click='destroy({{ $producto->id }})'><i class="fa fa-trash-can fa-sm" style="color: red;"></i></button>
                          </td>
                      </tr>
                  @endforeach
@@ -134,4 +143,5 @@
         </div>
         </div>
     </div>
+</div>
 </div>

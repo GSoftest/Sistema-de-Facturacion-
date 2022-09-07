@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Clientes;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class ListaClientes extends Component
 {
@@ -38,10 +39,15 @@ public function activar2()
 {
     $this->confirmingActivar=false;
 
+    try{
     $cliente = Clientes::find($this->activar);
     $cliente->estatus = 1;
     $cliente->save();
     $this->estatus = $cliente->estatus;
+    Session::flash('notificacion', '¡Cliente Activado Exitosamente!');
+    }catch(\Illuminate\Database\QueryException $e){
+        Session::flash('advertencia', '¡El Cliente No Puede Ser Activado!');
+    }
     return Redirect::route('clientes');
 }
 
@@ -56,10 +62,15 @@ public function desactivar2()
 {
     $this->confirmingUserDeletion=false;
 
+    try{
     $cliente = Clientes::find($this->desactivar);
     $cliente->estatus = 0;
     $cliente->save();
     $this->estatus = $cliente->estatus;
+    Session::flash('notificacion', '¡Cliente Desactivado Exitosamente!');
+    }catch(\Illuminate\Database\QueryException $e){
+        Session::flash('advertencia', '¡El Cliente No Puede Ser Desactivado!');
+    }
     return Redirect::route('clientes');
 }
 

@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Proveedores;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class ListaProveedores extends Component
 {
@@ -29,10 +30,15 @@ public function activar2()
 {
     $this->confirmingActivar=false;
 
+    try {
     $poveedor = Proveedores::find($this->activar);
     $poveedor->status = 1;
     $poveedor->save();
     $this->status = $poveedor->status;
+    Session::flash('message', 'Proveedor Activado');
+    }catch(\Illuminate\Database\QueryException $e){
+        Session::flash('message2', 'Proveedor No Se Puede Activar');
+    }
     return Redirect::route('proveedores');
 }
 
@@ -47,10 +53,15 @@ public function desactivar2()
 {
     $this->confirmingUserDeletion=false;
 
+    try {
     $poveedor = Proveedores::find($this->desactivar);
     $poveedor->status = 0;
     $poveedor->save();
     $this->status = $poveedor->status;
+    Session::flash('message', 'Proveedor Desactivado');
+    }catch(\Illuminate\Database\QueryException $e){
+        Session::flash('message2', 'Proveedor No Puede Desactivarse');
+    }
     return Redirect::route('proveedores');
 }
 

@@ -6,13 +6,17 @@ use Livewire\Component;
 use App\Models\Ivas;
 use App\Models\Tasa_BCV;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class Iva extends Component
 {
 
     public $confirmingUserDeletion = false;
+    public $confirmingActivar = false;
+    public $confirmingDesactivar = false;
     use WithPagination;
-    public $iva, $iva_id,$estado;
+    public $iva, $iva_id,$estado,$activar,$desactivar;
 
     public function render()
     {
@@ -33,38 +37,42 @@ class Iva extends Component
             'iva.regex' =>'El IVA con formato inválido.',
         ];
 
+        try{
         $this->validate($rules, $messages);
 
-        if ($this->iva_id) {
-
-            $iva = Ivas::find($this->iva_id);
-            $this->iva = str_replace(",",".",$this->iva);
-
-            $iva->update([
-                'iva' => $this->iva,
-                'estado' => $this->estado
-            ]);
-            
-        }else{
-            $this->iva = str_replace(",",".",$this->iva);
-            $iva = Ivas::where('iva', $this->iva)->exists();
-            if ($iva) {
-
-                session()->flash('message', 'El IVA ya se encuentra registrado');
-
-                
-            }else{
+            if ($this->iva_id) {
+                $iva = Ivas::find($this->iva_id);
                 $this->iva = str_replace(",",".",$this->iva);
-
-                Ivas::create([
-                'iva' => $this->iva,
-                'estado' => 0
+                $iva->update([
+                    'iva' => $this->iva,
+                    'estado' => $this->estado
                 ]);
+
+                Session::flash('notificacion', '¡ IVA Actualizado Exitosamente!');
+
+            }else{
+
+                $this->iva = str_replace(",",".",$this->iva);
+                $iva = Ivas::where('iva', $this->iva)->exists();
+                if($iva){
+                    Session::flash('notificacion', '¡ IVA ya se encuentra registrado!');  
+                }else{
+                    $this->iva = str_replace(",",".",$this->iva);
+
+                    Ivas::create([
+                    'iva' => $this->iva,
+                    'estado' => 0
+                    ]);
+                    Session::flash('notificacion', '¡ IVA Registrado Exitosamente!');
+                }
             }
-        }
+
+    }catch(\Illuminate\Database\QueryException $e){
+        Session::flash('advertencia', '¡El IVA No Puede Ser Registrado!');
+    }
 
         $this->limpiar();
-        $this->view = 'livewire.iva';
+        return Redirect::route('iva');
 
     }
 
@@ -79,6 +87,8 @@ class Iva extends Component
             'iva.regex' =>'El IVA con formato inválido.',
         ];
 
+
+        
         $iva = Ivas::find($id);
         $this->iva_id = $iva->id;
         $this->iva = number_format($iva->iva, 2);
@@ -96,45 +106,58 @@ class Iva extends Component
         $this->iva_id = '';
     }
 
-    public function activar($id)
+
+    public function activar2($id)
     {
+        $this->activar=$id;
+        $this->confirmingActivar=true;
+    }
+
+    public function activar()
+    {
+        try{
 
         $verificacion = Ivas::where('estado', 1)->get();
 
         if(count($verificacion) == 0){
-
-            $iva = Ivas::find($id);
-
+            $iva = Ivas::find($this->activar);
             $iva->update([
                 'estado' => 1
             ]);
-    
-    
             $this->estado = $iva->estado;
-
-            $bcv = Tasa_BCV::all();
-            $bcv->update([
-                'estado' => 0
-            ]);
-
+            Session::flash('notificacion', '¡ IVA Activado Exitosamente!');
         }else{
-
-            session()->flash('message', 'Ya se encuentra un IVA activo para la venta');
-        
+            Session::flash('notificacion', '¡Ya se encuentra un IVA activo para la venta!');
         }
 
-        $this->view = 'livewire.iva';
+        }catch(\Illuminate\Database\QueryException $e){
+            Session::flash('advertencia', '¡El IVA No Puede Ser Activado!');
+        }
+        return Redirect::route('iva');
     }
 
-    public function desactivar($id)
-    {
-        $iva = Ivas::find($id);
 
+    public function desactivar2($id)
+    {
+        $this->desactivar=$id;
+        $this->confirmingDesactivar=true;
+    }
+
+
+    public function desactivar()
+    {
+        try{
+        $iva = Ivas::find($this->desactivar);
         $iva->update([
             'estado' => 0
         ]);
         $this->estado = $iva->estado;
-        $this->view = 'livewire.iva';
+        Session::flash('notificacion', '¡ IVA Desactivado Exitosamente!');
+        }catch(\Illuminate\Database\QueryException $e){
+        Session::flash('advertencia', '¡El IVA No Puede Ser Desactivado!');
+        }
+
+        return Redirect::route('iva');
     }
 
 
@@ -148,12 +171,19 @@ class Iva extends Component
     public function destroy2()
     {
         $this->confirmingUserDeletion=false;
+        try{
         Ivas::destroy($this->eliminar);
+        Session::flash('notificacion', '¡El IVA Fue Eliminado Exitosamente!');
+        }catch(\Illuminate\Database\QueryException $e){
+            Session::flash('advertencia', '¡El IVA No Puedo Ser Eliminado!');
+        }
+        return Redirect::route('iva');
     }
 
 
     public function cerrar()
     {
         $this->confirmingUserDeletion=false;
+        $this->confirmingActivar=false;
     }
 }

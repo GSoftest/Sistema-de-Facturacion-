@@ -1,13 +1,22 @@
+<div>
+@if (Session::has('message'))
+<x-notificacion on="{{ session('message') }}"></x-notificacion>
+@endif
+
+@if (Session::has('message2'))
+<x-advertencia on="{{ session('message2') }}"></x-advertencia>
+@endif
+
 <div class="justify-center items-center">
   <!--  <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Clientes') }}
         </h2>
     </x-slot>-->
+
     <div class="mx-auto sm:px-6 lg:px-8 py-12 w-3/5">
         <div class="mt-5 md:mt-0 md:col-span-2">
         <div class="shadow overflow-hidden sm:rounded-md">
-
         <div class="px-4 py-5 bg-white sm:p-6">
             <div class="grid grid-cols-1 gap-1  justify-items-stretc">
                 <div class="justify-self-center">
@@ -16,13 +25,16 @@
                     </h2>
                 </div>
             </div>
-
         <div class="py-8 grid grid-cols-4 gap-4">
             <div class="py-4">
                 <a class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-2 border border-green-500 rounded w-20"
                 href="/proveedores/nuevo">Nuevo</a>
             </div>
         </div>
+
+
+
+
 
         <table class="w-full border m:table-fixed">
              <thead class="border-b bg-gray-800">
@@ -137,4 +149,5 @@
         </div>
         </div>
     </div>
+</div>
 </div>

@@ -1,4 +1,12 @@
-<div>
+<div><div>
+@if (Session::has('notificacion'))
+<x-notificacion on="{{ session('notificacion') }}"></x-notificacion>
+@endif
+
+@if (Session::has('advertencia'))
+<x-advertencia on="{{ session('advertencia') }}"></x-advertencia>
+@endif
+
   <!--  <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Clientes') }}
@@ -145,4 +153,5 @@
         </div>
         </div>
     </div>
+</div>
 </div>

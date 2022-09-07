@@ -24,21 +24,21 @@
                         <input type="hidden" name="id" id="id" value="{{$data->id}}">
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-700">Nombre *</label>
-                                <input type="text" name="name" id="name" wire:model='name' value="{{$data->name}}"  autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="name"/>
+                                <input type="text" name="name" id="name" wire:model='name' value="{{$data->name}}" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <x-jet-input-error for="name" id='ocultarNameEdit'/>
                             </div>
                             <div>
                                 <label for="phone_number" class="block text-sm font-medium text-gray-700">Teléfono *</label>
-                                <input type="text" name="phone_number" id="phone_number" wire:model='phone_number' maxlength="12" value="{{$data->phone_number}}" placeholder="0xxx-xxxxxxx"  autocomplete="given-phone_number" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
-                                <x-jet-input-error for="phone_number"/>
+                                <input type="text" name="phone_number" id="phone_number" wire:model='phone_number'  maxlength="12" value="{{$data->phone_number}}" placeholder="0xxx-xxxxxxx"  autocomplete="given-phone_number" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
+                                <x-jet-input-error for="phone_number" id='ocultarPhoneEdit'/>
                             </div>
                         </div>
 
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700">Correo *</label>
-                                <input type="text" name="email" id="email" wire:model='email' value="{{$data->email}}"  autocomplete="given-email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
-                                <x-jet-input-error for="email"/>
+                                <input type="text" name="email" id="email" wire:model='email' value="{{$data->email}}" autocomplete="given-email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"> 
+                                <x-jet-input-error for="email" id='ocultarEmailEdit'/>
                             </div>
                         </div>
 

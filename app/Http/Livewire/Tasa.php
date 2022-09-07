@@ -7,12 +7,15 @@ use Livewire\Component;
 use App\Models\Tasa_Otros;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class Tasa extends Component
 {
     public $confirmingUserDeletion = false;
+    public $confirmingActivar = false;
+    public $confirmingDesactivar = false;
     use WithPagination;
-    public $tasa, $tasa_id,$estatus;
+    public $tasa, $tasa_id,$estatus,$activar,$desactivar;
 
     public function render()
     {
@@ -34,10 +37,8 @@ class Tasa extends Component
         ];
 
         $this->validate($rules, $messages);
+        try{
         if ($this->tasa_id) {
-
-
-
             $tasa = Tasa_Otros::find($this->tasa_id);
 
             if(strpos($this->tasa, ',')){
@@ -47,7 +48,7 @@ class Tasa extends Component
                 'tasa' => $this->tasa,
                 'estatus' => $this->estatus
             ]);
-
+            Session::flash('notificacion', '¡Tasa Actualizada Exitosamente!');
             }else{
                 session()->flash('message', 'formato inválido,,,.');
             }
@@ -59,8 +60,6 @@ class Tasa extends Component
             if ($tasa) {
 
                 session()->flash('message', 'La tasa ya se encuentra registrada');
-
-                
             }else{
               
                 if(strpos($this->tasa, '.')){
@@ -70,14 +69,17 @@ class Tasa extends Component
                 'tasa' => $this->tasa,
                 'estatus' => 0
                 ]);
+                Session::flash('notificacion', '¡Tasa Registrada Exitosamente!');
                 }else{
                     session()->flash('message', 'formato inválido.');
                 }
             }
         }
-
+        }catch(\Illuminate\Database\QueryException $e){
+            Session::flash('advertencia', '¡La Tasa No Puede Ser Registrada!');
+        }
         $this->limpiar();
-        $this->view = 'livewire.tasa';
+        return Redirect::route('tasa');
 
 
     }
@@ -111,14 +113,22 @@ class Tasa extends Component
         $this->view = 'livewire.tasa';
     }
 
-    public function activar($id)
+
+    public function activar2($id)
+    {
+        $this->activar=$id;
+        $this->confirmingActivar=true;
+    }
+
+    public function activar()
     {
 
+        try{
         $verificacion = Tasa_Otros::where('estatus', 1)->get();
 
         if(count($verificacion) == 0){
 
-            $tasa = Tasa_Otros::find($id);
+            $tasa = Tasa_Otros::find($this->activar);
 
             $tasa->update([
                 'estatus' => 1
@@ -130,21 +140,32 @@ class Tasa extends Component
             ]);
 
             $this->estatus = $tasa->estatus;
+            Session::flash('notificacion', '¡La Tasa Fue Activada Exitosamente!');
         }else{
 
             session()->flash('message', 'Ya se encuentra una tasa activa');
         
         }
-
+       
+        }catch(\Illuminate\Database\QueryException $e){
+            Session::flash('advertencia', '¡La Tasa No Puede Ser Activada!');
+        }
        
         return Redirect::route('tasa');
     }
 
-    public function desactivar($id)
+    public function desactivar2($id)
+    {
+        $this->desactivar=$id;
+        $this->confirmingDesactivar=true;
+    }
+
+    public function desactivar()
     {
 
 
-        $tasa = Tasa_Otros::find($id);
+        $tasa = Tasa_Otros::find($this->desactivar);
+        try{
 
         $tasa->update([
             'estatus' => 0
@@ -156,6 +177,10 @@ class Tasa extends Component
             ]);
 
         $this->estatus = $tasa->estatus;
+        Session::flash('notificacion', '¡La Tasa Fue Desactivada Exitosamente!');
+        }catch(\Illuminate\Database\QueryException $e){
+            Session::flash('advertencia', '¡La Tasa No Puede Ser Desactivada!');
+        }
         return Redirect::route('tasa');
     }
     
@@ -169,12 +194,20 @@ class Tasa extends Component
     public function destroy2()
     {
         $this->confirmingUserDeletion=false;
+        try{
         Tasa_Otros::destroy($this->eliminar);
+        Session::flash('notificacion', '¡La Tasa Fue Eliminada Exitosamente!');
+        }catch(\Illuminate\Database\QueryException $e){
+            Session::flash('advertencia', '¡La Tasa No Puede Ser Eliminada!');
+        }
+        return Redirect::route('tasa');
     }
 
     public function cerrar()
     {
         $this->confirmingUserDeletion=false;
+        $this->confirmingActivar=false;
+        $this->confirmingDesactivar=false;
     }
 
 

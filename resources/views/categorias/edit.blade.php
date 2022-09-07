@@ -25,17 +25,17 @@
                         <div class="pt-8 py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                         <input type="hidden" name="id" id="id" value="{{$data->id}}">
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nombre *</label>
                                 <input type="text" name="name" id="name" wire:model='name' value="{{$data->name}}"  autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <x-jet-input-error for="name"/>
+                                <x-jet-input-error for="name" id='ocultarNameEditC'/>
                             </div>
                         </div>
 
                         <div class="py-2 grid grid-cols-2 gap-4 justify-items-stretc">
                             <div class="col-span-2 sm:col-span-2"> 
-                                <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+                                <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción *</label>
                                 <textarea type="text" name="descripcion" id="descripcion" wire:model='descripcion' value="{{$data->descripcion}}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full h-32 shadow-sm sm:text-sm border-gray-300 resize-y rounded-md">{{$data->descripcion}}</textarea>
-                                <x-jet-input-error for="descripcion"/>
+                                <x-jet-input-error for="descripcion" id='ocultarDesEditC'/>
                             </div>
                             <div class="col-span-2 sm:col-span-2"></div>
                         </div>
